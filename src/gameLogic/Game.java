@@ -6,7 +6,11 @@ import inputs.InputController;
 
 import javax.swing.*;
 
+/**
+ * This class is responsible for the game's logic.
+ */
 public class Game implements Runnable {
+    private static Game gameInstance;
     private final ViewController viewController;
     private final InputController inputController;
 
@@ -14,13 +18,19 @@ public class Game implements Runnable {
     private final int FPS_SET = 144, UPS_SET = 144;
 
     public Game() {
-
         inputController = new InputController(this);
         viewController = new ViewController(this);
         bindInputController();
-        viewController.setCurrentPanel(new TestPanel(viewController, false));
+        viewController.setCurrentPanel(new TestPanel(viewController, true));
 
         startGameLoop();
+    }
+
+    public static Game getInstance() {
+        if(gameInstance == null) {
+            gameInstance = new Game();
+        }
+        return gameInstance;
     }
 
     private void bindInputController() {
