@@ -3,16 +3,23 @@ package gameLogic;
 import gameView.ViewController;
 import gameView.panels.TestPanel;
 import inputs.InputController;
+import observerPattern.GameEvent;
+import observerPattern.Observable;
+import observerPattern.Observer;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is responsible for the game's logic.
  */
-public class Game implements Runnable {
+public class Game implements Runnable, Observable {
     private static Game gameInstance;
     private final ViewController viewController;
     private final InputController inputController;
+
+    private List<Observer> observers = new ArrayList<>();
 
     private Thread gameLoop;
     private final int FPS_SET = 144, UPS_SET = 144;
@@ -22,7 +29,7 @@ public class Game implements Runnable {
         viewController = new ViewController(this);
         bindInputController();
         viewController.setCurrentPanel(new TestPanel(viewController, true));
-
+        addObserver(viewController);
         startGameLoop();
     }
 
@@ -93,5 +100,32 @@ public class Game implements Runnable {
 
     public InputController getInputController() {
         return inputController;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(GameEvent event) {
+        for(Observer observer : observers) {
+            observer.receiveEventNotification(event);
+        }
+    }
+
+    /**
+     * Generates an event and notifies the observers.
+     * @param eventType The name of the event.
+     * @param eventData The data associated with the event.
+     */
+    public void generateEvent(String eventType, Object eventData) {
+        GameEvent event = new GameEvent(eventType, eventData);
+        notifyObservers(event);
     }
 }

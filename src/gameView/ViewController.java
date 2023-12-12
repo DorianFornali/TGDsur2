@@ -3,13 +3,15 @@ package gameView;
 import gameLogic.Game;
 import gameView.panels.TestPanel;
 import inputs.InputController;
+import observerPattern.GameEvent;
+import observerPattern.Observer;
 
 import javax.swing.*;
 
 /**
  * This class is responsible for the game's window and its components.
  */
-public class ViewController extends JFrame {
+public class ViewController extends JFrame implements Observer {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     private JPanel currentPanel;
@@ -69,5 +71,17 @@ public class ViewController extends JFrame {
         this.currentPanel = panel;
         add(this.currentPanel);
         panel.revalidate();
+    }
+
+    @Override
+    public void receiveEventNotification(GameEvent event) {
+        String typeEvent = event.getEventType();
+        switch(typeEvent) {
+            case "TEST_EVENT":
+                System.out.println("Test event received");
+                break;
+            default:
+                break;
+        }
     }
 }
