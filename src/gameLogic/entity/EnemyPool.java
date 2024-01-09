@@ -5,7 +5,7 @@ import gameLogic.Game;
 /** The singleton pool of objects for the game's enemies */
 public class EnemyPool {
     private static EnemyPool poolInstance;
-    private static final int poolSize = 100;
+    private static final int poolSize = 3;
     public int size;
     private Enemy[] pool;
     public EnemyPool(int n){
@@ -31,6 +31,7 @@ public class EnemyPool {
     public Enemy allocateEnemy(){
         for(int i = 0; i<size; i++){
             if(!pool[i].isUsed){
+                System.out.println("Allocating enemy, found one that is not used");
                 pool[i].initialize();
                 return pool[i];
             }
@@ -40,7 +41,6 @@ public class EnemyPool {
 
     public void freeSpace(int index){
         // We reset the enemy so it can be reused later
-        pool[index].isUsed = false;
         pool[index].reset();
     }
 

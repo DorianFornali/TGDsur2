@@ -14,29 +14,49 @@ public class Stage {
     public Tower[][] gameBoard;
 
     /** The list of alive entities in the borad. Alive means they must be rendered in the View controller */
-    public List<Entity> entities;
+    public static List<Entity> entities;
     public EnemyFactory enemyFactory;
 
     /** The amount of rows and columns in the gameBoard */
-    public final int nrows = 7, mcols = 10;
+    public static int nrows = 7, mcols = 10;
 
     public int playerHealth;
 
     public Stage(){
         this.gameBoard = new Tower[nrows][mcols];
-        this.entities = new ArrayList<Entity>();
+        entities = new ArrayList<Entity>();
         this.enemyFactory = new EnemyFactory();
         this.playerHealth = 5;
         System.out.println("Initialized Stage");
-        entities.add(enemyFactory.createWeakEnemy(3));
+        Enemy e = null;
+        for(int i = 0; i < 5; i++) {
+            e = enemyFactory.createWeakEnemy(i % 7);
+            if(e != null)
+                entities.add(e);
+        }
+
     }
 
     public void update(){
+        List<Enemy> enemiesToRemove = new ArrayList<Enemy>();
         // Update all entities
         for(Entity e : entities){
-            if(e != null)
+            if(e != null) {
+                if(e instanceof Enemy) {
+                    Enemy enemy = (Enemy) e;
+                    if(((Enemy) e).toRemove()){
+                        // We need to remove the enemy from the list of entities outside the loop
+                        enemiesToRemove.add(enemy);
+                    }
+                }
                 e.update();
+            }
         }
+
+        for(Enemy e : enemiesToRemove) {
+            entities.remove(e);
+        }
+
         // Update all towers
         for(int i = 0; i<nrows; i++){
             for(int j = 0; j<mcols; j++){
@@ -45,6 +65,11 @@ public class Stage {
                 }
             }
         }
+
+    }
+
+    public static void removeFromEntities(Entity e){
+        entities.remove(e);
     }
 
 }

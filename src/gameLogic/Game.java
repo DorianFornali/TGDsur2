@@ -102,6 +102,8 @@ public class Game implements Runnable, Observable {
         //generateEvent("TEST_EVENT", null);
         if(currentStage != null)
             currentStage.update();
+
+
     }
 
     public InputController getInputController() {

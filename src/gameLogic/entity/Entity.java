@@ -13,7 +13,6 @@ public abstract class Entity {
 
     protected BufferedImage spriteSheet;
     protected BufferedImage currentSprite;
-    protected float spriteWidth, spriteHeight;
 
 
     public float getX(){
@@ -44,34 +43,16 @@ public abstract class Entity {
         return this.currentSprite;
     }
 
-
-
     public void update() {
     }
 
-    public Image getSprite() {
-        return currentSprite;
+    public BufferedImage getSprite() {
+        return spriteSheet; // TODO;
     }
 
 
     public void setSpriteSheet(BufferedImage spriteSheet){
         this.spriteSheet = spriteSheet;
-    }
-
-    public void setSpriteWidth(float width){
-        this.spriteWidth = width;
-    }
-
-    public void setSpriteHeight(float height){
-        this.spriteHeight = height;
-    }
-
-    public float getSpriteWidth(){
-        return this.spriteWidth;
-    }
-
-    public float getSpriteHeight(){
-        return this.spriteHeight;
     }
 
 }

@@ -17,7 +17,7 @@ public class GameScreen extends JPanel {
     private ViewController viewController;
     private Stage currentStage;
 
-    // The height of the HUD is 15% of the screen
+    private int cellHeight, cellWidth;
     public GameScreen(ViewController viewController){
         this.viewController = viewController;
         this.currentStage = new Stage();
@@ -31,24 +31,23 @@ public class GameScreen extends JPanel {
         drawTowerHUD(g);
         drawGameBoard(g);
         renderEntities(g);
+
     }
 
 
     private void renderEntities(Graphics g) {
-        List<Entity> entities = currentStage.entities;
-        for(Entity e : entities){
+        for(Entity e : Stage.entities){
             Enemy enemy = (Enemy) e;
-            System.out.println("Rendering entity at " + enemy.getX() + ", " + enemy.getY());
-            if(enemy.isUsed) {
-                g.drawImage(enemy.getSprite(), (int) (enemy.getX() - enemy.getSpriteWidth() / 2), (int) (enemy.getY() - enemy.getSpriteHeight() / 2), null);
-                g.drawArc((int) (enemy.getX() - enemy.getSpriteWidth() / 2), (int) (enemy.getY() - enemy.getSpriteHeight() / 2), (int) enemy.getSpriteWidth(), (int) enemy.getSpriteHeight(), 0, 360);
+            if(enemy != null && enemy.isUsed) {
+                BufferedImage img = enemy.getSprite();
+                g.drawImage(img, (int) (enemy.getX() - cellWidth / 2), (int) (enemy.getY() - cellHeight / 2), cellWidth, cellHeight, null);
             }
         }
     }
 
     private void drawGameBoard(Graphics g) {
-        int m = currentStage.mcols;
-        int n = currentStage.nrows;
+        int m = Stage.mcols;
+        int n = Stage.nrows;
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
@@ -57,8 +56,8 @@ public class GameScreen extends JPanel {
 
         int gridHeight = panelHeight - topHeight;
 
-        int cellWidth = panelWidth / m;
-        int cellHeight = gridHeight / n;
+        cellWidth = panelWidth / m;
+        cellHeight = gridHeight / n;
 
         g.setColor(Color.BLACK);
         for (int i = 0; i < m-1; i++) {
