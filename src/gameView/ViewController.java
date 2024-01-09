@@ -1,10 +1,15 @@
 package gameView;
 
+import gameLogic.Game;
+import gameLogic.entity.Enemy;
+import gameLogic.entity.Entity;
 import inputs.InputController;
 import observerPattern.GameEvent;
 import observerPattern.Observer;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 
 /**
  * This class is responsible for the game's window and its components.
@@ -18,7 +23,7 @@ public class ViewController extends JFrame implements Observer {
 
     public ViewController() {
         // Game's window settings and initialization
-        setSize(800, 600);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("TGD/2");
         setResizable(false);
@@ -43,7 +48,6 @@ public class ViewController extends JFrame implements Observer {
         if(this.currentPanel != null) {
             this.currentPanel.repaint();
         }
-
     }
 
 

@@ -13,6 +13,7 @@ public class Enemy extends Entity{
     public int index;
 
     private int health, maxHealth;
+    private int speed;
 
     public Enemy(int index){
         this.index = index;
@@ -43,7 +44,24 @@ public class Enemy extends Entity{
         }
 
         // Moving the enemy from right to left
-        setX(getX() - speed);
+        System.out.println("Enemy moving");
+        setX(getX() - (float) speed /100);
+        if(getX() < 0){
+            // Enemy reached the end of the board
+            Game.getInstance().getCurrentStage().playerHealth--;
+            EnemyPool.getInstance().freeSpace(index);
+        }
+    }
 
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    public void setHealth(int i) {
+        this.health = i;
+    }
+
+    public void setMaxHealth(int i) {
+        this.maxHealth = i;
     }
 }

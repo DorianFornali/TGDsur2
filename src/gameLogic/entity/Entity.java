@@ -1,5 +1,6 @@
 package gameLogic.entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
@@ -10,12 +11,9 @@ public abstract class Entity {
     // An enemy at row 1 can only move in this row.
     private int entityRow;
 
-    protected BufferedImage[] spriteSheet;
+    protected BufferedImage spriteSheet;
     protected BufferedImage currentSprite;
-
-    protected int speed;
-
-
+    protected float spriteWidth, spriteHeight;
 
 
     public float getX(){
@@ -47,6 +45,33 @@ public abstract class Entity {
     }
 
 
+
     public void update() {
     }
+
+    public Image getSprite() {
+        return currentSprite;
+    }
+
+
+    public void setSpriteSheet(BufferedImage spriteSheet){
+        this.spriteSheet = spriteSheet;
+    }
+
+    public void setSpriteWidth(float width){
+        this.spriteWidth = width;
+    }
+
+    public void setSpriteHeight(float height){
+        this.spriteHeight = height;
+    }
+
+    public float getSpriteWidth(){
+        return this.spriteWidth;
+    }
+
+    public float getSpriteHeight(){
+        return this.spriteHeight;
+    }
+
 }

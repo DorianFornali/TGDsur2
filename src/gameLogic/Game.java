@@ -22,7 +22,7 @@ public class Game implements Runnable, Observable {
     private List<Observer> observers = new ArrayList<>();
 
     private Thread gameLoop;
-    private final int FPS_SET = 144, UPS_SET = 144;
+    private final int FPS_SET = 144, UPS_SET = 60;
 
     private Stage currentStage;
 

@@ -1,8 +1,10 @@
 package gameLogic;
 
+import gameLogic.entity.Enemy;
 import gameLogic.entity.EnemyFactory;
 import gameLogic.entity.Entity;
 import gameLogic.entity.Tower;
+import gameView.ViewController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Stage {
     /** The amount of rows and columns in the gameBoard */
     public final int nrows = 7, mcols = 10;
 
-    private int playerHealth;
+    public int playerHealth;
 
     public Stage(){
         this.gameBoard = new Tower[nrows][mcols];
@@ -26,6 +28,7 @@ public class Stage {
         this.enemyFactory = new EnemyFactory();
         this.playerHealth = 5;
         System.out.println("Initialized Stage");
+        entities.add(enemyFactory.createWeakEnemy(3));
     }
 
     public void update(){
@@ -43,6 +46,5 @@ public class Stage {
             }
         }
     }
-
 
 }
