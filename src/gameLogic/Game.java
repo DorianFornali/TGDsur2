@@ -25,8 +25,8 @@ public class Game implements Runnable, Observable {
     private final int FPS_SET = 144, UPS_SET = 144;
 
     public Game() {
-        inputController = new InputController(this);
-        viewController = new ViewController(this);
+        inputController = new InputController();
+        viewController = new ViewController();
         bindInputController();
         viewController.setCurrentPanel(new TestPanel(viewController, true));
         addObserver(viewController);
@@ -96,6 +96,7 @@ public class Game implements Runnable, Observable {
 
     private void updateGameLogic() {
         // Game logic update
+        generateEvent("TEST_EVENT", null);
     }
 
     public InputController getInputController() {

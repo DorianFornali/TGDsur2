@@ -18,7 +18,7 @@ public class ViewController extends JFrame implements Observer {
 
     private InputController inputController;
 
-    public ViewController(Game game) {
+    public ViewController() {
         // Game's window settings and initialization
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

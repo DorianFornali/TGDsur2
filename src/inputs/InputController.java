@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 public class InputController {
     private MouseController mouseController;
 
-    public InputController(Game game) {
+    public InputController() {
         this.mouseController = new MouseController();
     }
 
