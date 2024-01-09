@@ -44,11 +44,11 @@ public class GameScreen extends JPanel {
 
         // Dessiner le quadrillage
         g.setColor(Color.BLACK);
-        for (int i = 0; i <= m; i++) {
+        for (int i = 0; i < m-1; i++) {
             int x = i * cellWidth;
             g.drawRect(x, topHeight, cellWidth, gridHeight);
         }
-        for (int j = 0; j <= n; j++) {
+        for (int j = 0; j < n-1; j++) {
             int y = topHeight + j * cellHeight;
             g.drawRect(0, y, panelWidth, cellHeight);
         }
