@@ -22,6 +22,7 @@ public class EnemyPool {
 
     /** Initializes the pool of object, creates n blank enemies */
     private void initPool() {
+        pool = new Enemy[size];
         for(int i = 0; i<size; i++){
             pool[i] = new Enemy(i);
         }

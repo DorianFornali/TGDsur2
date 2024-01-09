@@ -31,7 +31,6 @@ public class MainScreen extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        // Use Example
         super.paintComponent(g);
         g.setColor(Color.RED);
 

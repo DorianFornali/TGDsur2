@@ -40,8 +40,10 @@ public class ViewController extends JFrame implements Observer {
      * Renders graphics on the screen.
      */
     public void renderGraphics() {
-        if(this.currentPanel != null)
+        if(this.currentPanel != null) {
             this.currentPanel.repaint();
+        }
+
     }
 
 
@@ -58,11 +60,11 @@ public class ViewController extends JFrame implements Observer {
             // We remove the current panel from the frame
             remove(this.currentPanel);
             currentPanel.invalidate();
+            currentPanel.removeAll();
         }
 
         // We bind the controller, requestFocus and add the panel to the frame
         panel.addMouseListener(this.inputController.getMouseController());
-
         panel.setFocusable(true);
         panel.requestFocus();
 

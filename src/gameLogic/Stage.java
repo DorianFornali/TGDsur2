@@ -16,7 +16,7 @@ public class Stage {
     public EnemyFactory enemyFactory;
 
     /** The amount of rows and columns in the gameBoard */
-    public static final int nrows = 5, mcols = 6;
+    public final int nrows = 7, mcols = 10;
 
     private int playerHealth;
 

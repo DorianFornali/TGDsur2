@@ -33,6 +33,7 @@ public class Game implements Runnable, Observable {
         viewController.setCurrentPanel(new MainScreen(viewController));
         addObserver(viewController);
         startGameLoop();
+        Game.gameInstance = this;
     }
 
     public static Game getInstance() {
@@ -98,7 +99,7 @@ public class Game implements Runnable, Observable {
 
     private void updateGameLogic() {
         // Game logic update
-        generateEvent("TEST_EVENT", null);
+        //generateEvent("TEST_EVENT", null);
         if(currentStage != null)
             currentStage.update();
     }
@@ -132,5 +133,13 @@ public class Game implements Runnable, Observable {
     public void generateEvent(String eventType, Object eventData) {
         GameEvent event = new GameEvent(eventType, eventData);
         notifyObservers(event);
+    }
+
+    public Stage getCurrentStage(){
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 }
