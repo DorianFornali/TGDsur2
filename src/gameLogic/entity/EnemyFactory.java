@@ -7,7 +7,40 @@ public class EnemyFactory {
     public EnemyFactory(){
         this.pool = EnemyPool.getInstance();
     }
-    public Enemy createEnemy(){
+    public Enemy createWeakEnemy(){
+        Enemy e = pool.allocateEnemy();
+        if(e == null){
+            System.out.println("Unable to allocate enemy, all are used");
+        }
+        else{
+            return e;
+        }
+        return e;
+    }
+
+    public Enemy createTankEnemy(){
+        Enemy e = pool.allocateEnemy();
+        if(e == null){
+            System.out.println("Unable to allocate enemy, all are used");
+        }
+        else{
+            return e;
+        }
+        return e;
+    }
+
+    public Enemy createFastEnemy(){
+        Enemy e = pool.allocateEnemy();
+        if(e == null){
+            System.out.println("Unable to allocate enemy, all are used");
+        }
+        else{
+            return e;
+        }
+        return e;
+    }
+
+    public Enemy createPolyvalentEnemy(){
         Enemy e = pool.allocateEnemy();
         if(e == null){
             System.out.println("Unable to allocate enemy, all are used");

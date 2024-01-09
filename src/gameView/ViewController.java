@@ -1,7 +1,5 @@
 package gameView;
 
-import gameLogic.Game;
-import gameView.panels.TestPanel;
 import inputs.InputController;
 import observerPattern.GameEvent;
 import observerPattern.Observer;

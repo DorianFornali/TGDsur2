@@ -1,7 +1,7 @@
 package gameLogic;
 
 import gameView.ViewController;
-import gameView.panels.TestPanel;
+import gameView.panels.MainScreen;
 import inputs.InputController;
 import observerPattern.GameEvent;
 import observerPattern.Observable;
@@ -24,11 +24,13 @@ public class Game implements Runnable, Observable {
     private Thread gameLoop;
     private final int FPS_SET = 144, UPS_SET = 144;
 
+    private Stage currentStage;
+
     public Game() {
         inputController = new InputController();
         viewController = new ViewController();
         bindInputController();
-        viewController.setCurrentPanel(new TestPanel(viewController, true));
+        viewController.setCurrentPanel(new MainScreen(viewController));
         addObserver(viewController);
         startGameLoop();
     }
@@ -97,6 +99,8 @@ public class Game implements Runnable, Observable {
     private void updateGameLogic() {
         // Game logic update
         generateEvent("TEST_EVENT", null);
+        if(currentStage != null)
+            currentStage.update();
     }
 
     public InputController getInputController() {

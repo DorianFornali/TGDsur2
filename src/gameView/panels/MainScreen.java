@@ -7,23 +7,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TestPanel extends JPanel {
+public class MainScreen extends JPanel {
     private ViewController viewController;
-    private final boolean showRect;
-    public TestPanel(ViewController viewController, boolean showRect) {
+    public MainScreen(ViewController viewController) {
         this.viewController = viewController;
-        this.showRect = showRect;
-
+        setLayout(null);
         JButton button = new JButton("Click me");
         //button.setFocusable(false);
+        button.setBounds(ViewController.WIDTH/2 - 200/2, ViewController.HEIGHT/2 - 100, 200, 100);
+        button.setFont(new Font("Arial", Font.PLAIN, 20));
+        button.setVerticalAlignment(SwingConstants.CENTER);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setText("Level selection");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                viewController.setCurrentPanel(new TestPanel(viewController, !showRect));
                 System.out.println("Changing screen");
+                viewController.setCurrentPanel(new LevelSelectionScreen(viewController));
             }
         });
-        button.setBounds(ViewController.WIDTH / 2 - 100, ViewController.HEIGHT / 2, 100, 100);
         add(button);
 
     }
@@ -32,9 +34,7 @@ public class TestPanel extends JPanel {
         // Use Example
         super.paintComponent(g);
         g.setColor(Color.RED);
-        if(showRect) {
-            g.fillRect(ViewController.WIDTH / 2 - 100, ViewController.HEIGHT / 2 - 100, 100, 100);
-        }
+
     }
 
 }

@@ -1,13 +1,22 @@
 package gameLogic.entity;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Entity {
     // Entity coordinates
     private float x, y;
-    // TODO! Add the sprite/animation related components
 
     // Each entity is placed in a row and cannot change (Exceptions apart).
     // An enemy at row 1 can only move in this row.
     private int entityRow;
+
+    protected BufferedImage[] spriteSheet;
+    protected BufferedImage currentSprite;
+
+    protected int speed;
+
+
+
 
     public float getX(){
         return this.x;
@@ -33,4 +42,11 @@ public abstract class Entity {
         this.entityRow = row;
     }
 
+    public BufferedImage getCurrentSprite(){
+        return this.currentSprite;
+    }
+
+
+    public void update() {
+    }
 }

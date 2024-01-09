@@ -1,12 +1,23 @@
 package gameLogic.entity;
 
-/** The pool of objects for the game's enemies */
+import gameLogic.Game;
+
+/** The singleton pool of objects for the game's enemies */
 public class EnemyPool {
+    private static EnemyPool poolInstance;
+    private static final int poolSize = 100;
     public int size;
     private Enemy[] pool;
     public EnemyPool(int n){
         this.size = n;
         initPool();
+    }
+
+    public static EnemyPool getInstance() {
+        if(poolInstance == null) {
+            poolInstance = new EnemyPool(poolSize);
+        }
+        return poolInstance;
     }
 
     /** Initializes the pool of object, creates n blank enemies */
