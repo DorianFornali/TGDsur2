@@ -33,6 +33,7 @@ public class GameScreen extends JPanel {
         renderEntities(g);
     }
 
+
     private void renderEntities(Graphics g) {
         List<Entity> entities = currentStage.entities;
         for(Entity e : entities){
