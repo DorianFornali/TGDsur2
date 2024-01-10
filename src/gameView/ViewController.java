@@ -34,6 +34,9 @@ public class ViewController extends JFrame implements Observer {
         setVisible(true);
     }
 
+    public static void setWidth(int width) {
+    }
+
     /**
      * Initializes the game's window components.
      */
@@ -71,9 +74,10 @@ public class ViewController extends JFrame implements Observer {
         panel.addMouseListener(this.inputController.getMouseController());
         panel.setFocusable(true);
         panel.requestFocus();
-
         this.currentPanel = panel;
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         add(this.currentPanel);
+        pack();
         panel.revalidate();
     }
 
@@ -88,4 +92,5 @@ public class ViewController extends JFrame implements Observer {
                 break;
         }
     }
+
 }

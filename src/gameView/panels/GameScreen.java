@@ -13,12 +13,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
+
 public class GameScreen extends JPanel {
     private ViewController viewController;
     private Stage currentStage;
 
     private int cellHeight, cellWidth;
     public GameScreen(ViewController viewController){
+        setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
         this.currentStage = new Stage();
         Game.getInstance().setCurrentStage(currentStage);
@@ -28,10 +30,17 @@ public class GameScreen extends JPanel {
         super.paintComponent(g);
         g.clearRect(0, 0, ViewController.WIDTH, ViewController.HEIGHT);
         g.setColor(Color.GRAY);
+        drawBackground(g);
         drawTowerHUD(g);
         drawGameBoard(g);
         renderEntities(g);
 
+    }
+
+    private void drawBackground(Graphics g) {
+        // For the moment a simple gray background
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, ViewController.WIDTH, ViewController.HEIGHT);
     }
 
 
@@ -40,7 +49,10 @@ public class GameScreen extends JPanel {
             Enemy enemy = (Enemy) e;
             if(enemy != null && enemy.isUsed) {
                 BufferedImage img = enemy.getSprite();
-                g.drawImage(img, (int) (enemy.getX() - cellWidth / 2), (int) (enemy.getY() - cellHeight / 2), cellWidth, cellHeight, null);
+                int drawingX = (int) enemy.getX();
+                int drawingY = (int) enemy.getY();
+                g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+                g.fillRect((int) enemy.getX(), (int)enemy.getY(), 20, 20);
             }
         }
     }
@@ -72,6 +84,6 @@ public class GameScreen extends JPanel {
 
     private void drawTowerHUD(Graphics g){
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0, 0, ViewController.WIDTH, (int) (0.15*getHeight()));
+        g.fillRect(0, 0, getWidth(), (int) (0.15*getHeight()));
     }
 }

@@ -30,6 +30,8 @@ public class Enemy extends Entity{
 
     public void update(){
         if(!isUsed) return;
+        super.update();
+
         if(health <= 0){
             // Enemy dies
             System.out.println("Enemy died");

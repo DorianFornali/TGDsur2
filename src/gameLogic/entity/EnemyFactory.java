@@ -36,11 +36,13 @@ public class EnemyFactory {
             // as the enemy's spritesheet
             BufferedImage img = null;
             try {
-                img = ImageIO.read(new File("assets/sprites/enemies/weakEnemySprite.png"));
+                img = ImageIO.read(new File("assets/sprites/enemies/fast.png"));
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
             e.setSpriteSheet(img);
+            e.setSpriteIndex(0);
+            e.setNSPRITES(8);
             return e;
         }
         return null;

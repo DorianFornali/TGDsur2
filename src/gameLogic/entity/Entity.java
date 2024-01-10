@@ -14,6 +14,15 @@ public abstract class Entity {
     protected BufferedImage spriteSheet;
     protected BufferedImage currentSprite;
 
+    // The amount of sprites in the spritesheet
+    protected int NSPRITES;
+
+    // The index of the current sprite in the spritesheet
+    protected int spriteIndex;
+
+    // Used to time the animation of the sprite
+    protected double previousTimer;
+
 
     public float getX(){
         return this.x;
@@ -43,16 +52,35 @@ public abstract class Entity {
         return this.currentSprite;
     }
 
+
     public void update() {
+        double now = System.nanoTime();
+        if(now - previousTimer > 1000000000/10){
+            previousTimer = now;
+            spriteIndex++;
+            if(spriteIndex >= NSPRITES){
+                spriteIndex = 0;
+            }
+            int spriteHeight = spriteSheet.getHeight() / NSPRITES;
+            currentSprite = spriteSheet.getSubimage(0, spriteIndex * spriteHeight, spriteHeight, spriteHeight);
+        }
     }
 
     public BufferedImage getSprite() {
-        return spriteSheet; // TODO;
+        return currentSprite; // TODO;
     }
 
 
     public void setSpriteSheet(BufferedImage spriteSheet){
         this.spriteSheet = spriteSheet;
+    }
+
+    public void setSpriteIndex(int spriteIndex) {
+        this.spriteIndex = spriteIndex;
+    }
+
+    public void setNSPRITES(int NSPRITES) {
+        this.NSPRITES = NSPRITES;
     }
 
 }
