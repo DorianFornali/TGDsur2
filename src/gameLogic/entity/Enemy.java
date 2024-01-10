@@ -4,6 +4,8 @@ import gameLogic.Game;
 import gameLogic.Stage;
 import gameView.ViewController;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Enemy extends Entity{
@@ -50,8 +52,6 @@ public class Enemy extends Entity{
             Game.getInstance().getCurrentStage().playerHealth--;
         }
 
-
-
     }
 
     public void initialize(){
@@ -72,6 +72,10 @@ public class Enemy extends Entity{
 
     public boolean toRemove() {
     	return health <= 0 || getX() < 0;
+    }
+
+    public void setHitbox(int x, int y, int width, int height){
+        this.hitbox = new Rectangle(x, y, width, height);
     }
 
 

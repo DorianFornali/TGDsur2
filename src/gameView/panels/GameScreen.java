@@ -17,8 +17,8 @@ import java.util.List;
 public class GameScreen extends JPanel {
     private ViewController viewController;
     private Stage currentStage;
-
     private int cellHeight, cellWidth;
+
     public GameScreen(ViewController viewController){
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
@@ -52,7 +52,15 @@ public class GameScreen extends JPanel {
                 int drawingX = (int) enemy.getX();
                 int drawingY = (int) enemy.getY();
                 g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
-                g.fillRect((int) enemy.getX(), (int)enemy.getY(), 20, 20);
+
+                // Drawing the hitbox for debug purposes
+                g.setColor(Color.RED);
+                Rectangle hitbox = enemy.getHitbox();
+                g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+
+                // debug, drawing image delimitations
+                //g.setColor(Color.BLUE);
+                //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
             }
         }
     }
@@ -86,4 +94,5 @@ public class GameScreen extends JPanel {
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, getWidth(), (int) (0.15*getHeight()));
     }
+
 }

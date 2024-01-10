@@ -23,9 +23,7 @@ public class EnemyFactory {
         }
         else{
             System.out.println("Allocated enemy");
-            e.setSpeed(20);
-            e.setX(ViewController.WIDTH);
-            e.setY((float) ViewController.HEIGHT /2);
+            e.setSpeed(10);
             e.setHealth(100);
             e.setMaxHealth(100);
             e.setX(ViewController.WIDTH);
@@ -43,6 +41,13 @@ public class EnemyFactory {
             e.setSpriteSheet(img);
             e.setSpriteIndex(0);
             e.setNSPRITES(8);
+
+            int cellWidth = calculateCellWidth();
+            int cellHeight = calculateCellHeight();
+
+            int hitboxWidth = cellWidth/3, hitboxHeight = cellHeight/2;
+            e.setHitbox(0, 0, hitboxWidth, hitboxHeight);
+            // There is no need to give the hitbox a correct position for now as it'll get updated in the e.update() method
             return e;
         }
         return null;
@@ -81,7 +86,28 @@ public class EnemyFactory {
         return e;
     }
 
+    /** Converts a row to coordinates */
     private float rowToY(int row){
         return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+    }
+
+    /** Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size*/
+    private int calculateCellHeight() {
+        int n = Stage.nrows;
+        int panelHeight = ViewController.HEIGHT;
+        int topHeight = (int) (panelHeight * 0.15);
+        int gridHeight = panelHeight - topHeight;
+        int cellHeight = gridHeight / n;
+        return cellHeight;
+    }
+
+    /** Fetch information on the gameboard to determine the width of a game cell, to calculate the hitbox's size*/
+    private int calculateCellWidth() {
+        int m = Stage.mcols;
+        int panelWidth = ViewController.WIDTH;
+        int panelHeight = ViewController.HEIGHT;
+        int topHeight = (int) (panelHeight * 0.15);
+        int cellWidth = panelWidth / m;
+        return cellWidth;
     }
 }

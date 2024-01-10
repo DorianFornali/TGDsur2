@@ -23,6 +23,9 @@ public abstract class Entity {
     // Used to time the animation of the sprite
     protected double previousTimer;
 
+    // The actual hitbox of the entity, collision will be checked against this
+    protected Rectangle hitbox;
+
 
     public float getX(){
         return this.x;
@@ -54,6 +57,19 @@ public abstract class Entity {
 
 
     public void update() {
+        updateSprite();
+        updateHitbox();
+    }
+
+    private void updateHitbox() {
+        int hitboxWidth = (int) hitbox.getWidth(), hitboxHeight = (int) hitbox.getHeight();
+        // We relocate the hitbox rectangle position to the entity's position
+        int newX = (int) (getX() + (currentSprite.getWidth() + hitboxWidth/2)/2);
+        int newY = (int) getY() + hitboxHeight/2;
+        hitbox.setLocation(newX, newY);
+    }
+
+    private void updateSprite() {
         double now = System.nanoTime();
         if(now - previousTimer > 1000000000/10){
             previousTimer = now;
@@ -67,7 +83,7 @@ public abstract class Entity {
     }
 
     public BufferedImage getSprite() {
-        return currentSprite; // TODO;
+        return currentSprite;
     }
 
 
@@ -81,6 +97,10 @@ public abstract class Entity {
 
     public void setNSPRITES(int NSPRITES) {
         this.NSPRITES = NSPRITES;
+    }
+
+    public Rectangle getHitbox() {
+    	return hitbox;
     }
 
 }

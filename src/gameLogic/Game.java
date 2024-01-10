@@ -144,4 +144,8 @@ public class Game implements Runnable, Observable {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
+
+    public ViewController getViewController() {
+        return viewController;
+    }
 }
