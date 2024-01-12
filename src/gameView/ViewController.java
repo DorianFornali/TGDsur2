@@ -3,23 +3,30 @@ package gameView;
 import gameLogic.Game;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Entity;
+import gameView.panels.GameScreen;
+import gameView.panels.LevelSelectionScreen;
+import gameView.panels.MainScreen;
 import inputs.InputController;
 import observerPattern.GameEvent;
+import observerPattern.Observable;
 import observerPattern.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is responsible for the game's window and its components.
  */
-public class ViewController extends JFrame implements Observer {
+public class ViewController extends JFrame implements Observer, Observable {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     private JPanel currentPanel;
 
     private InputController inputController;
+
+    private List<Observer> observers = new ArrayList<>();
 
 
     public ViewController() {
@@ -30,6 +37,7 @@ public class ViewController extends JFrame implements Observer {
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
+        addObserver(Game.getInstance());
     }
 
 
@@ -93,8 +101,47 @@ public class ViewController extends JFrame implements Observer {
 
 
     private void pauseGame(){
-        // No matter on which panel we are, escape will always pause the game and display a small menu
-        Game.PAUSED = !Game.PAUSED;
+        switch(this.currentPanel.getClass().getSimpleName()){
+            case "GameScreen":
+                Game.PAUSED = !Game.PAUSED;
+
+                GameScreen gs = (GameScreen) this.currentPanel;
+                gs.displayPauseMenu();
+                break;
+            case "MainScreen":
+                MainScreen ms = (MainScreen) this.currentPanel;
+                ms.displayPauseMenu();
+                break;
+            case "LevelSelectionScreen":
+                LevelSelectionScreen lss = (LevelSelectionScreen) this.currentPanel;
+                lss.displayPauseMenu();
+                break;
+
+            default:
+                break;
+        }
+
     }
 
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(GameEvent event) {
+        for(Observer observer : observers) {
+            observer.receiveEventNotification(event);
+        }
+    }
+
+    public void generateEvent(String eventType, Object eventData) {
+        GameEvent event = new GameEvent(eventType, eventData);
+        notifyObservers(event);
+    }
 }

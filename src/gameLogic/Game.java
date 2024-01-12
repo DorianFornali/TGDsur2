@@ -25,7 +25,7 @@ public class Game implements Runnable, Observer {
 
     private Stage currentStage;
 
-    public static boolean PAUSED = false;
+    public static boolean PAUSED = false, IN_GAME = false;
 
     // If the speed of the game has been upgraded (UPS limit higher)
     public static int CURRENT_SPEED_FACTOR = 1;
@@ -142,6 +142,8 @@ public class Game implements Runnable, Observer {
     }
 
     public void fastenTheGame() {
+        if(!IN_GAME)
+            return;
         switch(Game.CURRENT_SPEED_FACTOR){
             case 1:
                 setUPS(getUPS()+60);
