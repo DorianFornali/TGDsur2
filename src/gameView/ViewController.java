@@ -21,6 +21,7 @@ public class ViewController extends JFrame implements Observer {
 
     private InputController inputController;
 
+
     public ViewController() {
         // Game's window settings and initialization
         setSize(WIDTH, HEIGHT);
@@ -28,19 +29,10 @@ public class ViewController extends JFrame implements Observer {
         setTitle("TGD/2");
         setResizable(false);
         setLocationRelativeTo(null);
-
-        initUI();
-
         setVisible(true);
     }
 
 
-    /**
-     * Initializes the game's window components.
-     */
-    private void initUI() {
-        // Graphical components initialization
-    }
 
     /**
      * Renders graphics on the screen.
@@ -52,6 +44,10 @@ public class ViewController extends JFrame implements Observer {
     }
 
 
+
+    public InputController getInputController(){
+        return inputController;
+    }
     public void setInputController(InputController inputController) {
         this.inputController = inputController;
     }
@@ -70,13 +66,14 @@ public class ViewController extends JFrame implements Observer {
 
         // We bind the controller, requestFocus and add the panel to the frame
         panel.addMouseListener(this.inputController.getMouseController());
+        panel.addKeyListener(this.inputController.getKeyboardController());
         panel.setFocusable(true);
-        panel.requestFocus();
         this.currentPanel = panel;
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         add(this.currentPanel);
-        pack();
+        pack(); // So the JFrame has the same size as its children panels
         panel.revalidate();
+        panel.requestFocusInWindow(); // Needed to keep receiving keyevents
     }
 
     @Override
@@ -84,11 +81,20 @@ public class ViewController extends JFrame implements Observer {
         String typeEvent = event.getEventType();
         switch(typeEvent) {
             case "TEST_EVENT":
-                System.out.println("Test event received");
+                System.out.println("Test event received by ViewController");
+                break;
+            case "PAUSE":
+                pauseGame();
                 break;
             default:
                 break;
         }
+    }
+
+
+    private void pauseGame(){
+        // No matter on which panel we are, escape will always pause the game and display a small menu
+        Game.PAUSED = !Game.PAUSED;
     }
 
 }

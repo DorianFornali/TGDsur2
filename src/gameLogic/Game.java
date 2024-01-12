@@ -14,26 +14,30 @@ import java.util.List;
 /**
  * This class is responsible for the game's logic.
  */
-public class Game implements Runnable, Observable {
+public class Game implements Runnable, Observer {
     private static Game gameInstance;
     private final ViewController viewController;
     private final InputController inputController;
 
-    private List<Observer> observers = new ArrayList<>();
 
     private Thread gameLoop;
-    private final int FPS_SET = 144, UPS_SET = 60;
+    private int FPS_SET = 144, UPS_SET = 60;
 
     private Stage currentStage;
 
+    public static boolean PAUSED = false;
+
+    // If the speed of the game has been upgraded (UPS limit higher)
+    public static int CURRENT_SPEED_FACTOR = 1;
+
+
     public Game() {
-        inputController = new InputController();
+        Game.gameInstance = this;
         viewController = new ViewController();
+        inputController = new InputController(viewController);
         bindInputController();
         viewController.setCurrentPanel(new MainScreen(viewController));
-        addObserver(viewController);
         startGameLoop();
-        Game.gameInstance = this;
     }
 
     public static Game getInstance() {
@@ -49,6 +53,12 @@ public class Game implements Runnable, Observable {
 
     private void startGameLoop() {
         // GameLoop's initialization
+        gameLoop = new Thread(this);
+        gameLoop.start();
+    }
+
+    public void restartGameLoop(){
+        gameLoop.interrupt();
         gameLoop = new Thread(this);
         gameLoop.start();
     }
@@ -95,14 +105,14 @@ public class Game implements Runnable, Observable {
                 updates = 0;
             }
         }
+
     }
 
     private void updateGameLogic() {
         // Game logic update
         //generateEvent("TEST_EVENT", null);
-        if(currentStage != null)
+        if(currentStage != null && !PAUSED)
             currentStage.update();
-
 
     }
 
@@ -110,32 +120,6 @@ public class Game implements Runnable, Observable {
         return inputController;
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        this.observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(GameEvent event) {
-        for(Observer observer : observers) {
-            observer.receiveEventNotification(event);
-        }
-    }
-
-    /**
-     * Generates an event and notifies the observers.
-     * @param eventType The name of the event.
-     * @param eventData The data associated with the event.
-     */
-    public void generateEvent(String eventType, Object eventData) {
-        GameEvent event = new GameEvent(eventType, eventData);
-        notifyObservers(event);
-    }
 
     public Stage getCurrentStage(){
         return currentStage;
@@ -147,5 +131,48 @@ public class Game implements Runnable, Observable {
 
     public ViewController getViewController() {
         return viewController;
+    }
+
+    public int getUPS(){
+        return UPS_SET;
+    }
+
+    public void setUPS(int ups){
+        UPS_SET = ups;
+    }
+
+    public void fastenTheGame() {
+        switch(Game.CURRENT_SPEED_FACTOR){
+            case 1:
+                setUPS(getUPS()+60);
+                Game.CURRENT_SPEED_FACTOR = 2;
+                restartGameLoop();
+                break;
+            case 2:
+                setUPS(getUPS()+60);
+                Game.CURRENT_SPEED_FACTOR = 3;
+                getInstance().restartGameLoop();
+                break;
+            default:
+                setUPS(60);
+                Game.CURRENT_SPEED_FACTOR = 1;
+                getInstance().restartGameLoop();
+                break;
+        }
+    }
+
+    @Override
+    public void receiveEventNotification(GameEvent event) {
+        String typeEvent = event.getEventType();
+        switch(typeEvent) {
+            case "TEST_EVENT":
+                System.out.println("Test event received by Game");
+                break;
+            case "FASTEN":
+                fastenTheGame();
+                break;
+            default:
+                break;
+        }
     }
 }
