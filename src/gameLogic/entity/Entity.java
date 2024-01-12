@@ -26,7 +26,6 @@ public abstract class Entity {
     // The actual hitbox of the entity, collision will be checked against this
     protected Rectangle hitbox;
 
-
     public float getX(){
         return this.x;
     }

@@ -18,6 +18,8 @@ public class Enemy extends Entity{
     private int health, maxHealth;
     private int speed;
 
+
+
     public Enemy(int index){
         this.index = index;
         this.isUsed = false;
