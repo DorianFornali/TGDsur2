@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LevelSelectionScreen extends JPanel{
     private ViewController viewController;
@@ -22,7 +23,11 @@ public class LevelSelectionScreen extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Changing screen");
-                viewController.setCurrentPanel(new GameScreen(viewController));
+                try {
+                    viewController.setCurrentPanel(new GameScreen(viewController));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         add(level1);

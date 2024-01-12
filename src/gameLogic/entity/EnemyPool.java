@@ -5,7 +5,7 @@ import gameLogic.Game;
 /** The singleton pool of objects for the game's enemies */
 public class EnemyPool {
     private static EnemyPool poolInstance;
-    private static final int poolSize = 3;
+    private static final int poolSize = 150;
     public int size;
     private Enemy[] pool;
     public EnemyPool(int n){

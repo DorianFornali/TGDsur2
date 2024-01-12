@@ -34,8 +34,6 @@ public class ViewController extends JFrame implements Observer {
         setVisible(true);
     }
 
-    public static void setWidth(int width) {
-    }
 
     /**
      * Initializes the game's window components.

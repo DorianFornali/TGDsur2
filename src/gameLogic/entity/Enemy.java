@@ -47,7 +47,7 @@ public class Enemy extends Entity{
         // Moving the enemy from right to left
         setX(getX() - (float) speed /10);
 
-        if(getX() < 0){
+        if(hitbox.x < 0){
             health = -1;
             Game.getInstance().getCurrentStage().playerHealth--;
         }
@@ -71,7 +71,7 @@ public class Enemy extends Entity{
     }
 
     public boolean toRemove() {
-    	return health <= 0 || getX() < 0;
+    	return health <= 0 || hitbox.x < 0;
     }
 
     public void setHitbox(int x, int y, int width, int height){

@@ -2,6 +2,7 @@ package gameView.panels;
 
 import gameLogic.Game;
 import gameLogic.Stage;
+import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Entity;
 import gameView.ViewController;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -19,10 +21,10 @@ public class GameScreen extends JPanel {
     private Stage currentStage;
     private int cellHeight, cellWidth;
 
-    public GameScreen(ViewController viewController){
+    public GameScreen(ViewController viewController) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
-        this.currentStage = new Stage();
+        this.currentStage = new Stage(StageNumero.STAGE1);
         Game.getInstance().setCurrentStage(currentStage);
     }
 

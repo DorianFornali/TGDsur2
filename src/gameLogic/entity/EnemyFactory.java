@@ -1,6 +1,5 @@
 package gameLogic.entity;
 
-import gameLogic.Game;
 import gameLogic.Stage;
 import gameView.ViewController;
 
@@ -28,6 +27,7 @@ public class EnemyFactory {
             e.setMaxHealth(100);
             e.setX(ViewController.WIDTH);
             // We set the Y coordinate of the enemy to the center of the entity's row
+            row = row % Stage.nrows;
             e.setY(rowToY(row));
 
             // We read the spritesheet from the assets/sprites/enemies/weakEnemySpritesheet.png and set it
@@ -53,7 +53,7 @@ public class EnemyFactory {
         return null;
     }
 
-    public Enemy createTankEnemy(){
+    public Enemy createTankEnemy(int row){
         Enemy e = pool.allocateEnemy();
         if(e == null){
             System.err.println("Unable to allocate enemy, all are used");
@@ -64,7 +64,7 @@ public class EnemyFactory {
         return e;
     }
 
-    public Enemy createFastEnemy(){
+    public Enemy createFastEnemy(int row){
         Enemy e = pool.allocateEnemy();
         if(e == null){
             System.err.println("Unable to allocate enemy, all are used");
@@ -75,7 +75,7 @@ public class EnemyFactory {
         return e;
     }
 
-    public Enemy createPolyvalentEnemy(){
+    public Enemy createPolyvalentEnemy(int row){
         Enemy e = pool.allocateEnemy();
         if(e == null){
             System.err.println("Unable to allocate enemy, all are used");
@@ -88,7 +88,7 @@ public class EnemyFactory {
 
     /** Converts a row to coordinates */
     private float rowToY(int row){
-        return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+        return (float) (ViewController.HEIGHT*0.15 + (row-1) * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
     }
 
     /** Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size*/
