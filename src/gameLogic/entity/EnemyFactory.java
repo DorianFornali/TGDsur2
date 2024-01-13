@@ -41,7 +41,7 @@ public class EnemyFactory {
             e.setSpriteSheet(img);
             e.setSpriteIndex(0);
             e.setNSPRITES(8);
-
+            
             int cellWidth = calculateCellWidth();
             int cellHeight = calculateCellHeight();
 

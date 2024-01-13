@@ -2,6 +2,8 @@ package gameLogic.entity;
 
 import gameLogic.Game;
 
+import java.awt.*;
+
 
 public class Tower extends Entity{
 
@@ -10,6 +12,7 @@ public class Tower extends Entity{
     private int firingRate;
     private boolean canShoot;
     private boolean canBlock;
+    private int price;
 
     public void update(){
         super.update();
@@ -29,7 +32,7 @@ public class Tower extends Entity{
         this.health = health;
     }
 
-    public boolean isDead(){
+    public boolean toRemove(){
         return health <= 0;
     }
 
@@ -47,5 +50,13 @@ public class Tower extends Entity{
 
     public void setCanBlock(boolean canBlock){
         this.canBlock = canBlock;
+    }
+
+    public void setPrice(int price){
+        this.price = price;
+    }
+
+    public void setHitbox(int x, int y, int width, int height){
+        this.hitbox = new Rectangle(x, y, width, height);
     }
 }

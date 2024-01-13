@@ -5,6 +5,7 @@ import gameLogic.Stage;
 import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Entity;
+import gameLogic.entity.Tower;
 import gameView.ViewController;
 
 import javax.imageio.ImageIO;
@@ -48,22 +49,43 @@ public class GameScreen extends JPanel {
 
     private void renderEntities(Graphics g) {
         for(Entity e : Stage.entities){
-            Enemy enemy = (Enemy) e;
-            if(enemy != null && enemy.isUsed) {
-                BufferedImage img = enemy.getSprite();
-                int drawingX = (int) enemy.getX();
-                int drawingY = (int) enemy.getY();
-                g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+            if (e instanceof Enemy) {
+                Enemy enemy = (Enemy) e;
+                if(enemy != null && enemy.isUsed) {
+                    BufferedImage img = enemy.getSprite();
+                    int drawingX = (int) enemy.getX();
+                    int drawingY = (int) enemy.getY();
+                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                // Drawing the hitbox for debug purposes
-                g.setColor(Color.RED);
-                Rectangle hitbox = enemy.getHitbox();
-                g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+                    // Drawing the hitbox for debug purposes
+                    g.setColor(Color.RED);
+                    Rectangle hitbox = enemy.getHitbox();
+                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                // debug, drawing image delimitations
-                //g.setColor(Color.BLUE);
-                //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
+                    // debug, drawing image delimitations
+                    //g.setColor(Color.BLUE);
+                    //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
+                }
             }
+            if (e instanceof Tower){
+                Tower tower = (Tower) e;
+                if(tower != null) {
+                    BufferedImage img = tower.getSprite();
+                    int drawingX = (int) tower.getX();
+                    int drawingY = (int) tower.getY();
+                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+
+                    // Drawing the hitbox for debug purposes
+                    g.setColor(Color.RED);
+                    Rectangle hitbox = tower.getHitbox();
+                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+
+                    // debug, drawing image delimitations
+                    g.setColor(Color.BLUE);
+                    g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
+                }
+            }
+
         }
     }
 
