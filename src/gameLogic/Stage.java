@@ -16,7 +16,8 @@ public class Stage {
     public Tower[][] gameBoard;
 
     /** The list of alive entities in the borad. Alive means they must be rendered in the View controller */
-    public List<Entity> entities;
+    public List<Enemy> enemiesAlive;
+    public List<Projectile> projectilesAlive;
     public EnemyFactory enemyFactory;
     public TowerFactory towerFactory;
 
@@ -41,7 +42,8 @@ public class Stage {
     public Stage(StageNumero stageNumero) throws IOException {
         this.gameBoard = new Tower[nrows][mcols];
         this.stageNumero = stageNumero;
-        entities = new ArrayList<Entity>();
+        enemiesAlive = new ArrayList<Enemy>();
+        projectilesAlive = new ArrayList<Projectile>();
         this.enemyFactory = new EnemyFactory();
         this.towerFactory = new TowerFactory();
         this.playerHealth = 5;
@@ -80,19 +82,19 @@ public class Stage {
             switch(enemyType){
                 case WEAK -> {
                     Enemy e = enemyFactory.createWeakEnemy(row);
-                    entities.add(e);
+                    enemiesAlive.add(e);
                 }
                 case POLYVALENT -> {
                     Enemy e = enemyFactory.createPolyvalentEnemy(row);
-                    entities.add(e);
+                    enemiesAlive.add(e);
                 }
                 case FAST -> {
                     Enemy e = enemyFactory.createFastEnemy(row);
-                    entities.add(e);
+                    enemiesAlive.add(e);
                 }
                 case TANK -> {
                     Enemy e = enemyFactory.createTankEnemy(row);
-                    entities.add(e);
+                    enemiesAlive.add(e);
                 }
                 default -> System.err.println("Wrong enemy type");
             }
@@ -167,7 +169,7 @@ public class Stage {
     private void updateEntities() {
         List<Enemy> enemiesToRemove = new ArrayList<Enemy>();
         // Update all entities
-        for(Entity e : entities){
+        for(Entity e : enemiesAlive){
             if(e != null) {
                 if(e instanceof Enemy) {
                     Enemy enemy = (Enemy) e;
@@ -181,7 +183,7 @@ public class Stage {
         }
 
         for(Enemy e : enemiesToRemove) {
-            entities.remove(e);
+            enemiesAlive.remove(e);
         }
 
         // Update all towers
@@ -191,6 +193,22 @@ public class Stage {
                     gameBoard[i][j].update();
                 }
             }
+        }
+
+        // Update all projectiles
+        List<Projectile> projectilesToRemove = new ArrayList<Projectile>();
+        for(Projectile p : projectilesAlive){
+            if(p != null) {
+                if(p.toRemove()){
+                    // We need to remove the projectile from the list of entities outside the loop
+                    projectilesToRemove.add(p);
+                    System.out.println("Projectile removed");
+                }
+                p.update();
+            }
+        }
+        for(Projectile p : projectilesToRemove) {
+            projectilesAlive.remove(p);
         }
     }
 

@@ -37,6 +37,7 @@ public abstract class Entity {
 
     // Only for enemies and towers, not projectiles
     protected int maxHealth, health;
+    private float speed; // Only for enemies and projectiles
 
     public float getX(){
         return this.x;
@@ -128,6 +129,10 @@ public abstract class Entity {
         this.damage = damage;
     }
 
+    public int getDamage() {
+    	return damage;
+    }
+
     public void setMaxHealth(int maxHealth){
         this.maxHealth = maxHealth;
     }
@@ -138,4 +143,11 @@ public abstract class Entity {
     }
 
 
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public float getSpeed() {
+    	return speed;
+    }
 }

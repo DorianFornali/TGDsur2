@@ -6,6 +6,7 @@ import gameView.ViewController;
 import gameView.panels.GameScreen;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 public class Tower extends Entity{
@@ -17,6 +18,7 @@ public class Tower extends Entity{
     private boolean canBlock;
     private int price;
     private TowerType towerType;
+
 
     /** Updates the tower, will call a function corresponding of the tower's type 
      * We choose to do it that way instead of one class = one tower 
@@ -67,11 +69,10 @@ public class Tower extends Entity{
     }
 
     private void updateAttackTower() {
-        //TODO!
-    }
-
-    public boolean toRemove(){
-        return health <= 0;
+        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            shootProjectile();
+            previousFiring = System.nanoTime();
+        }
     }
 
     public void takeDamage(int damage){
@@ -102,6 +103,17 @@ public class Tower extends Entity{
 
         int hitboxWidth = (int) (cellWidth*0.8), hitboxHeight = cellHeight/2;
         super.setHitbox(5000, 5000, hitboxWidth, hitboxHeight);
+    }
+
+    /** Creates a projectile at the tower location */
+    private void shootProjectile(){
+        Projectile p = new Projectile();
+        p.setX(getX() + (float) getHitbox().getWidth() /2);
+        p.setY((float) (getY() + getHitbox().getHeight()/2));
+        p.setHitbox(-500, -500, GameScreen.calculateCellWidth()/4, GameScreen.calculateCellHeight()/4);
+        p.setSpeed(getSpeed());
+        p.setDamage(getDamage());
+        game.getCurrentStage().projectilesAlive.add(p);
     }
 
 }

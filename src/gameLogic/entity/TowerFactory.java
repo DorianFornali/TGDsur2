@@ -15,7 +15,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Defensive tower");
-        buildMainStats(tower, 400, 200, 0, 1, false, true, 100);
+        buildMainStats(tower, 400, 200, 0, 1, 10,false, true, 100);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/defensive.png", 1);
         tower.setHitbox();
@@ -29,7 +29,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Money tower");
-        buildMainStats(tower, 50, 50, 25, 3, true, false, 50);
+        buildMainStats(tower, 50, 50, 25, 3, 10,true, false, 50);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/money.png", 1);
         tower.setHitbox();
@@ -43,7 +43,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Attack tower");
-        buildMainStats(tower, 100, 100, 10, 5, true, true, 100);
+        buildMainStats(tower, 100, 100, 10, 2, 10,true, true, 100);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/attack.png", 8);
         tower.setHitbox();
@@ -57,7 +57,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Multi tower");
-        buildMainStats(tower, 150, 150, 10, 5, true, true, 325);
+        buildMainStats(tower, 150, 150, 10, 5, 10,true, true, 325);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/multi.png", 1);
         tower.setHitbox();
@@ -71,7 +71,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Global tower");
-        buildMainStats(tower, 200, 200, 3, 5, true, true, 500);
+        buildMainStats(tower, 200, 200, 3, 5, 10,true, true, 500);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/global.png", 1);
         tower.setHitbox();
@@ -80,11 +80,12 @@ public class TowerFactory {
         return tower;
     }
 
-    private void buildMainStats(Tower t, int health, int maxHealth, int damage, int firingRate, boolean canShoot, boolean canBlock, int price){
+    private void buildMainStats(Tower t, int health, int maxHealth, int damage, int firingRate, float speed, boolean canShoot, boolean canBlock, int price){
         t.setHealth(health);
         t.setMaxHealth(maxHealth);
         t.setDamage(damage);
         t.setFiringRate(firingRate);
+        t.setSpeed(speed);
         t.setCanShoot(canShoot);
         t.setCanBlock(canBlock);
         t.setPrice(price);

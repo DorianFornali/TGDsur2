@@ -5,6 +5,7 @@ import gameLogic.Stage;
 import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Entity;
+import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameView.ViewController;
 
@@ -68,7 +69,23 @@ public class GameScreen extends JPanel {
     }
 
     private void renderProjectiles(Graphics g) {
-        //TODO! Create projectiles and either put them in entities array or in a dedicated projectiles list
+        for(Projectile p : currentStage.projectilesAlive){
+            if(p != null && p.inTheWindow) {
+                BufferedImage img = p.getSprite();
+                Rectangle hitbox = p.getHitbox();
+                int drawingX = (int) hitbox.getX();
+                int drawingY = (int) hitbox.getY();
+                g.drawImage(img, drawingX, drawingY, hitbox.width, hitbox.height, null);
+
+                // Drawing the hitbox for debug purposes
+                g.setColor(Color.RED);
+                g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+
+                // debug, drawing image delimitations
+                //g.setColor(Color.BLUE);
+                //g.drawRect(drawingX, drawingY, hitbox.width, hitbox.height);
+            }
+        }
     }
 
     private void renderTowers(Graphics g) {
@@ -94,24 +111,21 @@ public class GameScreen extends JPanel {
     }
 
     private void renderEnemies(Graphics g) {
-        for(Entity e : currentStage.entities){
-            if (e instanceof Enemy) {
-                Enemy enemy = (Enemy) e;
-                if(enemy != null && enemy.isUsed) {
-                    BufferedImage img = enemy.getSprite();
-                    int drawingX = (int) enemy.getX();
-                    int drawingY = (int) enemy.getY();
-                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+    for(Enemy enemy : currentStage.enemiesAlive){
+            if(enemy != null && enemy.isUsed) {
+                BufferedImage img = enemy.getSprite();
+                int drawingX = (int) enemy.getX();
+                int drawingY = (int) enemy.getY();
+                g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                    // Drawing the hitbox for debug purposes
-                    g.setColor(Color.RED);
-                    Rectangle hitbox = enemy.getHitbox();
-                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+                // Drawing the hitbox for debug purposes
+                g.setColor(Color.RED);
+                Rectangle hitbox = enemy.getHitbox();
+                g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                    // debug, drawing image delimitations
-                    //g.setColor(Color.BLUE);
-                    //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
-                }
+                // debug, drawing image delimitations
+                //g.setColor(Color.BLUE);
+                //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
             }
         }
     }

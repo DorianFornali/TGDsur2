@@ -17,9 +17,6 @@ public class Enemy extends Entity{
     public int index;
 
     private int health, maxHealth;
-    private int speed;
-
-
 
     public Enemy(int index){
         this.index = index;
@@ -48,7 +45,7 @@ public class Enemy extends Entity{
         }
 
         // Moving the enemy from right to left
-        setX(getX() - (float) speed /10);
+        setX(getX() - (float) getSpeed() /10);
 
         if(hitbox.x < 0){
             health = -1;
@@ -59,10 +56,6 @@ public class Enemy extends Entity{
 
     public void initialize(){
         this.isUsed = true;
-    }
-
-    public void setSpeed(int speed){
-        this.speed = speed;
     }
 
     public void setHealth(int i) {
