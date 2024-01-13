@@ -1,5 +1,7 @@
 package gameLogic.entity;
 
+import gameView.panels.GameScreen;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -25,6 +27,14 @@ public abstract class Entity {
 
     // The actual hitbox of the entity, collision will be checked against this
     protected Rectangle hitbox;
+
+    protected int damage;
+
+    // Only for towers and enemies, not projectiles
+    protected float firingRate;
+
+    // Only for enemies and towers, not projectiles
+    protected int maxHealth, health;
 
     public float getX(){
         return this.x;
@@ -63,7 +73,7 @@ public abstract class Entity {
     private void updateHitbox() {
         int hitboxWidth = (int) hitbox.getWidth(), hitboxHeight = (int) hitbox.getHeight();
         // We relocate the hitbox rectangle position to the entity's position
-        int newX = (int) (getX() + (currentSprite.getWidth() + hitboxWidth/2)/2);
+        int newX = (int) (getX() + GameScreen.calculateCellWidth()/2 - hitboxWidth/2);
         int newY = (int) getY() + hitboxHeight/2;
         hitbox.setLocation(newX, newY);
     }
@@ -101,5 +111,27 @@ public abstract class Entity {
     public Rectangle getHitbox() {
     	return hitbox;
     }
+
+    protected void setHitbox(int x, int y, int width, int height){
+        this.hitbox = new Rectangle(x, y, width, height);
+    }
+
+    public void setFiringRate(int firingRate){
+        this.firingRate = firingRate;
+    }
+
+    public void setDamage(int damage){
+        this.damage = damage;
+    }
+
+    public void setMaxHealth(int maxHealth){
+        this.maxHealth = maxHealth;
+    }
+
+
+    public void setHealth(int health){
+        this.health = health;
+    }
+
 
 }

@@ -52,8 +52,41 @@ public class GameScreen extends JPanel {
     }
 
 
+    /** Render all entities */
     private void renderEntities(Graphics g) {
-        for(Entity e : Stage.entities){
+        renderTowers(g);
+        renderEnemies(g);
+        renderProjectiles(g);
+    }
+
+    private void renderProjectiles(Graphics g) {
+        //TODO! Create projectiles and either put them in entities array or in a dedicated projectiles list
+    }
+
+    private void renderTowers(Graphics g) {
+        for(Tower[] rowOfTower : currentStage.gameBoard) {
+            for (Tower tower : rowOfTower) {
+                if (tower != null) {
+                    BufferedImage img = tower.getSprite();
+                    int drawingX = (int) tower.getX();
+                    int drawingY = (int) tower.getY();
+                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+
+                    // Drawing the hitbox for debug purposes
+                    g.setColor(Color.RED);
+                    Rectangle hitbox = tower.getHitbox();
+                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+
+                    // debug, drawing image delimitations
+                    //g.setColor(Color.BLUE);
+                    //g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
+                }
+            }
+        }
+    }
+
+    private void renderEnemies(Graphics g) {
+        for(Entity e : currentStage.entities){
             if (e instanceof Enemy) {
                 Enemy enemy = (Enemy) e;
                 if(enemy != null && enemy.isUsed) {
@@ -72,25 +105,6 @@ public class GameScreen extends JPanel {
                     //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
                 }
             }
-            if (e instanceof Tower){
-                Tower tower = (Tower) e;
-                if(tower != null) {
-                    BufferedImage img = tower.getSprite();
-                    int drawingX = (int) tower.getX();
-                    int drawingY = (int) tower.getY();
-                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
-
-                    // Drawing the hitbox for debug purposes
-                    g.setColor(Color.RED);
-                    Rectangle hitbox = tower.getHitbox();
-                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
-
-                    // debug, drawing image delimitations
-                    g.setColor(Color.BLUE);
-                    g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
-                }
-            }
-
         }
     }
 
@@ -139,9 +153,9 @@ public class GameScreen extends JPanel {
 
     private void initUI() {
         fastenButtonSprites = new ImageIcon[]{
-                new ImageIcon(new ImageIcon("assets/sprites/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT))
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT))
         };
 
         fastenButton = new JButton(fastenButtonSprites[0]);
@@ -163,6 +177,36 @@ public class GameScreen extends JPanel {
     private void updateButtonIcon() {
         fastenButton.setIcon(fastenButtonSprites[Game.CURRENT_SPEED_FACTOR-1]);
         fastenButton.setVisible(!Game.PAUSED);
+    }
+
+    /** Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size*/
+    public static int calculateCellHeight() {
+        int n = Stage.nrows;
+        int panelHeight = ViewController.HEIGHT;
+        int topHeight = (int) (panelHeight * 0.15);
+        int gridHeight = panelHeight - topHeight;
+        int cellHeight = gridHeight / n;
+        return cellHeight;
+    }
+
+    /** Fetch information on the gameboard to determine the width of a game cell, to calculate the hitbox's size*/
+    public static int calculateCellWidth() {
+        int m = Stage.mcols;
+        int panelWidth = ViewController.WIDTH;
+        int panelHeight = ViewController.HEIGHT;
+        int topHeight = (int) (panelHeight * 0.15);
+        int cellWidth = panelWidth / m;
+        return cellWidth;
+    }
+
+    /** Converts a row to coordinates */
+    public static float rowToY(int row){
+        //return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+        return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+    }
+
+    public static float columnToX(int column){
+        return (float) (column * ((ViewController.WIDTH)/Stage.mcols));
     }
 
 }

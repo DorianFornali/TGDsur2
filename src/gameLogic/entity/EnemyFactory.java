@@ -2,6 +2,7 @@ package gameLogic.entity;
 
 import gameLogic.Stage;
 import gameView.ViewController;
+import gameView.panels.GameScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,32 +23,11 @@ public class EnemyFactory {
         }
         else{
             System.out.println("Allocated enemy");
-            e.setSpeed(10);
-            e.setHealth(100);
-            e.setMaxHealth(100);
-            e.setX(ViewController.WIDTH);
-            // We set the Y coordinate of the enemy to the center of the entity's row
-            row = row % Stage.nrows;
-            e.setY(rowToY(row));
+            buildMainStats(e, 10, 100, 100, 10, 10);
+            setCoords(e, row, 0);
+            setSprites(e, "assets/sprites/enemies/weak.png", 8);
+            e.setHitbox();
 
-            // We read the spritesheet from the assets/sprites/enemies/weakEnemySpritesheet.png and set it
-            // as the enemy's spritesheet
-            BufferedImage img = null;
-            try {
-                img = ImageIO.read(new File("assets/sprites/enemies/fast.png"));
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-            e.setSpriteSheet(img);
-            e.setSpriteIndex(0);
-            e.setNSPRITES(8);
-            
-            int cellWidth = calculateCellWidth();
-            int cellHeight = calculateCellHeight();
-
-            int hitboxWidth = cellWidth/3, hitboxHeight = cellHeight/2;
-            e.setHitbox(0, 0, hitboxWidth, hitboxHeight);
-            // There is no need to give the hitbox a correct position for now as it'll get updated in the e.update() method
             return e;
         }
         return null;
@@ -59,9 +39,15 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
+            System.out.println("Allocated enemy");
+            buildMainStats(e, 10, 100, 100, 10, 10);
+            setCoords(e, row, 0);
+            setSprites(e, "assets/sprites/enemies/tank.png", 8);
+            e.setHitbox();
+
             return e;
         }
-        return e;
+        return null;
     }
 
     public Enemy createFastEnemy(int row){
@@ -70,9 +56,15 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
+            System.out.println("Allocated enemy");
+            buildMainStats(e, 10, 100, 100, 10, 10);
+            setCoords(e, row, 0);
+            setSprites(e, "assets/sprites/enemies/fast.png", 8);
+            e.setHitbox();
+
             return e;
         }
-        return e;
+        return null;
     }
 
     public Enemy createPolyvalentEnemy(int row){
@@ -81,33 +73,44 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
+            System.out.println("Allocated enemy");
+            buildMainStats(e, 10, 100, 100, 10, 10);
+            setCoords(e, row, 0);
+            setSprites(e, "assets/sprites/enemies/polyvalent.png", 8);
+            e.setHitbox();
+
             return e;
         }
-        return e;
+        return null;
     }
 
-    /** Converts a row to coordinates */
-    private float rowToY(int row){
-        return (float) (ViewController.HEIGHT*0.15 + (row-1) * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+    private void buildMainStats(Enemy e, int speed, int health, int maxHealth, int damage, int firingRate){
+        e.setSpeed(speed);
+        e.setHealth(health);
+        e.setMaxHealth(maxHealth);
+        e.setDamage(damage);
+        e.setFiringRate(firingRate);
     }
 
-    /** Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size*/
-    private int calculateCellHeight() {
-        int n = Stage.nrows;
-        int panelHeight = ViewController.HEIGHT;
-        int topHeight = (int) (panelHeight * 0.15);
-        int gridHeight = panelHeight - topHeight;
-        int cellHeight = gridHeight / n;
-        return cellHeight;
+    private void setCoords(Enemy e, int row, int column){
+        e.setX(ViewController.WIDTH);
+        // We set the Y coordinate of the enemy to the center of the entity's row
+        row = row % Stage.nrows;
+        e.setY(GameScreen.rowToY(row));
     }
 
-    /** Fetch information on the gameboard to determine the width of a game cell, to calculate the hitbox's size*/
-    private int calculateCellWidth() {
-        int m = Stage.mcols;
-        int panelWidth = ViewController.WIDTH;
-        int panelHeight = ViewController.HEIGHT;
-        int topHeight = (int) (panelHeight * 0.15);
-        int cellWidth = panelWidth / m;
-        return cellWidth;
+    private void setSprites(Enemy e, String path, int NSPRITES){
+        BufferedImage img = null;
+        try{
+            img = ImageIO.read(new File(path));
+        } catch (IOException exception){
+            exception.printStackTrace();
+        }
+
+        e.setSpriteSheet(img);
+        e.setSpriteIndex(0);
+        e.setNSPRITES(NSPRITES);
     }
+
+
 }

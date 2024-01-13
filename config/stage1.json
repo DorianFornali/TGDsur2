@@ -2,7 +2,7 @@
   "stage_enemies": [
     {
       "type": "WEAK",
-      "row": 1,
+      "row": 0,
       "delay": 3
     },
     {

@@ -1,6 +1,9 @@
 package gameLogic.entity;
 
 import gameLogic.Game;
+import gameLogic.Stage;
+import gameView.ViewController;
+import gameView.panels.GameScreen;
 
 import java.awt.*;
 
@@ -16,20 +19,7 @@ public class Tower extends Entity{
 
     public void update(){
         super.update();
-
         // TODO! Make the tower shoot
-    }
-
-    public void setMaxHealth(int maxHealth){
-        this.maxHealth = maxHealth;
-    }
-
-    public void setDamage(int damage){
-        this.damage = damage;
-    }
-
-    public void setHealth(int health){
-        this.health = health;
     }
 
     public boolean toRemove(){
@@ -40,9 +30,6 @@ public class Tower extends Entity{
         health -= damage;
     }
 
-    public void setFiringRate(int firingRate){
-        this.firingRate = firingRate;
-    }
 
     public void setCanShoot(boolean canShoot){
         this.canShoot = canShoot;
@@ -56,7 +43,13 @@ public class Tower extends Entity{
         this.price = price;
     }
 
-    public void setHitbox(int x, int y, int width, int height){
-        this.hitbox = new Rectangle(x, y, width, height);
+
+    public void setHitbox(){
+        int cellWidth = GameScreen.calculateCellWidth();
+        int cellHeight = GameScreen.calculateCellHeight();
+
+        int hitboxWidth = (int) (cellWidth*0.8), hitboxHeight = cellHeight/2;
+        super.setHitbox(5000, 5000, hitboxWidth, hitboxHeight);
     }
+
 }

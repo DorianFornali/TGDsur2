@@ -16,7 +16,7 @@ public class Stage {
     public Tower[][] gameBoard;
 
     /** The list of alive entities in the borad. Alive means they must be rendered in the View controller */
-    public static List<Entity> entities;
+    public List<Entity> entities;
     public EnemyFactory enemyFactory;
     public TowerFactory towerFactory;
 
@@ -41,6 +41,7 @@ public class Stage {
         this.stageNumero = stageNumero;
         entities = new ArrayList<Entity>();
         this.enemyFactory = new EnemyFactory();
+        this.towerFactory = new TowerFactory();
         this.playerHealth = 5;
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
@@ -100,17 +101,18 @@ public class Stage {
 
     //temporary, just for testing
     private void spawnTower(){
-        Tower tower = towerFactory.createDefensiveTower(1,0);
-        entities.add(tower);
-        Tower tower1 = towerFactory.createAttackTower(2,0);
-        entities.add(tower1);
-        Tower tower2 = towerFactory.createRecoveryTower(3,0);
-        entities.add(tower2);
-        Tower tower3 = towerFactory.createMultiTower(4,0);
-        entities.add(tower3);
-        Tower tower4 = towerFactory.createGlobalTower(5,0);
-        entities.add(tower4);
-        System.out.println("Spawning tower");
+        Tower tower = towerFactory.createDefensiveTower(0,0);
+        gameBoard[1][0] = tower;
+        tower = towerFactory.createAttackTower(2,3);
+        gameBoard[2][0] = tower;
+        tower = towerFactory.createRecoveryTower(3,0);
+        gameBoard[3][0] = tower;
+        tower = towerFactory.createMultiTower(4,0);
+        gameBoard[4][0] = tower;
+        tower = towerFactory.createGlobalTower(7,7);
+        gameBoard[5][0] = tower;
+
+        System.out.println("Spawning towers");
     }
 
     /**
@@ -168,15 +170,6 @@ public class Stage {
                     if(((Enemy) e).toRemove()){
                         // We need to remove the enemy from the list of entities outside the loop
                         enemiesToRemove.add(enemy);
-                    }
-                }
-
-                if(e instanceof Tower) {
-                    Tower tower = (Tower) e;
-                    if(((Tower) e).toRemove()){
-                        // We need to remove the tower from the list of entities outside the loop
-                        // We also need to remove it from the gameboard
-                        entities.remove(tower);
                     }
                 }
                 e.update();

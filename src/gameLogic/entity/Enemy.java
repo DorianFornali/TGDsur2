@@ -3,6 +3,7 @@ package gameLogic.entity;
 import gameLogic.Game;
 import gameLogic.Stage;
 import gameView.ViewController;
+import gameView.panels.GameScreen;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -76,9 +77,14 @@ public class Enemy extends Entity{
     	return health <= 0 || hitbox.x < 0;
     }
 
-    public void setHitbox(int x, int y, int width, int height){
-        this.hitbox = new Rectangle(x, y, width, height);
-    }
+    public void setHitbox() {
+        int cellWidth = GameScreen.calculateCellWidth();
+        int cellHeight = GameScreen.calculateCellHeight();
 
+        int hitboxWidth = cellWidth/3, hitboxHeight = cellHeight/2;
+        // Initial position doesn't matter as it'll get updated in the update() method
+        // So we put it in a place where it won't collide with anything
+        super.setHitbox(10000, 10000, hitboxWidth, hitboxHeight);
+    }
 
 }
