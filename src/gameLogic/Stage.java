@@ -64,7 +64,7 @@ public class Stage {
             SpawnObject so = spawningStack.pop();
             EnemyType enemyType = so.type;
             int row = so.row;
-            double delay = so.delay * 1000000000.0; // seconds to nanoseconds
+            double delay = (so.delay * 1000000000.0)/Game.CURRENT_SPEED_FACTOR; // seconds to nanoseconds, and taking into account the in-game speed
 
             System.out.println("SPAWNING AN ENEMY");
             switch(enemyType){

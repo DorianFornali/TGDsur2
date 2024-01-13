@@ -1,5 +1,6 @@
 package gameView.panels;
 
+import gameLogic.Game;
 import gameView.ViewController;
 
 import javax.swing.*;
@@ -36,4 +37,13 @@ public class MainScreen extends JPanel {
 
     }
 
+    public void displayPauseMenu() {
+        // We display a small menu using a dialog object from Swing
+        String[] options = {"Resume", "Quit"};
+        int choice = JOptionPane.showOptionDialog(this, "Do you want to quit ?", "Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 1){
+            // We quit the game
+            System.exit(0);
+        }
+    }
 }

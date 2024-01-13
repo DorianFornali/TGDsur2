@@ -3,23 +3,31 @@ package gameView;
 import gameLogic.Game;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Entity;
+import gameView.panels.GameScreen;
+import gameView.panels.LevelSelectionScreen;
+import gameView.panels.MainScreen;
 import inputs.InputController;
 import observerPattern.GameEvent;
+import observerPattern.Observable;
 import observerPattern.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is responsible for the game's window and its components.
  */
-public class ViewController extends JFrame implements Observer {
+public class ViewController extends JFrame implements Observer, Observable {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     private JPanel currentPanel;
 
     private InputController inputController;
+
+    private List<Observer> observers = new ArrayList<>();
+
 
     public ViewController() {
         // Game's window settings and initialization
@@ -28,19 +36,11 @@ public class ViewController extends JFrame implements Observer {
         setTitle("TGD/2");
         setResizable(false);
         setLocationRelativeTo(null);
-
-        initUI();
-
         setVisible(true);
+        addObserver(Game.getInstance());
     }
 
 
-    /**
-     * Initializes the game's window components.
-     */
-    private void initUI() {
-        // Graphical components initialization
-    }
 
     /**
      * Renders graphics on the screen.
@@ -52,6 +52,10 @@ public class ViewController extends JFrame implements Observer {
     }
 
 
+
+    public InputController getInputController(){
+        return inputController;
+    }
     public void setInputController(InputController inputController) {
         this.inputController = inputController;
     }
@@ -70,13 +74,14 @@ public class ViewController extends JFrame implements Observer {
 
         // We bind the controller, requestFocus and add the panel to the frame
         panel.addMouseListener(this.inputController.getMouseController());
+        panel.addKeyListener(this.inputController.getKeyboardController());
         panel.setFocusable(true);
-        panel.requestFocus();
         this.currentPanel = panel;
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         add(this.currentPanel);
-        pack();
+        pack(); // So the JFrame has the same size as its children panels
         panel.revalidate();
+        panel.requestFocusInWindow(); // Needed to keep receiving keyevents
     }
 
     @Override
@@ -84,11 +89,59 @@ public class ViewController extends JFrame implements Observer {
         String typeEvent = event.getEventType();
         switch(typeEvent) {
             case "TEST_EVENT":
-                System.out.println("Test event received");
+                System.out.println("Test event received by ViewController");
+                break;
+            case "PAUSE":
+                pauseGame();
                 break;
             default:
                 break;
         }
     }
 
+
+    private void pauseGame(){
+        switch(this.currentPanel.getClass().getSimpleName()){
+            case "GameScreen":
+                Game.PAUSED = !Game.PAUSED;
+
+                GameScreen gs = (GameScreen) this.currentPanel;
+                gs.displayPauseMenu();
+                break;
+            case "MainScreen":
+                MainScreen ms = (MainScreen) this.currentPanel;
+                ms.displayPauseMenu();
+                break;
+            case "LevelSelectionScreen":
+                LevelSelectionScreen lss = (LevelSelectionScreen) this.currentPanel;
+                lss.displayPauseMenu();
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(GameEvent event) {
+        for(Observer observer : observers) {
+            observer.receiveEventNotification(event);
+        }
+    }
+
+    public void generateEvent(String eventType, Object eventData) {
+        GameEvent event = new GameEvent(eventType, eventData);
+        notifyObservers(event);
+    }
 }

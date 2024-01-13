@@ -8,13 +8,12 @@ import gameLogic.entity.Entity;
 import gameLogic.entity.Tower;
 import gameView.ViewController;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 
 public class GameScreen extends JPanel {
@@ -22,11 +21,17 @@ public class GameScreen extends JPanel {
     private Stage currentStage;
     private int cellHeight, cellWidth;
 
+    private JButton fastenButton;
+    private ImageIcon[] fastenButtonSprites;
+
     public GameScreen(ViewController viewController) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
         this.currentStage = new Stage(StageNumero.STAGE1);
         Game.getInstance().setCurrentStage(currentStage);
+        Game.IN_GAME = true;
+        initUI();
+        setLayout(null);
     }
 
     public void paintComponent(Graphics g) {
@@ -37,7 +42,7 @@ public class GameScreen extends JPanel {
         drawTowerHUD(g);
         drawGameBoard(g);
         renderEntities(g);
-
+        updateButtonIcon();
     }
 
     private void drawBackground(Graphics g) {
@@ -117,6 +122,47 @@ public class GameScreen extends JPanel {
     private void drawTowerHUD(Graphics g){
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, getWidth(), (int) (0.15*getHeight()));
+    }
+
+    public void displayPauseMenu() {
+        // We display a small menu using a dialog object from Swing
+        String[] options = {"Resume", "Back to main menu"};
+        int choice = JOptionPane.showOptionDialog(this, "Game paused", "Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 1){
+            // We quit the game
+            viewController.setCurrentPanel(new MainScreen(viewController));
+            Game.IN_GAME = false;
+        }
+        Game.PAUSED = !Game.PAUSED;
+
+    }
+
+    private void initUI() {
+        fastenButtonSprites = new ImageIcon[]{
+                new ImageIcon(new ImageIcon("assets/sprites/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT))
+        };
+
+        fastenButton = new JButton(fastenButtonSprites[0]);
+
+        int buttonSize = ViewController.WIDTH/20;
+        fastenButton.setPreferredSize(new Dimension(buttonSize, buttonSize));
+        fastenButton.setBounds((int) (ViewController.WIDTH*0.9), buttonSize/2, buttonSize, buttonSize);
+        fastenButton.setVisible(true);
+        fastenButton.setFocusable(false);
+        fastenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewController.generateEvent("FASTEN", null);
+            }
+        });
+        add(fastenButton);
+    }
+
+    private void updateButtonIcon() {
+        fastenButton.setIcon(fastenButtonSprites[Game.CURRENT_SPEED_FACTOR-1]);
+        fastenButton.setVisible(!Game.PAUSED);
     }
 
 }

@@ -38,4 +38,13 @@ public class LevelSelectionScreen extends JPanel{
         g.setColor(Color.RED);
     }
 
+    public void displayPauseMenu() {
+        // We display a small menu using a dialog object from Swing
+        String[] options = {"No", "Yes"};
+        int choice = JOptionPane.showOptionDialog(this, "Back to main screen ?", "Esc", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 1){
+            // We quit the game
+            viewController.setCurrentPanel(new MainScreen(viewController));
+        }
+    }
 }
