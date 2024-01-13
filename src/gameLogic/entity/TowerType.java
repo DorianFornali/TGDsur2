@@ -1,5 +1,5 @@
 package gameLogic.entity;
 
 public enum TowerType {
-    RECOVERY, BASIC, PROTECTIVE, MULTI, GLOBAL
+    ATTACK, DEFENSIVE, MONEY, MULTI, GLOBAL
 }

@@ -35,6 +35,8 @@ public class Stage {
     // To calculate whether we passed the delay
     private double previousTimer;
 
+    public int playerMoney;
+
 
     public Stage(StageNumero stageNumero) throws IOException {
         this.gameBoard = new Tower[nrows][mcols];
@@ -45,13 +47,21 @@ public class Stage {
         this.playerHealth = 5;
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
+        setPlayerMoney(100);
         spawnTower();
+    }
+
+    public void setPlayerMoney(int i) {
+        this.playerMoney = i;
+    }
+
+    public int getPlayerMoney() {
+        return this.playerMoney;
     }
 
     public void update(){
         updateEntities();
         spawnEnemies();
-
     }
 
     /**
@@ -67,34 +77,28 @@ public class Stage {
             int row = so.row;
             double delay = (so.delay * 1000000000.0)/Game.CURRENT_SPEED_FACTOR; // seconds to nanoseconds, and taking into account the in-game speed
 
-            System.out.println("SPAWNING AN ENEMY");
             switch(enemyType){
                 case WEAK -> {
                     Enemy e = enemyFactory.createWeakEnemy(row);
                     entities.add(e);
-                    System.out.println("Spawning weak enemy");
                 }
                 case POLYVALENT -> {
                     Enemy e = enemyFactory.createPolyvalentEnemy(row);
                     entities.add(e);
-                    System.out.println("Spawning polyvalent enemy");
                 }
                 case FAST -> {
                     Enemy e = enemyFactory.createFastEnemy(row);
                     entities.add(e);
-                    System.out.println("Spawning fast enemy");
                 }
                 case TANK -> {
                     Enemy e = enemyFactory.createTankEnemy(row);
                     entities.add(e);
-                    System.out.println("Spawning tank enemy");
                 }
                 default -> System.err.println("Wrong enemy type");
             }
 
             this.spawnDelay = delay;
             this.previousTimer = System.nanoTime();
-            System.out.println("DONE SPAWNING ONE ENEMY, GOING TO NEXT ONE");
         }
 
     }
@@ -105,7 +109,7 @@ public class Stage {
         gameBoard[1][0] = tower;
         tower = towerFactory.createAttackTower(2,3);
         gameBoard[2][0] = tower;
-        tower = towerFactory.createRecoveryTower(3,0);
+        tower = towerFactory.createMoneyTower(3,0);
         gameBoard[3][0] = tower;
         tower = towerFactory.createMultiTower(4,0);
         gameBoard[4][0] = tower;

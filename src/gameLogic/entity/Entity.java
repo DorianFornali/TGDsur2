@@ -1,5 +1,6 @@
 package gameLogic.entity;
 
+import gameLogic.Game;
 import gameView.panels.GameScreen;
 
 import java.awt.*;
@@ -32,6 +33,7 @@ public abstract class Entity {
 
     // Only for towers and enemies, not projectiles
     protected float firingRate;
+    protected double previousFiring; // Last system time the entity shot
 
     // Only for enemies and towers, not projectiles
     protected int maxHealth, health;
@@ -69,6 +71,7 @@ public abstract class Entity {
         updateSprite();
         updateHitbox();
     }
+
 
     private void updateHitbox() {
         int hitboxWidth = (int) hitbox.getWidth(), hitboxHeight = (int) hitbox.getHeight();
@@ -117,7 +120,8 @@ public abstract class Entity {
     }
 
     public void setFiringRate(int firingRate){
-        this.firingRate = firingRate;
+        // We convert the firing rate from shots per second to nanoseconds
+        this.firingRate = firingRate*1000000000f;
     }
 
     public void setDamage(int damage){

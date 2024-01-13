@@ -31,7 +31,6 @@ public class EnemyPool {
     public Enemy allocateEnemy(){
         for(int i = 0; i<size; i++){
             if(!pool[i].isUsed){
-                System.out.println("Allocating enemy, found one that is not used");
                 pool[i].initialize();
                 return pool[i];
             }

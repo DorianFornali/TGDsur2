@@ -22,7 +22,6 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            System.out.println("Allocated enemy");
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
             setSprites(e, "assets/sprites/enemies/weak.png", 8);
@@ -39,7 +38,6 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            System.out.println("Allocated enemy");
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
             setSprites(e, "assets/sprites/enemies/tank.png", 8);
@@ -56,7 +54,6 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            System.out.println("Allocated enemy");
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
             setSprites(e, "assets/sprites/enemies/fast.png", 8);
@@ -73,7 +70,6 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            System.out.println("Allocated enemy");
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
             setSprites(e, "assets/sprites/enemies/polyvalent.png", 8);

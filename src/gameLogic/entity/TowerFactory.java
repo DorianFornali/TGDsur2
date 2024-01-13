@@ -15,23 +15,25 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Defensive tower");
-        buildMainStats(tower, 400, 200, 0, 0, false, true, 100);
+        buildMainStats(tower, 400, 200, 0, 1, false, true, 100);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/defensive.png", 1);
         tower.setHitbox();
+        tower.setTowerType(TowerType.DEFENSIVE);
 
         return tower;
     }
 
-    // Tower that recover money (sunflower in PVZ)
-    public Tower createRecoveryTower(int row, int column) {
+    // Tower that generates money (sunflower in PVZ)
+    public Tower createMoneyTower(int row, int column) {
         Tower tower = new Tower();
 
-        System.out.println("Creating Recovery tower");
-        buildMainStats(tower, 50, 50, 25, 20, true, false, 50);
+        System.out.println("Creating Money tower");
+        buildMainStats(tower, 50, 50, 25, 3, true, false, 50);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/recovery.png", 1);
+        setSprites(tower, "assets/sprites/Tower/money.png", 1);
         tower.setHitbox();
+        tower.setTowerType(TowerType.MONEY);
 
         return tower;
     }
@@ -45,6 +47,7 @@ public class TowerFactory {
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/attack.png", 8);
         tower.setHitbox();
+        tower.setTowerType(TowerType.ATTACK);
 
         return tower;
     }
@@ -58,6 +61,7 @@ public class TowerFactory {
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/multi.png", 1);
         tower.setHitbox();
+        tower.setTowerType(TowerType.MULTI);
 
         return tower;
     }
@@ -71,6 +75,7 @@ public class TowerFactory {
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/global.png", 1);
         tower.setHitbox();
+        tower.setTowerType(TowerType.GLOBAL);
 
         return tower;
     }

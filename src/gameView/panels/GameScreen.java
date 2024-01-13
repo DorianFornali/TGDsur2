@@ -24,6 +24,8 @@ public class GameScreen extends JPanel {
     private JButton fastenButton;
     private ImageIcon[] fastenButtonSprites;
 
+    private JLabel playerMoneyLabel;
+
     public GameScreen(ViewController viewController) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
@@ -43,6 +45,12 @@ public class GameScreen extends JPanel {
         drawGameBoard(g);
         renderEntities(g);
         updateButtonIcon();
+        updatePlayerMoneyLabel(g);
+    }
+
+    private void updatePlayerMoneyLabel(Graphics g) {
+        int money = currentStage.getPlayerMoney();
+        playerMoneyLabel.setText("Money: " + money);
     }
 
     private void drawBackground(Graphics g) {
@@ -152,6 +160,7 @@ public class GameScreen extends JPanel {
     }
 
     private void initUI() {
+        // Initializing the fasten button
         fastenButtonSprites = new ImageIcon[]{
                 new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
                 new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
@@ -172,6 +181,14 @@ public class GameScreen extends JPanel {
             }
         });
         add(fastenButton);
+
+        // Intializing the player money label
+        playerMoneyLabel = new JLabel("TEST");
+        int labelSize = ViewController.WIDTH/10;
+        playerMoneyLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        playerMoneyLabel.setBounds(labelSize/10, labelSize/10, labelSize, labelSize/4);
+        playerMoneyLabel.setVisible(true);
+        add(playerMoneyLabel);
     }
 
     private void updateButtonIcon() {

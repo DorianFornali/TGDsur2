@@ -10,16 +10,64 @@ import java.awt.*;
 
 public class Tower extends Entity{
 
+    private Game game = Game.getInstance();
     private int health, maxHealth;
     private int damage;
-    private int firingRate;
     private boolean canShoot;
     private boolean canBlock;
     private int price;
+    private TowerType towerType;
 
+    /** Updates the tower, will call a function corresponding of the tower's type 
+     * We choose to do it that way instead of one class = one tower 
+     * */
     public void update(){
         super.update();
         // TODO! Make the tower shoot
+        switch(this.towerType){
+            case ATTACK:
+                updateAttackTower();
+                break;
+            case MULTI:
+                updateMultiTower();
+                break;
+            case GLOBAL:
+                updateGlobalTower();
+                break;
+            case DEFENSIVE:
+                updateDefensiveTower();
+                break;
+            case MONEY:
+                updateMoneyTower();
+                break;
+        }
+    }
+
+    /** The update function for the money tower */
+    private void updateMoneyTower() {
+        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            // The tower can "shoot", in this case it simply generates money
+            game.getCurrentStage().setPlayerMoney(game.getCurrentStage().getPlayerMoney() + 15);
+            //TODO! Do some visual effect to show the player that the tower generated money -> the GameScreen must do it
+            //TODO! send message to GameScreen
+            previousFiring = System.nanoTime();
+        }
+    }
+
+    private void updateDefensiveTower() {
+        //TODO!
+    }
+
+    private void updateGlobalTower() {
+        //TODO!
+    }
+
+    private void updateMultiTower() {
+        //TODO!
+    }
+
+    private void updateAttackTower() {
+        //TODO!
     }
 
     public boolean toRemove(){
@@ -41,6 +89,10 @@ public class Tower extends Entity{
 
     public void setPrice(int price){
         this.price = price;
+    }
+    
+    public void setTowerType(TowerType towerType){
+        this.towerType = towerType;
     }
 
 
