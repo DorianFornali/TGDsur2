@@ -1,5 +1,6 @@
 package gameLogic.entity;
 
+import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.panels.GameScreen;
 
@@ -10,8 +11,6 @@ import java.io.IOException;
 
 public class Projectile extends Entity{
 
-    private static BufferedImage spriteSheet;
-    private static final String spritePath = "assets/sprites/ui/fastenButton1.png";
     public boolean inTheWindow;
 
     public Projectile(){
@@ -22,15 +21,9 @@ public class Projectile extends Entity{
         this.inTheWindow = true;
     }
 
-    /** Initializes the spritesheet if necessary, the image shall be imported only the first time */
+    /** Initializes the spritesheet */
     private void initSpriteSheet() {
-        if(spriteSheet == null){
-            try{
-                spriteSheet = ImageIO.read(new File(spritePath));
-            } catch (IOException exception){
-                exception.printStackTrace();
-            }
-        }
+        spriteSheet = AssetManager.getInstance().getSprite("projectile");
     }
 
     public void update(){

@@ -1,5 +1,6 @@
 package gameLogic;
 
+import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.panels.MainScreen;
 import inputs.InputController;
@@ -38,6 +39,7 @@ public class Game implements Runnable, Observer {
         bindInputController();
         viewController.setCurrentPanel(new MainScreen(viewController));
         startGameLoop();
+        AssetManager.getInstance().loadAssets();
     }
 
     public static Game getInstance() {

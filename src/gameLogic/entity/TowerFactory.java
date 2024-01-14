@@ -1,6 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Stage;
+import gameView.AssetManager;
 import gameView.panels.GameScreen;
 
 import javax.imageio.ImageIO;
@@ -17,7 +18,7 @@ public class TowerFactory {
         System.out.println("Creating Defensive tower");
         buildMainStats(tower, 400, 200, 0, 1, 10,false, true, 100);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/defensive.png", 1);
+        setSprites(tower, "defensiveTower", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.DEFENSIVE);
         tower.setisAlive(true);
@@ -31,7 +32,7 @@ public class TowerFactory {
         System.out.println("Creating Money tower");
         buildMainStats(tower, 300, 300, 25, 3, 10,true, false, 50);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/money.png", 1);
+        setSprites(tower, "moneyTower", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.MONEY);
         tower.setisAlive(true);
@@ -45,7 +46,7 @@ public class TowerFactory {
         System.out.println("Creating Attack tower");
         buildMainStats(tower, 100, 100, 10, 1, 10,true, true, 100);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/attack.png", 8);
+        setSprites(tower, "attackTower", 8);
         tower.setHitbox();
         tower.setTowerType(TowerType.ATTACK);
         tower.setisAlive(true);
@@ -59,7 +60,7 @@ public class TowerFactory {
         System.out.println("Creating Multi tower");
         buildMainStats(tower, 150, 150, 10, 5, 10,true, true, 325);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/multi.png", 1);
+        setSprites(tower, "multiTower", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.MULTI);
         tower.setisAlive(true);
@@ -73,7 +74,7 @@ public class TowerFactory {
         System.out.println("Creating Global tower");
         buildMainStats(tower, 200, 200, 3, 5, 10,true, true, 500);
         setCoords(tower, row, column);
-        setSprites(tower, "assets/sprites/Tower/global.png", 1);
+        setSprites(tower, "globalTower", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.GLOBAL);
         tower.setisAlive(true);
@@ -101,14 +102,8 @@ public class TowerFactory {
         t.setY(GameScreen.rowToY(row));
     }
 
-    private void setSprites(Tower t, String path, int NSPRITES){
-        BufferedImage img = null;
-        try{
-            img = ImageIO.read(new File(path));
-        } catch (IOException exception){
-            exception.printStackTrace();
-        }
-
+    private void setSprites(Tower t, String type, int NSPRITES){
+        BufferedImage img = AssetManager.getInstance().getSprite(type);
         t.setSpriteSheet(img);
         t.setSpriteIndex(0);
         t.setNSPRITES(NSPRITES);

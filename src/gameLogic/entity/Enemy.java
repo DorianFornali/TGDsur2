@@ -44,12 +44,10 @@ public class Enemy extends Entity{
 
         if(getHealth() <= 0){
             // Enemy dies
-            System.out.println("Enemy died");
             reset();
         }
         else if(getHealth() <= getMaxHealth()/2){
             // Enemy is hurt
-            System.out.println("ENEMY HURT BADLY");
             // TODO! Change spritesheet for a more "damaged" one
         }
 

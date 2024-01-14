@@ -1,6 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Stage;
+import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.panels.GameScreen;
 
@@ -24,7 +25,7 @@ public class EnemyFactory {
         else{
             buildMainStats(e, 10, 100, 100, 100, 3);
             setCoords(e, row, 0);
-            setSprites(e, "assets/sprites/enemies/weak.png", 8);
+            setSprites(e, "weakEnemy", 8);
             e.setHitbox();
 
             return e;
@@ -40,7 +41,7 @@ public class EnemyFactory {
         else{
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
-            setSprites(e, "assets/sprites/enemies/tank.png", 8);
+            setSprites(e, "tankEnemy", 8);
             e.setHitbox();
 
             return e;
@@ -56,7 +57,7 @@ public class EnemyFactory {
         else{
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
-            setSprites(e, "assets/sprites/enemies/fast.png", 8);
+            setSprites(e, "fastEnemy", 8);
             e.setHitbox();
 
             return e;
@@ -72,7 +73,7 @@ public class EnemyFactory {
         else{
             buildMainStats(e, 10, 100, 100, 10, 10);
             setCoords(e, row, 0);
-            setSprites(e, "assets/sprites/enemies/polyvalent.png", 8);
+            setSprites(e, "polyvalentEnemy", 8);
             e.setHitbox();
 
             return e;
@@ -95,13 +96,8 @@ public class EnemyFactory {
         e.setY(GameScreen.rowToY(row));
     }
 
-    private void setSprites(Enemy e, String path, int NSPRITES){
-        BufferedImage img = null;
-        try{
-            img = ImageIO.read(new File(path));
-        } catch (IOException exception){
-            exception.printStackTrace();
-        }
+    private void setSprites(Entity e, String type, int NSPRITES){
+        BufferedImage img = AssetManager.getInstance().getSprite(type);
 
         e.setSpriteSheet(img);
         e.setSpriteIndex(0);
