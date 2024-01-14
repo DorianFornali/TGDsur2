@@ -5,12 +5,9 @@ import gameView.ViewController;
 import gameView.panels.MainScreen;
 import inputs.InputController;
 import observerPattern.GameEvent;
-import observerPattern.Observable;
 import observerPattern.Observer;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is responsible for the game's logic.

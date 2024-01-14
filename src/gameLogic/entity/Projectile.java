@@ -2,12 +2,7 @@ package gameLogic.entity;
 
 import gameView.AssetManager;
 import gameView.ViewController;
-import gameView.panels.GameScreen;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Projectile extends Entity{
 

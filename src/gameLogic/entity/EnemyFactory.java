@@ -5,10 +5,8 @@ import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.panels.GameScreen;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 
 /** Factory "creating" dynamically new enemies, will call the pool of object */
 public class EnemyFactory {

@@ -1,16 +1,8 @@
 package inputs;
 
-import gameLogic.Game;
 import gameView.ViewController;
-import observerPattern.GameEvent;
-import observerPattern.Observable;
-import observerPattern.Observer;
 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is responsible for handling all the inputs from the user.

@@ -1,6 +1,5 @@
 package gameLogic.entity;
 
-import gameLogic.Game;
 import gameView.panels.GameScreen;
 
 import java.awt.*;

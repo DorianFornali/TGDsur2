@@ -4,10 +4,8 @@ import gameLogic.Stage;
 import gameView.AssetManager;
 import gameView.panels.GameScreen;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 
 public class TowerFactory {
 

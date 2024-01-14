@@ -1,12 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Game;
-import gameLogic.Stage;
-import gameView.ViewController;
 import gameView.panels.GameScreen;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 
 public class Tower extends Entity{

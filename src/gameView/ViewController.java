@@ -1,8 +1,6 @@
 package gameView;
 
 import gameLogic.Game;
-import gameLogic.entity.Enemy;
-import gameLogic.entity.Entity;
 import gameView.panels.GameScreen;
 import gameView.panels.LevelSelectionScreen;
 import gameView.panels.MainScreen;

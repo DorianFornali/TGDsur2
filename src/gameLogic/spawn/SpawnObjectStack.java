@@ -1,7 +1,5 @@
 package gameLogic.spawn;
 
-import gameLogic.spawn.SpawnObject;
-
 import java.util.Stack;
 
 /** Very basic Stack class using built-in java stack containing SpawnObjects to facilitate the JSON -> Java object */

@@ -3,7 +3,8 @@ package gameLogic;
 import gameLogic.entity.*;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;

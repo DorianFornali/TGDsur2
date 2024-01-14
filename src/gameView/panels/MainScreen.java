@@ -1,6 +1,5 @@
 package gameView.panels;
 
-import gameLogic.Game;
 import gameView.ViewController;
 
 import javax.swing.*;

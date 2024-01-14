@@ -1,13 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Game;
-import gameLogic.Stage;
-import gameView.ViewController;
 import gameView.panels.GameScreen;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 public class Enemy extends Entity{
     // Whether the Enemy is being used by the pool of object or not

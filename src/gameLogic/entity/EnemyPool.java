@@ -1,7 +1,5 @@
 package gameLogic.entity;
 
-import gameLogic.Game;
-
 /** The singleton pool of objects for the game's enemies */
 public class EnemyPool {
     private static EnemyPool poolInstance;

@@ -4,7 +4,6 @@ import gameLogic.Game;
 import gameLogic.Stage;
 import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
-import gameLogic.entity.Entity;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameView.ViewController;
