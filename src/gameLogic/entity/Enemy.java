@@ -41,11 +41,12 @@ public class Enemy extends Entity{
         }
         else if(health <= maxHealth/2){
             // Enemy is hurt
+            System.out.println("ENEMY HURT BADLY");
             // TODO! Change spritesheet for a more "damaged" one
         }
 
         // Moving the enemy from right to left
-        setX(getX() - (float) getSpeed() /10);
+        setX(getX() - getSpeed() /10);
 
         if(hitbox.x < 0){
             health = -1;
@@ -80,4 +81,7 @@ public class Enemy extends Entity{
         super.setHitbox(10000, 10000, hitboxWidth, hitboxHeight);
     }
 
+    public int getHealth() {
+        return health;
+    }
 }

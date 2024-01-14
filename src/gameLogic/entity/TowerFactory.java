@@ -43,7 +43,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Attack tower");
-        buildMainStats(tower, 100, 100, 10, 2, 10,true, true, 100);
+        buildMainStats(tower, 100, 100, 10, 1, 10,true, true, 100);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/attack.png", 8);
         tower.setHitbox();

@@ -64,6 +64,7 @@ public class Stage {
     public void update(){
         updateEntities();
         spawnEnemies();
+        checkCollisions();
     }
 
     /**
@@ -210,6 +211,32 @@ public class Stage {
         for(Projectile p : projectilesToRemove) {
             projectilesAlive.remove(p);
         }
+    }
+
+    private void checkCollisions(){
+        checkCollisionsProjectilesEnemies();
+        checkCollisionsEnemiesTowers();
+    }
+
+    /** Will check for every projectile alive if it's inside the hitbox of any alive enemy */
+    private void checkCollisionsEnemiesTowers() {
+        for(Projectile p : projectilesAlive){
+            if(p != null && p.inTheWindow) {
+                for (Enemy e : enemiesAlive) {
+                    if (e != null && e.isUsed) {
+                        if (p.getHitbox().intersects(e.getHitbox())) {
+                            // Collision between projectile and enemy
+                            e.setHealth(e.getHealth() - p.getDamage());
+                            p.inTheWindow = false;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void checkCollisionsProjectilesEnemies() {
     }
 
 }

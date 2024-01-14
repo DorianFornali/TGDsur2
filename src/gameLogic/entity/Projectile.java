@@ -36,10 +36,13 @@ public class Projectile extends Entity{
     public void update(){
         super.update();
         setX(getX() + getSpeed());
+
+        if(hitbox.x > ViewController.WIDTH)
+            inTheWindow = false;
     }
 
     public boolean toRemove(){
-        return getX() > ViewController.WIDTH;
+        return !inTheWindow;
     }
 
 }
