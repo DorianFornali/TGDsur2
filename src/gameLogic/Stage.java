@@ -112,8 +112,8 @@ public class Stage {
         gameBoard[1][0] = tower;
         tower = towerFactory.createAttackTower(2,3);
         gameBoard[2][0] = tower;
-        tower = towerFactory.createMoneyTower(3,0);
-        gameBoard[3][0] = tower;
+        tower = towerFactory.createMoneyTower(3,4);
+        gameBoard[3][4] = tower;
         tower = towerFactory.createMultiTower(4,0);
         gameBoard[4][0] = tower;
         tower = towerFactory.createGlobalTower(7,7);
@@ -191,7 +191,12 @@ public class Stage {
         for(int i = 0; i<nrows; i++){
             for(int j = 0; j<mcols; j++){
                 if(gameBoard[i][j] != null){
-                    gameBoard[i][j].update();
+                    if(!gameBoard[i][j].isAlive()){
+                        gameBoard[i][j] = null;
+                    }
+                    else{
+                        gameBoard[i][j].update();
+                    }
                 }
             }
         }
@@ -203,7 +208,6 @@ public class Stage {
                 if(p.toRemove()){
                     // We need to remove the projectile from the list of entities outside the loop
                     projectilesToRemove.add(p);
-                    System.out.println("Projectile removed");
                 }
                 p.update();
             }
@@ -219,7 +223,7 @@ public class Stage {
     }
 
     /** Will check for every projectile alive if it's inside the hitbox of any alive enemy */
-    private void checkCollisionsEnemiesTowers() {
+    private void checkCollisionsProjectilesEnemies() {
         for(Projectile p : projectilesAlive){
             if(p != null && p.inTheWindow) {
                 for (Enemy e : enemiesAlive) {
@@ -236,7 +240,23 @@ public class Stage {
 
     }
 
-    private void checkCollisionsProjectilesEnemies() {
+    /** Will check for every enemy alive if it's inside the hitbox of any tower */
+    private void checkCollisionsEnemiesTowers() {
+        for(Enemy e : enemiesAlive){
+            if(e != null && e.isUsed) {
+                for (int i = 0; i < nrows; i++) {
+                    for (int j = 0; j < mcols; j++) {
+                        if (gameBoard[i][j] != null) {
+                            if (e.getHitbox().intersects(gameBoard[i][j].getHitbox())) {
+                                // Collision between enemy and tower
+                                e.setAttacking(true);
+                                e.setTarget(gameBoard[i][j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -91,7 +91,7 @@ public class GameScreen extends JPanel {
     private void renderTowers(Graphics g) {
         for(Tower[] rowOfTower : currentStage.gameBoard) {
             for (Tower tower : rowOfTower) {
-                if (tower != null) {
+                if (tower != null && tower.isAlive()) {
                     BufferedImage img = tower.getSprite();
                     int drawingX = (int) tower.getX();
                     int drawingY = (int) tower.getY();

@@ -12,12 +12,13 @@ import java.awt.image.BufferedImage;
 public class Tower extends Entity{
 
     private Game game = Game.getInstance();
-    private int health, maxHealth;
     private int damage;
     private boolean canShoot;
     private boolean canBlock;
     private int price;
     private TowerType towerType;
+
+    private boolean isAlive;
 
 
     /** Updates the tower, will call a function corresponding of the tower's type 
@@ -25,7 +26,18 @@ public class Tower extends Entity{
      * */
     public void update(){
         super.update();
-        // TODO! Make the tower shoot
+
+        if(getHealth() <= 0){
+            // Tower dies
+            System.out.println("Tower died");
+            setisAlive(false);
+        }
+
+        else if(getHealth() <= getMaxHealth()/2){
+            // Tower is hurt
+            // TODO! Change spritesheet for a more "damaged" one
+        }
+
         switch(this.towerType){
             case ATTACK:
                 updateAttackTower();
@@ -75,11 +87,6 @@ public class Tower extends Entity{
         }
     }
 
-    public void takeDamage(int damage){
-        health -= damage;
-    }
-
-
     public void setCanShoot(boolean canShoot){
         this.canShoot = canShoot;
     }
@@ -94,6 +101,14 @@ public class Tower extends Entity{
     
     public void setTowerType(TowerType towerType){
         this.towerType = towerType;
+    }
+
+    public void setisAlive(boolean isAlive) {
+    	this.isAlive = isAlive;
+    }
+
+    public boolean isAlive() {
+    	return this.isAlive;
     }
 
 

@@ -16,7 +16,11 @@ public class Enemy extends Entity{
     // Enemy's index in the pool of object
     public int index;
 
-    private int health, maxHealth;
+    // Whether the enemy is attacking or not a tower
+    private boolean isAttacking;
+
+    // The tower the enemy is attacking
+    private Tower target;
 
     public Enemy(int index){
         this.index = index;
@@ -34,41 +38,58 @@ public class Enemy extends Entity{
         if(!isUsed) return;
         super.update();
 
-        if(health <= 0){
+        updateTargetState();
+
+        attack();
+
+        if(getHealth() <= 0){
             // Enemy dies
             System.out.println("Enemy died");
             reset();
         }
-        else if(health <= maxHealth/2){
+        else if(getHealth() <= getMaxHealth()/2){
             // Enemy is hurt
             System.out.println("ENEMY HURT BADLY");
             // TODO! Change spritesheet for a more "damaged" one
         }
 
         // Moving the enemy from right to left
-        setX(getX() - getSpeed() /10);
+        if(!isAttacking)
+            setX(getX() - getSpeed() /10);
 
         if(hitbox.x < 0){
-            health = -1;
+            setHealth(-1);
             Game.getInstance().getCurrentStage().playerHealth--;
         }
 
+    }
+
+    /** Checks if the current target is dead or not */
+    private void updateTargetState() {
+        if(target != null && !target.isAlive()){
+            // The target is dead, the enemy can move again
+            target = null;
+            isAttacking = false;
+        }
+    }
+
+
+    /** Attack function with firingRate as delay */
+    private void attack() {
+        if(!isAttacking || target == null) return;
+        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            // The enemy can "shoot", in this case it simply attacks the tower
+            target.setHealth(target.getHealth() - damage);
+            previousFiring = System.nanoTime();
+        }
     }
 
     public void initialize(){
         this.isUsed = true;
     }
 
-    public void setHealth(int i) {
-        this.health = i;
-    }
-
-    public void setMaxHealth(int i) {
-        this.maxHealth = i;
-    }
-
     public boolean toRemove() {
-    	return health <= 0 || hitbox.x < 0;
+    	return getHealth() <= 0 || hitbox.x < 0;
     }
 
     public void setHitbox() {
@@ -81,7 +102,15 @@ public class Enemy extends Entity{
         super.setHitbox(10000, 10000, hitboxWidth, hitboxHeight);
     }
 
-    public int getHealth() {
-        return health;
+    public void setTarget(Tower target) {
+    	this.target = target;
+    }
+
+    public void setAttacking(boolean isAttacking) {
+    	this.isAttacking = isAttacking;
+    }
+
+    public boolean isAttacking() {
+    	return isAttacking;
     }
 }

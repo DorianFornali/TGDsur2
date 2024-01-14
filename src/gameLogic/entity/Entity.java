@@ -31,12 +31,13 @@ public abstract class Entity {
 
     protected int damage;
 
-    // Only for towers and enemies, not projectiles
+    // Only for towers and enemies, not projectiles, the firing rate is the delay between two shots
+    // So its actually the inverse of the firing rate but we call it firingRate here
     protected float firingRate;
     protected double previousFiring; // Last system time the entity shot
 
     // Only for enemies and towers, not projectiles
-    protected int maxHealth, health;
+    private int maxHealth, health;
     private float speed; // Only for enemies and projectiles
 
     public float getX(){
@@ -137,7 +138,9 @@ public abstract class Entity {
         this.maxHealth = maxHealth;
     }
 
-
+    public int getMaxHealth() {
+    	return maxHealth;
+    }
     public void setHealth(int health){
         this.health = health;
     }
@@ -149,5 +152,9 @@ public abstract class Entity {
 
     public float getSpeed() {
     	return speed;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

@@ -20,7 +20,7 @@ public class TowerFactory {
         setSprites(tower, "assets/sprites/Tower/defensive.png", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.DEFENSIVE);
-
+        tower.setisAlive(true);
         return tower;
     }
 
@@ -29,12 +29,12 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Money tower");
-        buildMainStats(tower, 50, 50, 25, 3, 10,true, false, 50);
+        buildMainStats(tower, 300, 300, 25, 3, 10,true, false, 50);
         setCoords(tower, row, column);
         setSprites(tower, "assets/sprites/Tower/money.png", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.MONEY);
-
+        tower.setisAlive(true);
         return tower;
     }
 
@@ -48,7 +48,7 @@ public class TowerFactory {
         setSprites(tower, "assets/sprites/Tower/attack.png", 8);
         tower.setHitbox();
         tower.setTowerType(TowerType.ATTACK);
-
+        tower.setisAlive(true);
         return tower;
     }
 
@@ -62,11 +62,11 @@ public class TowerFactory {
         setSprites(tower, "assets/sprites/Tower/multi.png", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.MULTI);
-
+        tower.setisAlive(true);
         return tower;
     }
 
-    //Tower that can attack every enemy on the map at the same time
+    // Tower that can attack every enemy on the map at the same time
     public Tower createGlobalTower(int row, int column){
         Tower tower = new Tower();
 
@@ -76,7 +76,7 @@ public class TowerFactory {
         setSprites(tower, "assets/sprites/Tower/global.png", 1);
         tower.setHitbox();
         tower.setTowerType(TowerType.GLOBAL);
-
+        tower.setisAlive(true);
         return tower;
     }
 
