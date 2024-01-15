@@ -1,11 +1,9 @@
 package gameLogic.entity;
 
-import gameLogic.Game;
-
 /** The singleton pool of objects for the game's enemies */
 public class EnemyPool {
     private static EnemyPool poolInstance;
-    private static final int poolSize = 100;
+    private static final int poolSize = 150;
     public int size;
     private Enemy[] pool;
     public EnemyPool(int n){
@@ -40,7 +38,6 @@ public class EnemyPool {
 
     public void freeSpace(int index){
         // We reset the enemy so it can be reused later
-        pool[index].isUsed = false;
         pool[index].reset();
     }
 

@@ -1,12 +1,9 @@
 package inputs;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.SwingUtilities;
 public class MouseController implements MouseListener, MouseMotionListener{
     @Override
     public void mouseClicked(MouseEvent e) {

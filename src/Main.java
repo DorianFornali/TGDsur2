@@ -1,6 +1,4 @@
 import gameLogic.Game;
-import gameView.ViewController;
-import inputs.InputController;
 
 import javax.swing.*;
 

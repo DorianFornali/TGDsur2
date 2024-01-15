@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LevelSelectionScreen extends JPanel{
     private ViewController viewController;
@@ -22,7 +23,11 @@ public class LevelSelectionScreen extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Changing screen");
-                viewController.setCurrentPanel(new GameScreen(viewController));
+                try {
+                    viewController.setCurrentPanel(new GameScreen(viewController));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         add(level1);
@@ -33,4 +38,13 @@ public class LevelSelectionScreen extends JPanel{
         g.setColor(Color.RED);
     }
 
+    public void displayPauseMenu() {
+        // We display a small menu using a dialog object from Swing
+        String[] options = {"No", "Yes"};
+        int choice = JOptionPane.showOptionDialog(this, "Back to main screen ?", "Esc", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 1){
+            // We quit the game
+            viewController.setCurrentPanel(new MainScreen(viewController));
+        }
+    }
 }
