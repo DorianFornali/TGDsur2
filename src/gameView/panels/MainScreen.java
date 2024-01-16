@@ -1,6 +1,7 @@
 package gameView.panels;
 
 import gameView.ViewController;
+import gameView.customButtons.TowerDragButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class MainScreen extends JPanel {
     private ViewController viewController;
+    TowerDragButton t;
     public MainScreen(ViewController viewController) {
         this.viewController = viewController;
         setLayout(null);
@@ -28,12 +30,15 @@ public class MainScreen extends JPanel {
         });
         add(button);
 
+        t = new TowerDragButton(100, 100, 100, 100);
+        add(t.getDragButton());
+
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.RED);
-
+        g.drawImage(t.getBackground(), t.getBackgroundX(), t.getBackgroundY(), t.getBackgroundWidth(), t.getBackgroundHeight(), null);
     }
 
     public void displayPauseMenu() {
