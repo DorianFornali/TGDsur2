@@ -42,6 +42,9 @@ public class Stage implements Observable {
     // To calculate whether we passed the delay
     private double previousTimer;
 
+    private double moneyGenerationDelay;
+    private double previousMoneyGenerationTimer;
+
     public int playerMoney;
 
     private List<Observer> observers = new ArrayList<>();
@@ -59,6 +62,8 @@ public class Stage implements Observable {
         this.playerHealth = 5;
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
+        this.previousMoneyGenerationTimer = System.nanoTime();
+        this.moneyGenerationDelay = (5f/Game.CURRENT_SPEED_FACTOR) * 1000000000.0;;
         setPlayerMoney(100);
         addObserver(viewController);
     }
@@ -75,6 +80,17 @@ public class Stage implements Observable {
         updateEntities();
         spawnEnemies();
         checkCollisions();
+        generateMoney();
+    }
+
+    /** Natural money generation, not via money tower */
+    private void generateMoney() {
+        if(System.nanoTime() - previousMoneyGenerationTimer >= moneyGenerationDelay/Game.CURRENT_SPEED_FACTOR){
+            // Delay has passed, we can generate money
+            System.out.println("Generating money");
+            this.playerMoney += 25;
+            this.previousMoneyGenerationTimer = System.nanoTime();
+        }
     }
 
     /**
