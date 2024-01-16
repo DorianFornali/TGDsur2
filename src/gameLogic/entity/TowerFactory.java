@@ -56,7 +56,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Multi tower");
-        buildMainStats(tower, 150, 150, 10, 5, 10,true, true, 325);
+        buildMainStats(tower, 150, 150, 10, 5, 10,true, true, 5);
         setCoords(tower, row, column);
         setSprites(tower, "multiTower", 1);
         tower.setHitbox();
@@ -70,7 +70,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Global tower");
-        buildMainStats(tower, 200, 200, 3, 5, 10,true, true, 500);
+        buildMainStats(tower, 200, 200, 50, 5, 10,true, true, 5);
         setCoords(tower, row, column);
         setSprites(tower, "globalTower", 1);
         tower.setHitbox();

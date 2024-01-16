@@ -1,6 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Game;
+import gameLogic.Stage;
 import gameView.panels.GameScreen;
 
 
@@ -64,20 +65,47 @@ public class Tower extends Entity{
     }
 
     private void updateDefensiveTower() {
-        //TODO!
+        //Do nothing, just protect the player
     }
 
     private void updateGlobalTower() {
-        //TODO!
+        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            // The tower can "shoot", in this case it simply attacks every enemy on the map
+            for(Enemy e : game.getCurrentStage().enemiesAlive){
+                e.setHealth(e.getHealth() - getDamage());
+            }
+            previousFiring = System.nanoTime();
+        }
     }
 
     private void updateMultiTower() {
-        //TODO!
+        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            shootProjectile(0);
+            int row = Stage.getRowFromY((int)getY());
+            switch (row){
+                case (0):
+                    System.out.println("tout en haut");
+                    shootProjectile(0);
+                    shootProjectile(1);
+                    break;
+                case (6):
+                    System.out.println("tout en bas");
+                    shootProjectile(0);
+                    shootProjectile(-1);
+                    break;
+                default:
+                    shootProjectile(0);
+                    shootProjectile(1);
+                    shootProjectile(-1);
+                    break;
+            }
+            previousFiring = System.nanoTime();
+        }
     }
 
     private void updateAttackTower() {
         if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
-            shootProjectile();
+            shootProjectile(0);
             previousFiring = System.nanoTime();
         }
     }
@@ -116,10 +144,11 @@ public class Tower extends Entity{
     }
 
     /** Creates a projectile at the tower location */
-    private void shootProjectile(){
+    private void shootProjectile(int rowOffSet){
+        int YOffSet = rowOffSet * GameScreen.calculateCellHeight();
         Projectile p = new Projectile();
         p.setX(getX() + (float) getHitbox().getWidth() /2);
-        p.setY((float) (getY() + getHitbox().getHeight()/2));
+        p.setY((float) (getY() + getHitbox().getHeight()/2) + YOffSet);
         p.setHitbox(-500, -500, GameScreen.calculateCellWidth()/4, GameScreen.calculateCellHeight()/4);
         p.setSpeed(getSpeed());
         p.setDamage(getDamage());

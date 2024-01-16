@@ -149,13 +149,13 @@ public class Stage implements Observable {
                 this.gameBoard[row][column] = towerFactory.createMoneyTower(row, column);
             }
             case MULTI -> {
-                int TOWER_MULTI_PRICE = 325;
+                int TOWER_MULTI_PRICE = 5;
                 if(this.playerMoney < TOWER_MULTI_PRICE) return;
                 this.playerMoney -= TOWER_MULTI_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMultiTower(row, column);
             }
             case GLOBAL -> {
-                int TOWER_GLOBAL_PRICE = 500;
+                int TOWER_GLOBAL_PRICE = 5;
                 if(this.playerMoney < TOWER_GLOBAL_PRICE) return;
                 this.playerMoney -= TOWER_GLOBAL_PRICE;
                 this.gameBoard[row][column] = towerFactory.createGlobalTower(row, column);
@@ -326,7 +326,7 @@ public class Stage implements Observable {
         GameEvent event = new GameEvent(eventType, eventData);
         notifyObservers(event);
     }
-    private int getRowFromY(int y){
+    public static int getRowFromY(int y){
         return ((int) (y / ((ViewController.HEIGHT*0.85) / nrows)))-1;
     }
 

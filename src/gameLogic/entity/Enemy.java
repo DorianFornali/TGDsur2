@@ -61,7 +61,6 @@ public class Enemy extends Entity{
                 stage.generateEvent("GAME_OVER", null);
             }
         }
-
     }
 
     /** Checks if the current target is dead or not */
