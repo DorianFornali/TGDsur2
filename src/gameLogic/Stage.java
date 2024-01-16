@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import observerPattern.Observable;
 import observerPattern.Observer;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,7 +50,6 @@ public class Stage implements Observable {
 
 
     public Stage(StageNumero stageNumero, ViewController viewController) throws IOException {
-        Stage.stageInstance = this;
         this.gameBoard = new Tower[nrows][mcols];
         this.stageNumero = stageNumero;
         enemiesAlive = new ArrayList<Enemy>();
@@ -60,7 +60,6 @@ public class Stage implements Observable {
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
         setPlayerMoney(100);
-        spawnTower();
         addObserver(viewController);
     }
 
