@@ -3,9 +3,11 @@ package gameLogic;
 import gameLogic.entity.*;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
+import gameView.ViewController;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +53,6 @@ public class Stage {
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
         setPlayerMoney(100);
-        spawnTower();
     }
 
     public void setPlayerMoney(int i) {
@@ -107,20 +108,14 @@ public class Stage {
 
     }
 
-    //temporary, just for testing
-    private void spawnTower(){
-        Tower tower = towerFactory.createDefensiveTower(0,0);
-        gameBoard[1][0] = tower;
-        tower = towerFactory.createAttackTower(2,3);
-        gameBoard[2][0] = tower;
-        tower = towerFactory.createMoneyTower(3,4);
-        gameBoard[3][4] = tower;
-        tower = towerFactory.createMultiTower(4,0);
-        gameBoard[4][0] = tower;
-        tower = towerFactory.createGlobalTower(7,7);
-        gameBoard[5][0] = tower;
-
-        System.out.println("Spawning towers");
+    /** Occurs when Game receives message from ViewController, means the user tries to place a turret*/
+    public void spawnTower(Object eventData){
+        Point location = (Point) eventData;
+        int locationX = location.x;
+        int locationY = location.y;
+        System.out.println("spawning turret at row " + getRowFromY(locationY) + " and column " + getColumnFromX(locationX) + "");
+        //TODO! convert x y to real x y coordinates
+        //TODO! spawn a turret there
     }
 
     /**
@@ -258,6 +253,14 @@ public class Stage {
                 }
             }
         }
+    }
+
+    private int getRowFromY(int y){
+        return ((int) (y / ((ViewController.HEIGHT*0.85) / nrows)))-1;
+    }
+
+    private int getColumnFromX(int x){
+        return x / (ViewController.WIDTH / mcols);
     }
 
 }

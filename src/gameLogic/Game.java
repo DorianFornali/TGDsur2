@@ -172,6 +172,11 @@ public class Game implements Runnable, Observer {
             case "FASTEN":
                 fastenTheGame();
                 break;
+            case "TOWER_PLACEMENT":
+                // We receive a message from the ViewController that the user wants to place a tower
+                // We will transmit these information to the currentStage that will react accordingly
+                System.out.println("Tower placement event received");
+                currentStage.spawnTower(event.getEventData());
             default:
                 break;
         }

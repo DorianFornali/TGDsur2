@@ -6,7 +6,9 @@ import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
+import gameLogic.entity.TowerType;
 import gameView.ViewController;
+import gameView.customButtons.TowerDragButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameScreen extends JPanel {
@@ -25,6 +29,8 @@ public class GameScreen extends JPanel {
     private ImageIcon[] fastenButtonSprites;
 
     private JLabel playerMoneyLabel;
+
+    private List<TowerDragButton> towerButtons;
 
     public GameScreen(ViewController viewController) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
@@ -43,12 +49,13 @@ public class GameScreen extends JPanel {
         drawBackground(g);
         drawTowerHUD(g);
         drawGameBoard(g);
+        drawTowerButton(g);
         renderEntities(g);
         updateButtonIcon();
-        updatePlayerMoneyLabel(g);
+        updatePlayerMoneyLabel();
     }
 
-    private void updatePlayerMoneyLabel(Graphics g) {
+    private void updatePlayerMoneyLabel() {
         int money = currentStage.getPlayerMoney();
         playerMoneyLabel.setText("Money: " + money);
     }
@@ -57,6 +64,12 @@ public class GameScreen extends JPanel {
         // For the moment a simple gray background
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, ViewController.WIDTH, ViewController.HEIGHT);
+    }
+
+    private void drawTowerButton(Graphics g){
+        for(TowerDragButton t : towerButtons){
+            g.drawImage(t.getBackground(), t.getBackgroundX(), t.getBackgroundY(), t.getBackgroundWidth(), t.getBackgroundHeight(), null);
+        }
     }
 
 
@@ -202,6 +215,21 @@ public class GameScreen extends JPanel {
         playerMoneyLabel.setBounds(labelSize/10, labelSize/10, labelSize, labelSize/4);
         playerMoneyLabel.setVisible(true);
         add(playerMoneyLabel);
+
+        initTowerButtons();
+    }
+
+    private void initTowerButtons() {
+        this.towerButtons = new ArrayList<>();
+        int squareSize = ViewController.WIDTH/10;
+        int offset = 0;
+        for(TowerType t: TowerType.values()){
+            TowerDragButton towerDragButton = new TowerDragButton(offset, (int) ((ViewController.HEIGHT)*0.04f),
+                    squareSize, squareSize, viewController, t);
+            towerButtons.add(towerDragButton);
+            add(towerDragButton.getDragButton());
+            offset += ViewController.WIDTH/10;
+        }
     }
 
     private void updateButtonIcon() {

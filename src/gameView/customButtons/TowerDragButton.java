@@ -1,6 +1,8 @@
 package gameView.customButtons;
 
+import gameLogic.entity.TowerType;
 import gameView.AssetManager;
+import gameView.ViewController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +20,12 @@ public class TowerDragButton {
     private int backgroundWidth, backgroundHeight;
     private int buttonWidth, buttonHeight;
 
+    private ViewController vc;
+
     private JButton dragButton;
     private BufferedImage background;
 
-    public TowerDragButton(int x, int y, int width, int height){
+    public TowerDragButton(int x, int y, int width, int height, ViewController vc, TowerType type){
         this.backgroundX = x;
         this.backgroundY = y;
         this.buttonX = x + width/8;
@@ -31,6 +35,7 @@ public class TowerDragButton {
         this.buttonWidth = (int) (width*0.6);
         this.buttonHeight = (int) (height*0.6);
         this.background = AssetManager.getInstance().getSprite("fastenButton1");
+        this.vc = vc;
         initButton();
     }
 
@@ -67,6 +72,7 @@ public class TowerDragButton {
                 Point newLocation = button.getLocation();
                 newLocation.translate(e.getX() - offset.x, e.getY() - offset.y);
                 button.setLocation(newLocation);
+
             }
 
         });
@@ -79,7 +85,7 @@ public class TowerDragButton {
                 // And relocate the button to its original spot
                 Point finalLocation = button.getLocation();
                 button.setLocation(buttonX, buttonY);
-                ;
+                vc.generateEvent("TOWER_PLACEMENT", finalLocation);
             }
         });
     }
