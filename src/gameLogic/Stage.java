@@ -149,13 +149,13 @@ public class Stage implements Observable {
                 this.gameBoard[row][column] = towerFactory.createMoneyTower(row, column);
             }
             case MULTI -> {
-                int TOWER_MULTI_PRICE = 5;
+                int TOWER_MULTI_PRICE = 325;
                 if(this.playerMoney < TOWER_MULTI_PRICE) return;
                 this.playerMoney -= TOWER_MULTI_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMultiTower(row, column);
             }
             case GLOBAL -> {
-                int TOWER_GLOBAL_PRICE = 5;
+                int TOWER_GLOBAL_PRICE = 500;
                 if(this.playerMoney < TOWER_GLOBAL_PRICE) return;
                 this.playerMoney -= TOWER_GLOBAL_PRICE;
                 this.gameBoard[row][column] = towerFactory.createGlobalTower(row, column);
