@@ -16,6 +16,7 @@ public class Enemy extends Entity{
 
     // The tower the enemy is attacking
     private Tower target;
+    private boolean canHurtPlayer = true;
 
     public Enemy(int index){
         this.index = index;
@@ -50,13 +51,14 @@ public class Enemy extends Entity{
         if(!isAttacking)
             setX(getX() - getSpeed() /10);
 
-        if(hitbox.x < 0){
+        if(hitbox.x < 0 && canHurtPlayer){
+            this.canHurtPlayer = false;
+            System.out.println("Enemy reached the end of the screen, removing one hp to player");
             setHealth(-1);
             Stage stage = Game.getInstance().getCurrentStage();
             stage.playerHealth--;
             if (stage.playerHealth <=0 && Game.IN_GAME){
                 stage.generateEvent("GAME_OVER", null);
-
             }
         }
 
