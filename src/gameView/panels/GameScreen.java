@@ -221,10 +221,10 @@ public class GameScreen extends JPanel {
 
     private void initTowerButtons() {
         this.towerButtons = new ArrayList<>();
-        int squareSize = ViewController.WIDTH/10;
-        int offset = 0;
+        int squareSize = ViewController.WIDTH/15;
+        int offset = (int) (ViewController.WIDTH*0.01f);
         for(TowerType t: TowerType.values()){
-            TowerDragButton towerDragButton = new TowerDragButton(offset, (int) ((ViewController.HEIGHT)*0.04f),
+            TowerDragButton towerDragButton = new TowerDragButton(offset, (int) ((ViewController.HEIGHT)*0.05f),
                     squareSize, squareSize, viewController, t);
             towerButtons.add(towerDragButton);
             add(towerDragButton.getDragButton());

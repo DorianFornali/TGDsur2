@@ -35,7 +35,7 @@ public class TowerDragButton {
         this.backgroundHeight= height;
         this.buttonWidth = (int) (width*0.6);
         this.buttonHeight = (int) (height*0.6);
-        this.background = AssetManager.getInstance().getSprite("fastenButton1");
+        this.background = AssetManager.getInstance().getSprite("tower_DragButton_background");
         this.vc = vc;
         this.type = type;
         initButton();
@@ -49,10 +49,42 @@ public class TowerDragButton {
         return background;
     }
 
-    public void initButton(){
+    public void initButton() {
         dragButton = new JButton();
+        BufferedImage img = null;
+        ImageIcon icon = null;
+
+        switch (type) {
+            case ATTACK:
+                img = AssetManager.getInstance().getSprite("attackTowerIcon");
+                icon = new ImageIcon(img.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT));
+                break;
+
+            case DEFENSIVE:
+                img = AssetManager.getInstance().getSprite("defensiveTowerIcon");
+                icon = new ImageIcon(img.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT));
+                break;
+
+            case MONEY:
+                img = AssetManager.getInstance().getSprite("moneyTowerIcon");
+                icon = new ImageIcon(img.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT));
+                break;
+
+            case MULTI:
+                img = AssetManager.getInstance().getSprite("multiTowerIcon");
+                icon = new ImageIcon(img.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT));
+                break;
+
+            case GLOBAL:
+                img = AssetManager.getInstance().getSprite("globalTowerIcon");
+                icon = new ImageIcon(img.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT));
+                break;
+        }
+
+        dragButton.setIcon(icon);
         dragButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
         dragButton.setFocusable(false);
+        dragButton.setLayout(null);
         associateMouseAdapter(dragButton);
     }
 

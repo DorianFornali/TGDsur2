@@ -30,6 +30,7 @@ public class AssetManager {
         loadEnemiesSprites(img);
         loadTowersSprites(img);
         loadProjectilesSprites(img);
+        loadDragButtonAssets(img);
     }
 
     private void loadProjectilesSprites(BufferedImage img) {
@@ -82,6 +83,26 @@ public class AssetManager {
             assets.put("fastenButton2", img);
             img = ImageIO.read(new File("assets/sprites/ui/fastenButton3.png"));
             assets.put("fastenButton3", img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadDragButtonAssets(BufferedImage img) {
+        try {
+            img = ImageIO.read(new File("assets/sprites/tower_DragButton_background.png"));
+            assets.put("tower_DragButton_background", img);
+            img = ImageIO.read(new File("assets/sprites/towers/icons/attackTowerIcon.png"));
+            assets.put("attackTowerIcon", img);
+            img = ImageIO.read(new File("assets/sprites/towers/icons/defensiveTowerIcon.png"));
+            assets.put("defensiveTowerIcon", img);
+            img = ImageIO.read(new File("assets/sprites/towers/icons/moneyTowerIcon.png"));
+            assets.put("moneyTowerIcon", img);
+            img = ImageIO.read(new File("assets/sprites/towers/icons/multiTowerIcon.png"));
+            assets.put("multiTowerIcon", img);
+            img = ImageIO.read(new File("assets/sprites/towers/icons/globalTowerIcon.png"));
+            assets.put("globalTowerIcon", img);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
