@@ -89,13 +89,14 @@ public class GameScreen extends JPanel {
                 int drawingY = (int) hitbox.getY();
                 g.drawImage(img, drawingX, drawingY, hitbox.width, hitbox.height, null);
 
-                // Drawing the hitbox for debug purposes
+                /*
                 g.setColor(Color.RED);
                 g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                // debug, drawing image delimitations
-                //g.setColor(Color.BLUE);
-                //g.drawRect(drawingX, drawingY, hitbox.width, hitbox.height);
+                g.setColor(Color.BLUE);
+                g.drawRect(drawingX, drawingY, hitbox.width, hitbox.height);
+
+                 */
             }
         }
     }
@@ -109,14 +110,15 @@ public class GameScreen extends JPanel {
                     int drawingY = (int) tower.getY();
                     g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                    // Drawing the hitbox for debug purposes
+                    /*
                     g.setColor(Color.RED);
                     Rectangle hitbox = tower.getHitbox();
                     g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                    // debug, drawing image delimitations
-                    //g.setColor(Color.BLUE);
-                    //g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
+                    g.setColor(Color.BLUE);
+                    g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
+
+                     */
                 }
             }
         }
@@ -130,14 +132,15 @@ public class GameScreen extends JPanel {
                 int drawingY = (int) enemy.getY();
                 g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                // Drawing the hitbox for debug purposes
+                /*
                 g.setColor(Color.RED);
                 Rectangle hitbox = enemy.getHitbox();
                 g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                // debug, drawing image delimitations
-                //g.setColor(Color.BLUE);
-                //g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
+                g.setColor(Color.BLUE);
+                g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
+
+                 */
             }
         }
     }
@@ -212,11 +215,33 @@ public class GameScreen extends JPanel {
         playerMoneyLabel = new JLabel("TEST");
         int labelSize = ViewController.WIDTH/10;
         playerMoneyLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
-        playerMoneyLabel.setBounds(labelSize/10, labelSize/10, labelSize, labelSize/4);
+        playerMoneyLabel.setForeground(Color.BLACK);
+        playerMoneyLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        playerMoneyLabel.setBounds(ViewController.WIDTH/2, (int) (ViewController.HEIGHT*0.06), labelSize*2, labelSize/4);
         playerMoneyLabel.setVisible(true);
         add(playerMoneyLabel);
 
         initTowerButtons();
+        initInfoLabels();
+    }
+
+    private void initInfoLabels() {
+        JLabel tLabel = new JLabel("Press T to speed up the game");
+        int labelSize = ViewController.WIDTH/10;
+        tLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        tLabel.setForeground(Color.DARK_GRAY);
+        tLabel.setFont(new Font("Arial", Font.ITALIC, 11));
+        tLabel.setBounds(ViewController.WIDTH/2 + labelSize*2, (int) (ViewController.HEIGHT*0.08), labelSize*2, labelSize/4);
+        tLabel.setVisible(true);
+        add(tLabel);
+
+        JLabel escLabel = new JLabel("Press Esc to pause the game");
+        escLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        escLabel.setForeground(Color.DARK_GRAY);
+        escLabel.setFont(new Font("Arial", Font.ITALIC, 11));
+        escLabel.setBounds(ViewController.WIDTH/2 + labelSize*2, (int) (ViewController.HEIGHT*0.04), labelSize*2, labelSize/4);
+        escLabel.setVisible(true);
+        add(escLabel);
     }
 
     private void initTowerButtons() {
@@ -229,7 +254,9 @@ public class GameScreen extends JPanel {
             towerButtons.add(towerDragButton);
             add(towerDragButton.getDragButton());
             offset += ViewController.WIDTH/10;
+            add(towerDragButton.getTowerPriceLabel());
         }
+
     }
 
     private void updateButtonIcon() {

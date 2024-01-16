@@ -147,33 +147,28 @@ public class Stage implements Observable {
 
         switch(towerType){
             case ATTACK -> {
-                int TOWER_ATTACK_PRICE = 100;
-                if(this.playerMoney < TOWER_ATTACK_PRICE) return;
-                this.playerMoney -= TOWER_ATTACK_PRICE;
+                if(this.playerMoney < Tower.ATTACK_TOWER_PRICE) return;
+                this.playerMoney -= Tower.ATTACK_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createAttackTower(row, column);
             }
             case DEFENSIVE -> {
-                int TOWER_DEFENSIVE_PRICE = 50;
-                if(this.playerMoney < TOWER_DEFENSIVE_PRICE) return;
-                this.playerMoney -= TOWER_DEFENSIVE_PRICE;
+                if(this.playerMoney < Tower.DEFENSIVE_TOWER_PRICE) return;
+                this.playerMoney -= Tower.DEFENSIVE_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createDefensiveTower(row, column);
             }
             case MONEY -> {
-                int TOWER_MONEY_PRICE = 50;
-                if(this.playerMoney < TOWER_MONEY_PRICE) return;
-                this.playerMoney -= TOWER_MONEY_PRICE;
+                if(this.playerMoney < Tower.MONEY_TOWER_PRICE) return;
+                this.playerMoney -= Tower.MONEY_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMoneyTower(row, column);
             }
             case MULTI -> {
-                int TOWER_MULTI_PRICE = 325;
-                if(this.playerMoney < TOWER_MULTI_PRICE) return;
-                this.playerMoney -= TOWER_MULTI_PRICE;
+                if(this.playerMoney < Tower.MULTI_TOWER_PRICE) return;
+                this.playerMoney -= Tower.MULTI_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMultiTower(row, column);
             }
             case GLOBAL -> {
-                int TOWER_GLOBAL_PRICE = 500;
-                if(this.playerMoney < TOWER_GLOBAL_PRICE) return;
-                this.playerMoney -= TOWER_GLOBAL_PRICE;
+                if(this.playerMoney < Tower.GLOBAL_TOWER_PRICE) return;
+                this.playerMoney -= Tower.GLOBAL_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createGlobalTower(row, column);
             }
 

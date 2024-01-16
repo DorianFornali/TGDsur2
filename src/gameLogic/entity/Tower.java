@@ -11,8 +11,13 @@ public class Tower extends Entity{
     private int damage;
     private boolean canShoot;
     private boolean canBlock;
-    private int price;
     private TowerType towerType;
+    public static final int ATTACK_TOWER_PRICE = 100;
+    public static final int MULTI_TOWER_PRICE = 325;
+    public static final int GLOBAL_TOWER_PRICE = 500;
+    public static final int DEFENSIVE_TOWER_PRICE = 50;
+    public static final int MONEY_TOWER_PRICE = 50;
+
 
     private boolean isAlive;
 
@@ -116,10 +121,6 @@ public class Tower extends Entity{
 
     public void setCanBlock(boolean canBlock){
         this.canBlock = canBlock;
-    }
-
-    public void setPrice(int price){
-        this.price = price;
     }
     
     public void setTowerType(TowerType towerType){

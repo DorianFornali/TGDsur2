@@ -1,5 +1,6 @@
 package gameView.customButtons;
 
+import gameLogic.entity.Tower;
 import gameLogic.entity.TowerType;
 import gameView.AssetManager;
 import gameView.ViewController;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.TooManyListenersException;
 
 /** This class represents the tower buttons in the game screen hud
  * Contains a JButton that is draggable and a background */
@@ -23,6 +25,7 @@ public class TowerDragButton {
     private ViewController vc;
 
     private JButton dragButton;
+    private JLabel towerPrice;
     private BufferedImage background;
     private TowerType type;
 
@@ -39,6 +42,7 @@ public class TowerDragButton {
         this.vc = vc;
         this.type = type;
         initButton();
+        initLabel();
     }
 
     public JButton getDragButton(){
@@ -47,6 +51,10 @@ public class TowerDragButton {
 
     public BufferedImage getBackground(){
         return background;
+    }
+
+    public JLabel getTowerPriceLabel(){
+        return towerPrice;
     }
 
     public void initButton() {
@@ -89,6 +97,32 @@ public class TowerDragButton {
         dragButton.setFocusable(false);
         dragButton.setLayout(null);
         associateMouseAdapter(dragButton);
+    }
+
+    public void initLabel() {
+        towerPrice = new JLabel();
+        towerPrice.setText("NaN");
+        switch(type){
+            case ATTACK:
+                towerPrice.setText(String.valueOf(Tower.ATTACK_TOWER_PRICE));
+                break;
+            case DEFENSIVE:
+                towerPrice.setText(String.valueOf(Tower.DEFENSIVE_TOWER_PRICE));
+                break;
+            case MONEY:
+                towerPrice.setText(String.valueOf(Tower.MONEY_TOWER_PRICE));
+                break;
+            case MULTI:
+                towerPrice.setText(String.valueOf(Tower.MULTI_TOWER_PRICE));
+                break;
+            case GLOBAL:
+                towerPrice.setText(String.valueOf(Tower.GLOBAL_TOWER_PRICE));
+                break;
+        }
+        towerPrice.setForeground(Color.BLACK);
+        towerPrice.setFont(new Font("Arial", Font.BOLD, 16));
+        towerPrice.setBounds(backgroundX + backgroundWidth/4, (int) (backgroundY - backgroundHeight*0.75), backgroundWidth, backgroundHeight);
+        towerPrice.setVisible(true);
     }
 
     /** Associates the button to a custom mouse adapter that will allow us to move the button itself
