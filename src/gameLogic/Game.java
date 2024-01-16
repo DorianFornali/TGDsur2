@@ -1,5 +1,6 @@
 package gameLogic;
 
+import gameLogic.entity.TowerType;
 import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.panels.MainScreen;
@@ -172,11 +173,21 @@ public class Game implements Runnable, Observer {
             case "FASTEN":
                 fastenTheGame();
                 break;
-            case "TOWER_PLACEMENT":
-                // We receive a message from the ViewController that the user wants to place a tower
-                // We will transmit these information to the currentStage that will react accordingly
-                System.out.println("Tower placement event received");
-                currentStage.spawnTower(event.getEventData());
+            case "TOWER_PLACEMENT_ATTACK":
+                currentStage.spawnTower(event.getEventData(), TowerType.ATTACK);
+                break;
+            case "TOWER_PLACEMENT_DEFENSIVE":
+                currentStage.spawnTower(event.getEventData(), TowerType.DEFENSIVE);
+                break;
+            case "TOWER_PLACEMENT_MONEY":
+                currentStage.spawnTower(event.getEventData(), TowerType.MONEY);
+                break;
+            case "TOWER_PLACEMENT_MULTI":
+                currentStage.spawnTower(event.getEventData(), TowerType.MULTI);
+                break;
+            case "TOWER_PLACEMENT_GLOBAL":
+                currentStage.spawnTower(event.getEventData(), TowerType.GLOBAL);
+                break;
             default:
                 break;
         }

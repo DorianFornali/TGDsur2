@@ -24,6 +24,7 @@ public class TowerDragButton {
 
     private JButton dragButton;
     private BufferedImage background;
+    private TowerType type;
 
     public TowerDragButton(int x, int y, int width, int height, ViewController vc, TowerType type){
         this.backgroundX = x;
@@ -36,6 +37,7 @@ public class TowerDragButton {
         this.buttonHeight = (int) (height*0.6);
         this.background = AssetManager.getInstance().getSprite("fastenButton1");
         this.vc = vc;
+        this.type = type;
         initButton();
     }
 
@@ -84,8 +86,26 @@ public class TowerDragButton {
                 // We will send a message to Stage to create a tower at these coordinates
                 // And relocate the button to its original spot
                 Point finalLocation = button.getLocation();
+
                 button.setLocation(buttonX, buttonY);
-                vc.generateEvent("TOWER_PLACEMENT", finalLocation);
+
+                switch(type){
+                    case ATTACK:
+                        vc.generateEvent("TOWER_PLACEMENT_ATTACK", finalLocation);
+                        break;
+                    case DEFENSIVE:
+                        vc.generateEvent("TOWER_PLACEMENT_DEFENSIVE", finalLocation);
+                        break;
+                    case MONEY:
+                        vc.generateEvent("TOWER_PLACEMENT_MONEY", finalLocation);
+                        break;
+                    case MULTI:
+                        vc.generateEvent("TOWER_PLACEMENT_MULTI", finalLocation);
+                        break;
+                    case GLOBAL:
+                        vc.generateEvent("TOWER_PLACEMENT_GLOBAL", finalLocation);
+                        break;
+                }
             }
         });
     }

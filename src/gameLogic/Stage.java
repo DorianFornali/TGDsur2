@@ -52,7 +52,7 @@ public class Stage {
         this.playerHealth = 5;
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
-        setPlayerMoney(100);
+        setPlayerMoney(15000);
     }
 
     public void setPlayerMoney(int i) {
@@ -109,13 +109,52 @@ public class Stage {
     }
 
     /** Occurs when Game receives message from ViewController, means the user tries to place a turret*/
-    public void spawnTower(Object eventData){
+    public void spawnTower(Object eventData, TowerType towerType) {
         Point location = (Point) eventData;
         int locationX = location.x;
         int locationY = location.y;
-        System.out.println("spawning turret at row " + getRowFromY(locationY) + " and column " + getColumnFromX(locationX) + "");
-        //TODO! convert x y to real x y coordinates
-        //TODO! spawn a turret there
+        int row = getRowFromY(locationY);
+        int column = getColumnFromX(locationX);
+
+        if(row < 0 || row >= nrows || column < 0 || column >= mcols){
+            // The user tried to place a tower outside the game board
+            return;
+        }
+
+        switch(towerType){
+            case ATTACK -> {
+                int TOWER_ATTACK_PRICE = 10;
+                if(this.playerMoney < TOWER_ATTACK_PRICE) return;
+                this.playerMoney -= TOWER_ATTACK_PRICE;
+                this.gameBoard[row][column] = towerFactory.createAttackTower(row, column);
+            }
+            case DEFENSIVE -> {
+                int TOWER_DEFENSIVE_PRICE = 20;
+                if(this.playerMoney < TOWER_DEFENSIVE_PRICE) return;
+                this.playerMoney -= TOWER_DEFENSIVE_PRICE;
+                this.gameBoard[row][column] = towerFactory.createDefensiveTower(row, column);
+            }
+            case MONEY -> {
+                int TOWER_MONEY_PRICE = 50;
+                if(this.playerMoney < TOWER_MONEY_PRICE) return;
+                this.playerMoney -= TOWER_MONEY_PRICE;
+                this.gameBoard[row][column] = towerFactory.createMoneyTower(row, column);
+            }
+            case MULTI -> {
+                int TOWER_MULTI_PRICE = 325;
+                if(this.playerMoney < TOWER_MULTI_PRICE) return;
+                this.playerMoney -= TOWER_MULTI_PRICE;
+                this.gameBoard[row][column] = towerFactory.createMultiTower(row, column);
+            }
+            case GLOBAL -> {
+                int TOWER_GLOBAL_PRICE = 500;
+                if(this.playerMoney < TOWER_GLOBAL_PRICE) return;
+                this.playerMoney -= TOWER_GLOBAL_PRICE;
+                this.gameBoard[row][column] = towerFactory.createGlobalTower(row, column);
+            }
+
+
+        }
     }
 
     /**
