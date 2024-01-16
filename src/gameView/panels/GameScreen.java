@@ -35,7 +35,7 @@ public class GameScreen extends JPanel {
     public GameScreen(ViewController viewController) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
-        this.currentStage = new Stage(StageNumero.STAGE1);
+        this.currentStage = new Stage(StageNumero.STAGE1, viewController);
         Game.getInstance().setCurrentStage(currentStage);
         Game.IN_GAME = true;
         initUI();
@@ -266,5 +266,6 @@ public class GameScreen extends JPanel {
     public static float columnToX(int column){
         return (float) (column * ((ViewController.WIDTH)/Stage.mcols));
     }
+
 
 }

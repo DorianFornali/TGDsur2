@@ -4,17 +4,19 @@ import gameLogic.entity.*;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
 import gameView.ViewController;
+import observerPattern.GameEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import observerPattern.Observable;
+import observerPattern.Observer;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stage {
+public class Stage implements Observable {
     /** The game board, contains the towers the player has placed */
     public Tower[][] gameBoard;
 
@@ -41,8 +43,13 @@ public class Stage {
 
     public int playerMoney;
 
+    private List<Observer> observers = new ArrayList<>();
 
-    public Stage(StageNumero stageNumero) throws IOException {
+    private ViewController viewController;
+
+
+    public Stage(StageNumero stageNumero, ViewController viewController) throws IOException {
+        Stage.stageInstance = this;
         this.gameBoard = new Tower[nrows][mcols];
         this.stageNumero = stageNumero;
         enemiesAlive = new ArrayList<Enemy>();
@@ -52,7 +59,9 @@ public class Stage {
         this.playerHealth = 5;
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
-        setPlayerMoney(15000);
+        setPlayerMoney(100);
+        spawnTower();
+        addObserver(viewController);
     }
 
     public void setPlayerMoney(int i) {
@@ -294,6 +303,30 @@ public class Stage {
         }
     }
 
+
+
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+
+    @Override
+    public void notifyObservers(GameEvent event) {
+        for(Observer observer : observers) {
+            observer.receiveEventNotification(event);
+        }
+    }
+
+    public void generateEvent(String eventType, Object eventData) {
+        GameEvent event = new GameEvent(eventType, eventData);
+        notifyObservers(event);
+    }
     private int getRowFromY(int y){
         return ((int) (y / ((ViewController.HEIGHT*0.85) / nrows)))-1;
     }

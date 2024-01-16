@@ -1,6 +1,7 @@
 package gameLogic.entity;
 
 import gameLogic.Game;
+import gameLogic.Stage;
 import gameView.panels.GameScreen;
 
 public class Enemy extends Entity{
@@ -51,7 +52,12 @@ public class Enemy extends Entity{
 
         if(hitbox.x < 0){
             setHealth(-1);
-            Game.getInstance().getCurrentStage().playerHealth--;
+            Stage stage = Game.getInstance().getCurrentStage();
+            stage.playerHealth--;
+            if (stage.playerHealth <=0 && Game.IN_GAME){
+                stage.generateEvent("GAME_OVER", null);
+
+            }
         }
 
     }
