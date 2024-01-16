@@ -3,18 +3,25 @@ package gameLogic;
 import gameLogic.entity.*;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
+import gameView.ViewController;
+import observerPattern.GameEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import observerPattern.Observable;
+import observerPattern.Observer;
 
+import javax.swing.text.View;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stage {
+public class Stage implements Observable {
     /** The game board, contains the towers the player has placed */
     public Tower[][] gameBoard;
+
+    public static Stage stageInstance;
 
     /** The list of alive entities in the borad. Alive means they must be rendered in the View controller */
     public List<Enemy> enemiesAlive;
@@ -26,7 +33,7 @@ public class Stage {
     public static int nrows = 7, mcols = 10;
     public StageNumero stageNumero;
 
-    public int playerHealth;
+    public static int playerHealth;
 
     // A simple task containing the json data, (FAST, 2, 1) means a fast enemy must be spawned at row 2
     // and then we wait 1 second before continuing the spawn
@@ -39,8 +46,13 @@ public class Stage {
 
     public int playerMoney;
 
+    private List<Observer> observers = new ArrayList<>();
 
-    public Stage(StageNumero stageNumero) throws IOException {
+    private ViewController viewController;
+
+
+    public Stage(StageNumero stageNumero, ViewController viewController) throws IOException {
+        Stage.stageInstance = this;
         this.gameBoard = new Tower[nrows][mcols];
         this.stageNumero = stageNumero;
         enemiesAlive = new ArrayList<Enemy>();
@@ -52,6 +64,7 @@ public class Stage {
         this.spawningStack = initSpawnStack();
         setPlayerMoney(100);
         spawnTower();
+        addObserver(viewController);
     }
 
     public void setPlayerMoney(int i) {
@@ -260,4 +273,28 @@ public class Stage {
         }
     }
 
+
+
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+
+    @Override
+    public void notifyObservers(GameEvent event) {
+        for(Observer observer : observers) {
+            observer.receiveEventNotification(event);
+        }
+    }
+
+    public void generateEvent(String eventType, Object eventData) {
+        GameEvent event = new GameEvent(eventType, eventData);
+        notifyObservers(event);
+    }
 }

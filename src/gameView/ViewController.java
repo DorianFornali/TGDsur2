@@ -11,6 +11,7 @@ import observerPattern.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,11 +93,25 @@ public class ViewController extends JFrame implements Observer, Observable {
             case "PAUSE":
                 pauseGame();
                 break;
+            case "GAME_OVER":
+
+                displayGameOver();
+                break;
             default:
                 break;
         }
     }
 
+    private void displayGameOver(){
+        // We display a small menu using a dialog object from Swing
+        String[] options = {"Back to main menu"};
+        int choice = JOptionPane.showOptionDialog(this, "SKill Issue", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 0){
+            // We quit the game
+            setCurrentPanel(new MainScreen(this));
+            Game.IN_GAME = false;
+        }
+    }
 
     private void pauseGame(){
         switch(this.currentPanel.getClass().getSimpleName()){
@@ -114,7 +129,6 @@ public class ViewController extends JFrame implements Observer, Observable {
                 LevelSelectionScreen lss = (LevelSelectionScreen) this.currentPanel;
                 lss.displayPauseMenu();
                 break;
-
             default:
                 break;
         }
@@ -142,4 +156,5 @@ public class ViewController extends JFrame implements Observer, Observable {
         GameEvent event = new GameEvent(eventType, eventData);
         notifyObservers(event);
     }
+
 }
