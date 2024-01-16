@@ -33,8 +33,8 @@ public class TowerDragButton {
         this.buttonY = y + height/8;
         this.backgroundWidth = width;
         this.backgroundHeight= height;
-        this.buttonWidth = (int) (width*0.6);
-        this.buttonHeight = (int) (height*0.6);
+        this.buttonWidth = (int) (width*0.8);
+        this.buttonHeight = (int) (height*0.8);
         this.background = AssetManager.getInstance().getSprite("tower_DragButton_background");
         this.vc = vc;
         this.type = type;
@@ -81,6 +81,9 @@ public class TowerDragButton {
                 break;
         }
 
+        dragButton.setOpaque(false);
+        dragButton.setContentAreaFilled(false);
+        dragButton.setBorderPainted(false);
         dragButton.setIcon(icon);
         dragButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
         dragButton.setFocusable(false);

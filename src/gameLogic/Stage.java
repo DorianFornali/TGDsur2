@@ -123,13 +123,13 @@ public class Stage {
 
         switch(towerType){
             case ATTACK -> {
-                int TOWER_ATTACK_PRICE = 10;
+                int TOWER_ATTACK_PRICE = 100;
                 if(this.playerMoney < TOWER_ATTACK_PRICE) return;
                 this.playerMoney -= TOWER_ATTACK_PRICE;
                 this.gameBoard[row][column] = towerFactory.createAttackTower(row, column);
             }
             case DEFENSIVE -> {
-                int TOWER_DEFENSIVE_PRICE = 20;
+                int TOWER_DEFENSIVE_PRICE = 50;
                 if(this.playerMoney < TOWER_DEFENSIVE_PRICE) return;
                 this.playerMoney -= TOWER_DEFENSIVE_PRICE;
                 this.gameBoard[row][column] = towerFactory.createDefensiveTower(row, column);
