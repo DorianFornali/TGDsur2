@@ -17,13 +17,14 @@ public class Enemy extends Entity{
 
     // The tower the enemy is attacking
     private Tower target;
-    private boolean canHurtPlayer = true;
+    private boolean canHurtPlayer;
 
     private EnemyType type;
 
     public Enemy(int index){
         this.index = index;
         this.isUsed = false;
+        this.canHurtPlayer = true;
     }
 
 
@@ -36,24 +37,14 @@ public class Enemy extends Entity{
     public void update(){
         if(!isUsed) return;
         super.update();
+        System.out.println("_______________");
+        System.out.println("Hitbox : " + hitbox.x + " " + hitbox.y);
+        System.out.println("Health : " + getHealth());
+        System.out.println("Can hurt player ? " + canHurtPlayer);
+        System.out.println("Is attacking ? " + isAttacking);
 
         updateTargetState();
-
         attack();
-
-        if(getHealth() <= 0){
-            // Enemy dies
-            reset();
-            playDeathSound();
-        }
-        else if(getHealth() <= getMaxHealth()/2){
-            // Enemy is hurt
-            // TODO! Change spritesheet for a more "damaged" one
-        }
-
-        // Moving the enemy from right to left
-        if(!isAttacking)
-            setX(getX() - getSpeed() /10);
 
         if(hitbox.x < 0 && canHurtPlayer){
             this.canHurtPlayer = false;
@@ -66,6 +57,24 @@ public class Enemy extends Entity{
                 stage.clearStage();
             }
         }
+
+        // Moving the enemy from right to left
+        if(!isAttacking)
+            setX(getX() - getSpeed() /10);
+
+
+        if(getHealth() <= 0){
+            // Enemy dies
+            reset();
+            playDeathSound();
+        }
+        else if(getHealth() <= getMaxHealth()/2){
+            // Enemy is hurt
+            // TODO! Change spritesheet for a more "damaged" one
+        }
+
+        System.out.println("_______________");
+
     }
 
     private void playDeathSound() {
@@ -110,7 +119,7 @@ public class Enemy extends Entity{
     }
 
     public boolean toRemove() {
-    	return getHealth() <= 0 || hitbox.x < 0;
+    	return getHealth() <= 0;
     }
 
     public void setHitbox() {
@@ -141,5 +150,9 @@ public class Enemy extends Entity{
 
     public EnemyType getType() {
         return this.type;
+    }
+
+    public void setCanHurtPlayer(boolean canHurtPlayer) {
+    	this.canHurtPlayer = canHurtPlayer;
     }
 }

@@ -141,7 +141,7 @@ public class ViewController extends JFrame implements Observer, Observable {
     private void displayGameOver(){
         // We display a small menu using a dialog object from Swing
         String[] options = {"Back to main menu"};
-        int choice = JOptionPane.showOptionDialog(this, "SKill Issue", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        int choice = JOptionPane.showOptionDialog(this, "You lost ...", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if(choice == 0){
             // We quit the game
             setCurrentPanel(new MainScreen(this));

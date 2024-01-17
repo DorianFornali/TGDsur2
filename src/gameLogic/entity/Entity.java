@@ -79,6 +79,7 @@ public abstract class Entity {
         // We relocate the hitbox rectangle position to the entity's position
         int newX = (int) (getX() + GameScreen.calculateCellWidth()/2 - hitboxWidth/2);
         int newY = (int) getY() + hitboxHeight/2;
+        if(newX < 0) System.out.println("ENTITY ABOUT TO LEAVE");
         hitbox.setLocation(newX, newY);
     }
 

@@ -146,7 +146,7 @@ public class GameScreen extends JPanel {
                 int drawingY = (int) enemy.getY();
                 g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                /*
+
                 g.setColor(Color.RED);
                 Rectangle hitbox = enemy.getHitbox();
                 g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
@@ -154,7 +154,7 @@ public class GameScreen extends JPanel {
                 g.setColor(Color.BLUE);
                 g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
 
-                 */
+
             }
         }
     }

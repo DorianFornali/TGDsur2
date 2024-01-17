@@ -25,6 +25,7 @@ public class EnemyFactory {
             setCoords(e, row, 0);
             setSprites(e, "weakEnemy", 8);
             e.setHitbox();
+            e.setCanHurtPlayer(true);
 
             return e;
         }
@@ -41,6 +42,7 @@ public class EnemyFactory {
             setCoords(e, row, 0);
             setSprites(e, "tankEnemy", 8);
             e.setHitbox();
+            e.setCanHurtPlayer(true);
 
             return e;
         }
@@ -57,6 +59,7 @@ public class EnemyFactory {
             setCoords(e, row, 0);
             setSprites(e, "fastEnemy", 8);
             e.setHitbox();
+            e.setCanHurtPlayer(true);
 
             return e;
         }
@@ -73,6 +76,7 @@ public class EnemyFactory {
             setCoords(e, row, 0);
             setSprites(e, "polyvalentEnemy", 8);
             e.setHitbox();
+            e.setCanHurtPlayer(true);
 
             return e;
         }
