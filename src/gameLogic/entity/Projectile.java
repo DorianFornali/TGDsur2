@@ -11,7 +11,7 @@ public class Projectile extends Entity{
     public Projectile(){
         initSpriteSheet();
         setSpriteSheet(spriteSheet);
-        setNSPRITES(1);
+        setNSPRITES(8);
         setSpriteIndex(0);
         this.inTheWindow = true;
     }
