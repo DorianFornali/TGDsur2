@@ -37,18 +37,12 @@ public class Enemy extends Entity{
     public void update(){
         if(!isUsed) return;
         super.update();
-        System.out.println("_______________");
-        System.out.println("Hitbox : " + hitbox.x + " " + hitbox.y);
-        System.out.println("Health : " + getHealth());
-        System.out.println("Can hurt player ? " + canHurtPlayer);
-        System.out.println("Is attacking ? " + isAttacking);
 
         updateTargetState();
         attack();
 
         if(hitbox.x < 0 && canHurtPlayer){
             this.canHurtPlayer = false;
-            System.out.println("Enemy reached the end of the screen, removing one hp to player");
             setHealth(-1);
             Stage stage = Game.getInstance().getCurrentStage();
             stage.playerHealth--;
@@ -72,8 +66,6 @@ public class Enemy extends Entity{
             // Enemy is hurt
             // TODO! Change spritesheet for a more "damaged" one
         }
-
-        System.out.println("_______________");
 
     }
 

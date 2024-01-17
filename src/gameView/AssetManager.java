@@ -113,6 +113,7 @@ public class AssetManager {
             img = ImageIO.read(new File("assets/sprites/towers/icons/globalTowerIcon.png"));
             assets.put("globalTowerIcon", img);
 
+
         } catch (IOException e) {
             e.printStackTrace();
         }

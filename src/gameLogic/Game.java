@@ -38,13 +38,13 @@ public class Game implements Runnable, Observer {
 
     public Game() {
         Game.gameInstance = this;
+        AssetManager.getInstance().loadAssets();
         audioPlayer = new AudioPlayer();
         viewController = new ViewController();
         inputController = new InputController(viewController);
         bindInputController();
         viewController.setCurrentPanel(new MainScreen(viewController));
         startGameLoop();
-        AssetManager.getInstance().loadAssets();
     }
 
     public static Game getInstance() {
