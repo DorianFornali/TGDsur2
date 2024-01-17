@@ -1,0 +1,29 @@
+{
+  "stage_enemies": [
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 3
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 0.5
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 1
+    },
+    {
+      "type": "WEAK",
+      "row": 8,
+      "delay": 3
+    }
+  ]
+}

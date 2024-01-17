@@ -70,11 +70,7 @@ public class AudioPlayer {
 
     /** Fetchs the audio files in the assets folder and converts it into a Clip object */
     private Clip getClip(String name) {
-
-
-
         try {
-            System.out.println("Trying to get clip from assets/audio/" + name);
             File f = new File("assets/audio/" + name);
             AudioInputStream audio;
             audio = AudioSystem.getAudioInputStream(f);
@@ -82,12 +78,9 @@ public class AudioPlayer {
             c.open(audio);
 
             return c;
-
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-
             e.printStackTrace();
         }
-
         return null;
     }
 
