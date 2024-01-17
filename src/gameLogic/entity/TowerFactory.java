@@ -28,7 +28,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Money tower");
-        buildMainStats(tower, 50, 50, 25, 1, 1,true, false, 50);
+        buildMainStats(tower, 50, 50, 25, 5, 10,true, false, 50);
         setCoords(tower, row, column);
         setSprites(tower, "moneyTower", 1);
         tower.setHitbox();
