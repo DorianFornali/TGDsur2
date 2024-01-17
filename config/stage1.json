@@ -2,28 +2,119 @@
   "stage_enemies": [
     {
       "type": "WEAK",
+      "row": 3,
+      "delay": 20
+    },
+    {
+      "type": "WEAK",
       "row": 0,
-      "delay": 3
+      "delay": 25
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 17
     },
     {
       "type": "WEAK",
       "row": 2,
-      "delay": 0.5
-    },
-    {
-      "type": "WEAK",
-      "row": 3,
-      "delay": 0.5
+      "delay": 18
     },
     {
       "type": "WEAK",
       "row": 5,
-      "delay": 1
+      "delay": 15
     },
     {
       "type": "WEAK",
-      "row": 8,
-      "delay": 3
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 7
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 7
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.3
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0.3
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 0.3
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 0.3
     }
+
   ]
 }

@@ -21,7 +21,7 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            buildMainStats(e, 10, 100, 100, 100, 3);
+            buildMainStats(e, 2, 200, 200, 25, 1);
             setCoords(e, row, 0);
             setSprites(e, "weakEnemy", 8);
             e.setHitbox();

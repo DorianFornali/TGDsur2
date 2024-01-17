@@ -14,7 +14,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Defensive tower");
-        buildMainStats(tower, 400, 200, 0, 1, 10,false, true, 100);
+        buildMainStats(tower, 1000, 1000, 0, 1, 10,false, true, 75);
         setCoords(tower, row, column);
         setSprites(tower, "defensiveTower", 1);
         tower.setHitbox();
@@ -28,7 +28,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Money tower");
-        buildMainStats(tower, 300, 300, 25, 3, 10,true, false, 50);
+        buildMainStats(tower, 50, 50, 25, 1, 1,true, false, 50);
         setCoords(tower, row, column);
         setSprites(tower, "moneyTower", 1);
         tower.setHitbox();
@@ -42,7 +42,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Attack tower");
-        buildMainStats(tower, 100, 100, 10, 1, 10,true, true, 100);
+        buildMainStats(tower, 100, 100, 25, 2, 10,true, true, 100);
         setCoords(tower, row, column);
         setSprites(tower, "attackTower", 8);
         tower.setHitbox();
@@ -56,7 +56,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Multi tower");
-        buildMainStats(tower, 150, 150, 10, 5, 10,true, true, 325);
+        buildMainStats(tower, 100, 100, 25, 2, 10,true, true, 325);
         setCoords(tower, row, column);
         setSprites(tower, "multiTower", 1);
         tower.setHitbox();
@@ -70,7 +70,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Global tower");
-        buildMainStats(tower, 200, 200, 50, 5, 10,true, true, 500);
+        buildMainStats(tower, 50, 50, 50, 5, 10,true, true, 500);
         setCoords(tower, row, column);
         setSprites(tower, "globalTower", 1);
         tower.setHitbox();
