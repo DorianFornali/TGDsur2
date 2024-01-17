@@ -13,13 +13,23 @@ public class LevelSelectionScreen extends JPanel{
     private ViewController viewController;
     public LevelSelectionScreen(ViewController viewController) {
         this.viewController = viewController;
+        initButtons();
         setLayout(null);
+
+    }
+
+    private void initButtons() {
+        int offset = 0;
+        int buttonWidth = ViewController.WIDTH/5;
+        int buttonHeight = ViewController.HEIGHT/5;
+
         JButton level1 = new JButton();
-        level1.setBounds(ViewController.WIDTH/2 - 200/2, ViewController.HEIGHT/2 - 100, 200, 100);
+        level1.setBounds((int) (buttonWidth*0.8 + offset), ViewController.HEIGHT/2 - buttonHeight, buttonWidth, buttonHeight);
+        offset += level1.getWidth();
         level1.setFont(new Font("Arial", Font.PLAIN, 20));
         level1.setVerticalAlignment(SwingConstants.CENTER);
         level1.setHorizontalAlignment(SwingConstants.CENTER);
-        level1.setText("LEVEL 1");
+        level1.setText("STAGE 1");
         level1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,6 +43,47 @@ public class LevelSelectionScreen extends JPanel{
             }
         });
         add(level1);
+
+        JButton level2 = new JButton();
+        level2.setBounds((int) (buttonWidth*0.8 + offset*1.2f), ViewController.HEIGHT/2 - buttonHeight, buttonWidth, buttonHeight);
+        offset += level2.getWidth();
+        level2.setFont(new Font("Arial", Font.PLAIN, 20));
+        level2.setVerticalAlignment(SwingConstants.CENTER);
+        level2.setHorizontalAlignment(SwingConstants.CENTER);
+        level2.setText("STAGE 2");
+        level2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Changing screen");
+                try {
+                    viewController.setCurrentPanel(new GameScreen(viewController, StageNumero.STAGE2));
+                    viewController.generateEvent("STAGE2_MUSIC_PLAY", null);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        add(level2);
+
+        JButton level3 = new JButton();
+        level3.setBounds((int) (buttonWidth*0.8 + offset*1.2f), ViewController.HEIGHT/2 - buttonHeight, buttonWidth, buttonHeight);
+        level3.setFont(new Font("Arial", Font.PLAIN, 20));
+        level3.setVerticalAlignment(SwingConstants.CENTER);
+        level3.setHorizontalAlignment(SwingConstants.CENTER);
+        level3.setText("STAGE 3");
+        level3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Changing screen");
+                try {
+                    viewController.setCurrentPanel(new GameScreen(viewController, StageNumero.STAGE3));
+                    viewController.generateEvent("STAGE3_MUSIC_PLAY", null);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        add(level3);
     }
 
     public void paintComponent(Graphics g) {
