@@ -31,6 +31,16 @@ public class AssetManager {
         loadTowersSprites(img);
         loadProjectilesSprites(img);
         loadDragButtonAssets(img);
+        loadHealthIcon(img);
+    }
+
+    private void loadHealthIcon(BufferedImage img) {
+        try {
+            img = ImageIO.read(new File("assets/sprites/ui/healthIcon.png"));
+            assets.put("healthIcon", img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadProjectilesSprites(BufferedImage img) {

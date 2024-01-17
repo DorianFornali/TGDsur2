@@ -79,6 +79,7 @@ public class Stage implements Observable {
     }
 
     public void update(){
+        if(stageEnded) return;
         updateEntities();
         spawnEnemies();
         checkCollisions();
@@ -367,4 +368,14 @@ public class Stage implements Observable {
         return x / (ViewController.WIDTH / mcols);
     }
 
+    /** Called when the player looses */
+    public void clearStage(){
+        enemiesAlive.clear();
+        projectilesAlive.clear();
+        for(int i = 0; i<nrows; i++){
+            for(int j = 0; j<mcols; j++){
+                gameBoard[i][j] = null;
+            }
+        }
+    }
 }

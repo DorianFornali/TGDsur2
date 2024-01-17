@@ -63,6 +63,7 @@ public class Enemy extends Entity{
             stage.playerHealth--;
             if (stage.playerHealth <=0 && Game.IN_GAME){
                 stage.generateEvent("GAME_OVER", null);
+                stage.clearStage();
             }
         }
     }

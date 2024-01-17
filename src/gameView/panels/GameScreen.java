@@ -7,6 +7,7 @@ import gameLogic.entity.Enemy;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameLogic.entity.TowerType;
+import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.customButtons.TowerDragButton;
 
@@ -29,6 +30,7 @@ public class GameScreen extends JPanel {
     private ImageIcon[] fastenButtonSprites;
 
     private JLabel playerMoneyLabel;
+    private BufferedImage healthIcon;
 
     private List<TowerDragButton> towerButtons;
 
@@ -53,6 +55,18 @@ public class GameScreen extends JPanel {
         renderEntities(g);
         updateButtonIcon();
         updatePlayerMoneyLabel();
+        drawHealth(g);
+    }
+
+    private void drawHealth(Graphics g) {
+        int health = currentStage.playerHealth;
+        BufferedImage toDraw = healthIcon.getSubimage(0, (5-health)*healthIcon.getHeight()/6, healthIcon.getWidth(), healthIcon.getHeight()/6);
+        int drawingWidth = (int) (ViewController.WIDTH*0.15);
+        int drawingHeight = (int) (playerMoneyLabel.getHeight()*1.5);
+        int drawingX = (int) (playerMoneyLabel.getX()*0.95f);
+        int drawingY = (int) (playerMoneyLabel.getY() + drawingHeight*0.6);
+
+        g.drawImage(toDraw, drawingX, drawingY, drawingWidth, drawingHeight, null);
     }
 
     private void updatePlayerMoneyLabel() {
@@ -217,12 +231,17 @@ public class GameScreen extends JPanel {
         playerMoneyLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
         playerMoneyLabel.setForeground(Color.BLACK);
         playerMoneyLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        playerMoneyLabel.setBounds(ViewController.WIDTH/2, (int) (ViewController.HEIGHT*0.06), labelSize*2, labelSize/4);
+        playerMoneyLabel.setBounds((int) (ViewController.WIDTH*0.55), (int) (ViewController.HEIGHT*0.06), labelSize*2, labelSize/4);
         playerMoneyLabel.setVisible(true);
         add(playerMoneyLabel);
 
         initTowerButtons();
         initInfoLabels();
+        initHealthIcon();
+    }
+
+    private void initHealthIcon() {
+        healthIcon = AssetManager.getInstance().getSprite("healthIcon");
     }
 
     private void initInfoLabels() {
