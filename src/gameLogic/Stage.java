@@ -51,6 +51,7 @@ public class Stage implements Observable {
     private List<Observer> observers = new ArrayList<>();
 
     private ViewController viewController;
+    private boolean stageEnded = false;
 
 
     public Stage(StageNumero stageNumero, ViewController viewController) throws IOException {
@@ -64,7 +65,7 @@ public class Stage implements Observable {
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
         this.previousMoneyGenerationTimer = System.nanoTime();
-        this.moneyGenerationDelay = (5f/Game.CURRENT_SPEED_FACTOR) * 1000000000.0;;
+        this.moneyGenerationDelay = 5f * 1000000000.0;;
         setPlayerMoney(50);
         addObserver(viewController);
     }
@@ -82,6 +83,18 @@ public class Stage implements Observable {
         spawnEnemies();
         checkCollisions();
         generateMoney();
+        checkStageEnd();
+    }
+
+    /** Checks if the stage is over, if so, we notify the view controller */
+    private void checkStageEnd() {
+        if(!spawningStack.isEmpty()) return;
+        // at this point we spawned everything we had to spawn, we check if there are still enemies alive
+        if(enemiesAlive.isEmpty() && !stageEnded){
+            // The stage is over, we notify the view controller
+            generateEvent("STAGE_COMPLETED", this.stageNumero);
+            stageEnded = true;
+        }
     }
 
     /** Natural money generation, not via money tower */
@@ -105,6 +118,7 @@ public class Stage implements Observable {
             SpawnObject so = spawningStack.pop();
             EnemyType enemyType = so.type;
             int row = so.row;
+
             double delay = (so.delay * 1000000000.0)/Game.CURRENT_SPEED_FACTOR; // seconds to nanoseconds, and taking into account the in-game speed
 
             switch(enemyType){

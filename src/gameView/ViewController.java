@@ -1,6 +1,7 @@
 package gameView;
 
 import gameLogic.Game;
+import gameLogic.StageNumero;
 import gameView.panels.GameScreen;
 import gameView.panels.LevelSelectionScreen;
 import gameView.panels.MainScreen;
@@ -94,11 +95,46 @@ public class ViewController extends JFrame implements Observer, Observable {
                 pauseGame();
                 break;
             case "GAME_OVER":
-
                 displayGameOver();
                 break;
+            case "STAGE_COMPLETED":
+                diplayStageCompleted((StageNumero) event.getEventData());
             default:
                 break;
+        }
+    }
+
+    private void diplayStageCompleted(StageNumero sn) {
+        String options[];
+        if(sn == StageNumero.STAGE3){
+            // There is no next level so we can only send the player back to main menu
+            options = new String[]{"Back to main menu"};
+        }else
+            options = new String[]{"Back to main menu", "Next Level"};
+
+        int choice = JOptionPane.showOptionDialog(this, "Congratulations, you completed this stage !", "Stage Completed", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(choice == 1){
+            try {
+                switch(sn){
+                    case STAGE1 -> {
+                        sn = StageNumero.STAGE2;
+                        generateEvent("STAGE2_MUSIC_PLAY", null);
+                    }
+                    case STAGE2 -> {
+                        sn = StageNumero.STAGE3;
+                        generateEvent("STAGE3_MUSIC_PLAY", null);
+                    }
+                }
+                setCurrentPanel(new LevelSelectionScreen(this));
+                setCurrentPanel(new GameScreen(this, sn));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+
+            setCurrentPanel(new MainScreen(this));
+            Game.IN_GAME = false;
         }
     }
 
