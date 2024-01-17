@@ -29,7 +29,8 @@ public class MainScreen extends JPanel {
         });
         add(button);
 
-
+        // We alert the Game that the music should be played
+        viewController.generateEvent("MAIN_MUSIC_PLAY", null);
     }
 
     public void paintComponent(Graphics g) {

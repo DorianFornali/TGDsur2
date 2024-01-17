@@ -1,5 +1,6 @@
 package gameView.panels;
 
+import gameLogic.StageNumero;
 import gameView.ViewController;
 
 import javax.swing.*;
@@ -24,7 +25,8 @@ public class LevelSelectionScreen extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Changing screen");
                 try {
-                    viewController.setCurrentPanel(new GameScreen(viewController));
+                    viewController.setCurrentPanel(new GameScreen(viewController, StageNumero.STAGE1));
+                    viewController.generateEvent("STAGE1_MUSIC_PLAY", null);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

@@ -61,6 +61,7 @@ public class Tower extends Entity{
     /** The update function for the money tower */
     private void updateMoneyTower() {
         if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+            System.out.println("Money tower generated money");
             // The tower can "shoot", in this case it simply generates money
             game.getCurrentStage().setPlayerMoney(game.getCurrentStage().getPlayerMoney() + 15);
             //TODO! Do some visual effect to show the player that the tower generated money -> the GameScreen must do it

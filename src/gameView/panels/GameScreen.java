@@ -32,10 +32,10 @@ public class GameScreen extends JPanel {
 
     private List<TowerDragButton> towerButtons;
 
-    public GameScreen(ViewController viewController) throws IOException {
+    public GameScreen(ViewController viewController, StageNumero stageNumero) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
         this.viewController = viewController;
-        this.currentStage = new Stage(StageNumero.STAGE1, viewController);
+        this.currentStage = new Stage(stageNumero, viewController);
         Game.getInstance().setCurrentStage(currentStage);
         Game.IN_GAME = true;
         initUI();

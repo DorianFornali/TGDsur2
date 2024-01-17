@@ -1,5 +1,6 @@
 package gameLogic;
 
+import audio.AudioPlayer;
 import gameLogic.entity.*;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
@@ -64,7 +65,7 @@ public class Stage implements Observable {
         this.spawningStack = initSpawnStack();
         this.previousMoneyGenerationTimer = System.nanoTime();
         this.moneyGenerationDelay = (5f/Game.CURRENT_SPEED_FACTOR) * 1000000000.0;;
-        setPlayerMoney(100);
+        setPlayerMoney(1000);
         addObserver(viewController);
     }
 
@@ -286,6 +287,13 @@ public class Stage implements Observable {
                             // Collision between projectile and enemy
                             e.setHealth(e.getHealth() - p.getDamage());
                             p.inTheWindow = false;
+                            switch(e.getType()){
+                                // We play the correct hitting sound depending on the enemy type
+                                case WEAK -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.WEAK_HURT_SFX);
+                                case FAST -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.FAST_HURT_SFX);
+                                case TANK -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.TANK_HURT_SFX);
+                                case POLYVALENT -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.POLYVALENT_HURT_SFX);
+                            }
                         }
                     }
                 }

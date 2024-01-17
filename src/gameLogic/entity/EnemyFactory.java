@@ -21,7 +21,7 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            buildMainStats(e, 10, 100, 100, 100, 3);
+            buildMainStats(e, 10, 100, 100, 100, 3, EnemyType.WEAK);
             setCoords(e, row, 0);
             setSprites(e, "weakEnemy", 8);
             e.setHitbox();
@@ -37,7 +37,7 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            buildMainStats(e, 10, 100, 100, 10, 10);
+            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.TANK);
             setCoords(e, row, 0);
             setSprites(e, "tankEnemy", 8);
             e.setHitbox();
@@ -53,7 +53,7 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            buildMainStats(e, 10, 100, 100, 10, 10);
+            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.FAST);
             setCoords(e, row, 0);
             setSprites(e, "fastEnemy", 8);
             e.setHitbox();
@@ -69,7 +69,7 @@ public class EnemyFactory {
             System.err.println("Unable to allocate enemy, all are used");
         }
         else{
-            buildMainStats(e, 10, 100, 100, 10, 10);
+            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.POLYVALENT);
             setCoords(e, row, 0);
             setSprites(e, "polyvalentEnemy", 8);
             e.setHitbox();
@@ -79,12 +79,13 @@ public class EnemyFactory {
         return null;
     }
 
-    private void buildMainStats(Enemy e, int speed, int health, int maxHealth, int damage, int firingRate){
+    private void buildMainStats(Enemy e, int speed, int health, int maxHealth, int damage, int firingRate, EnemyType type){
         e.setSpeed(speed);
         e.setHealth(health);
         e.setMaxHealth(maxHealth);
         e.setDamage(damage);
         e.setFiringRate(firingRate);
+        e.setType(type);
     }
 
     private void setCoords(Enemy e, int row, int column){

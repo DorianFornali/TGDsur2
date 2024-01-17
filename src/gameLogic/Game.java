@@ -1,5 +1,6 @@
 package gameLogic;
 
+import audio.AudioPlayer;
 import gameLogic.entity.TowerType;
 import gameView.AssetManager;
 import gameView.ViewController;
@@ -32,9 +33,12 @@ public class Game implements Runnable, Observer {
     // If the speed of the game has been upgraded (UPS limit higher)
     public static int CURRENT_SPEED_FACTOR = 1;
 
+    public AudioPlayer audioPlayer;
+
 
     public Game() {
         Game.gameInstance = this;
+        audioPlayer = new AudioPlayer();
         viewController = new ViewController();
         inputController = new InputController(viewController);
         bindInputController();
@@ -176,6 +180,8 @@ public class Game implements Runnable, Observer {
             case "FASTEN":
                 fastenTheGame();
                 break;
+
+                // Tower placement
             case "TOWER_PLACEMENT_ATTACK":
                 currentStage.spawnTower(event.getEventData(), TowerType.ATTACK);
                 break;
@@ -191,6 +197,20 @@ public class Game implements Runnable, Observer {
             case "TOWER_PLACEMENT_GLOBAL":
                 currentStage.spawnTower(event.getEventData(), TowerType.GLOBAL);
                 break;
+                // Music playing
+            case "MAIN_MUSIC_PLAY":
+                audioPlayer.playSong(AudioPlayer.MAIN_MUSIC);
+                break;
+            case "STAGE1_MUSIC_PLAY":
+                audioPlayer.playSong(AudioPlayer.STAGE1_MUSIC);
+                break;
+            case "STAGE2_MUSIC_PLAY":
+                audioPlayer.playSong(AudioPlayer.STAGE2_MUSIC);
+                break;
+            case "STAGE3_MUSIC_PLAY":
+                audioPlayer.playSong(AudioPlayer.STAGE3_MUSIC);
+                break;
+
             default:
                 break;
         }

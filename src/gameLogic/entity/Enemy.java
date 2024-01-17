@@ -1,5 +1,6 @@
 package gameLogic.entity;
 
+import audio.AudioPlayer;
 import gameLogic.Game;
 import gameLogic.Stage;
 import gameView.panels.GameScreen;
@@ -17,6 +18,8 @@ public class Enemy extends Entity{
     // The tower the enemy is attacking
     private Tower target;
     private boolean canHurtPlayer = true;
+
+    private EnemyType type;
 
     public Enemy(int index){
         this.index = index;
@@ -41,6 +44,7 @@ public class Enemy extends Entity{
         if(getHealth() <= 0){
             // Enemy dies
             reset();
+            playDeathSound();
         }
         else if(getHealth() <= getMaxHealth()/2){
             // Enemy is hurt
@@ -60,6 +64,23 @@ public class Enemy extends Entity{
             if (stage.playerHealth <=0 && Game.IN_GAME){
                 stage.generateEvent("GAME_OVER", null);
             }
+        }
+    }
+
+    private void playDeathSound() {
+        switch(this.type){
+            case WEAK:
+                Game.getInstance().audioPlayer.playEffect(AudioPlayer.WEAK_DEATH_SFX);
+                break;
+            case FAST:
+                Game.getInstance().audioPlayer.playEffect(AudioPlayer.FAST_DEATH_SFX);
+                break;
+            case TANK:
+                Game.getInstance().audioPlayer.playEffect(AudioPlayer.TANK_DEATH_SFX);
+                break;
+            case POLYVALENT:
+                Game.getInstance().audioPlayer.playEffect(AudioPlayer.POLYVALENT_DEATH_SFX);
+                break;
         }
     }
 
@@ -111,5 +132,13 @@ public class Enemy extends Entity{
 
     public boolean isAttacking() {
     	return isAttacking;
+    }
+
+    public void setType(EnemyType type) {
+        this.type = type;
+    }
+
+    public EnemyType getType() {
+        return this.type;
     }
 }
