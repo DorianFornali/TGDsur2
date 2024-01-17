@@ -31,7 +31,8 @@ public class AudioPlayer {
     public static final int POLYVALENT_HURT_SFX = 7;
 
 
-    private Clip[] songs, effects;
+    private Clip[] songs;
+    private Clip[][] effects;
     private int currentSongId;
     private float volume = 0.7f;
     private boolean songMute, effectMute;
@@ -58,9 +59,11 @@ public class AudioPlayer {
         // effectNames will contain every sound effects
         String[] effectNames = {"weakDeath.wav", "fastDeath.wav", "tankDeath.wav", "polyvalentDeath.wav",
                 "weakHurt.wav", "fastHurt.wav", "tankHurt.wav", "polyvalentHurt.wav"}; //
-        effects =  new Clip[effectNames.length];
+        effects =  new Clip[effectNames.length][20];
         for(int i = 0; i< effects.length; i++) {
-            effects[i] = getClip(effectNames[i]);
+            for(int j = 0; j < effects[i].length; j++) {
+                effects[i][j] = getClip(effectNames[i]);
+            }
         }
         updateEffectsVolume();
     }
@@ -103,9 +106,14 @@ public class AudioPlayer {
 
     /** Used to play a sfx */
     public void playEffect(int effect) {
-        effects[effect].stop();
-        effects[effect].setMicrosecondPosition(0);
-        effects[effect].start();
+        for(int i = 0; i < effects[effect].length; i++) {
+            if(!effects[effect][i].isActive()) {
+                effects[effect][i].setMicrosecondPosition(0);
+                effects[effect][i].start();
+                return;
+            }
+        }
+
     }
 
 
@@ -129,9 +137,12 @@ public class AudioPlayer {
             booleanControl.setValue(songMute);
         }
 
-        for(Clip c: effects) {
-            BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
-            booleanControl.setValue(songMute);
+        for(Clip[] clist: effects) {
+            for(Clip c: clist) {
+                BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
+                booleanControl.setValue(effectMute);
+            }
+
         }
 
         if(!effectMute) {
@@ -147,11 +158,13 @@ public class AudioPlayer {
     }
 
     private void updateEffectsVolume() {
-        for(Clip c: effects) {
-            FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
-            float range = gainControl.getMaximum() - gainControl.getMinimum();
-            float gain = (range * volume) + gainControl.getMinimum();
-            gainControl.setValue(gain);
+        for(Clip[] clist: effects) {
+            for(Clip c: clist) {
+                FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+                float range = gainControl.getMaximum() - gainControl.getMinimum();
+                float gain = (range * volume) + gainControl.getMinimum();
+                gainControl.setValue(gain);
+            }
         }
     }
 }
