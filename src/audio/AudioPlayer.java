@@ -1,10 +1,5 @@
 package audio;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Random;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.BooleanControl;
@@ -12,6 +7,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
 public class AudioPlayer {
 
@@ -43,32 +41,38 @@ public class AudioPlayer {
         loadEffects();
     }
 
-    /** Loads every songs of the game */
+    /**
+     * Loads every songs of the game
+     */
     private void loadSongs() {
         // songNames will contain every music
         String[] songNames = {"ES_Closed-Book_Dream_Cave.wav", "ES_Confidentiality-Dream-Cave.wav",
                 "ES_Dollhouse_Staircase_Mike_Franklyn.wav", "ES_First-on-the-Scene-Dream-Cave.wav"};
-        songs =  new Clip[songNames.length];
-        for(int i = 0; i< songNames.length; i++) {
+        songs = new Clip[songNames.length];
+        for (int i = 0; i < songNames.length; i++) {
             songs[i] = getClip(songNames[i]);
         }
     }
 
-    /** Loads every SFX of the game */
+    /**
+     * Loads every SFX of the game
+     */
     private void loadEffects() {
         // effectNames will contain every sound effects
         String[] effectNames = {"weakDeath.wav", "fastDeath.wav", "tankDeath.wav", "polyvalentDeath.wav",
                 "weakHurt.wav", "fastHurt.wav", "tankHurt.wav", "polyvalentHurt.wav"}; //
-        effects =  new Clip[effectNames.length][20];
-        for(int i = 0; i< effects.length; i++) {
-            for(int j = 0; j < effects[i].length; j++) {
+        effects = new Clip[effectNames.length][20];
+        for (int i = 0; i < effects.length; i++) {
+            for (int j = 0; j < effects[i].length; j++) {
                 effects[i][j] = getClip(effectNames[i]);
             }
         }
         updateEffectsVolume();
     }
 
-    /** Fetchs the audio files in the assets folder and converts it into a Clip object */
+    /**
+     * Fetchs the audio files in the assets folder and converts it into a Clip object
+     */
     private Clip getClip(String name) {
         try {
             File f = new File("assets/audio/" + name);
@@ -91,16 +95,18 @@ public class AudioPlayer {
     }
 
     public void stopSong() {
-        if(songs[currentSongId].isActive()) {
+        if (songs[currentSongId].isActive()) {
             songs[currentSongId].stop();
         }
     }
 
 
-    /** Used to play a sfx */
+    /**
+     * Used to play a sfx
+     */
     public void playEffect(int effect) {
-        for(int i = 0; i < effects[effect].length; i++) {
-            if(!effects[effect][i].isActive()) {
+        for (int i = 0; i < effects[effect].length; i++) {
+            if (!effects[effect][i].isActive()) {
                 effects[effect][i].setMicrosecondPosition(0);
                 effects[effect][i].start();
                 return;
@@ -110,7 +116,9 @@ public class AudioPlayer {
     }
 
 
-    /** Used to play a song */
+    /**
+     * Used to play a song
+     */
     public void playSong(int song) {
         stopSong();
 
@@ -125,20 +133,20 @@ public class AudioPlayer {
         // Pour tout mute
         this.songMute = !songMute;
         this.effectMute = !effectMute;
-        for(Clip c: songs) {
+        for (Clip c : songs) {
             BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
             booleanControl.setValue(songMute);
         }
 
-        for(Clip[] clist: effects) {
-            for(Clip c: clist) {
+        for (Clip[] clist : effects) {
+            for (Clip c : clist) {
                 BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
                 booleanControl.setValue(effectMute);
             }
 
         }
 
-        if(!effectMute) {
+        if (!effectMute) {
             playEffect(WEAK_DEATH_SFX);
         }
     }
@@ -151,8 +159,8 @@ public class AudioPlayer {
     }
 
     private void updateEffectsVolume() {
-        for(Clip[] clist: effects) {
-            for(Clip c: clist) {
+        for (Clip[] clist : effects) {
+            for (Clip c : clist) {
                 FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
                 float range = gainControl.getMaximum() - gainControl.getMinimum();
                 float gain = (range * volume) + gainControl.getMinimum();

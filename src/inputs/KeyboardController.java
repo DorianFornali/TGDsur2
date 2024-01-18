@@ -13,7 +13,8 @@ import java.util.List;
 
 public class KeyboardController implements Observable, KeyListener {
     private List<Observer> observers = new ArrayList<>();
-    public KeyboardController(ViewController vc){
+
+    public KeyboardController(ViewController vc) {
         observers.add(vc);
         observers.add(Game.getInstance());
         System.out.println("Creation d'un Keyboard COntroller");
@@ -31,7 +32,7 @@ public class KeyboardController implements Observable, KeyListener {
 
     @Override
     public void notifyObservers(GameEvent event) {
-        for(Observer observer : observers) {
+        for (Observer observer : observers) {
             observer.receiveEventNotification(event);
         }
     }
@@ -48,7 +49,7 @@ public class KeyboardController implements Observable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_ESCAPE:
                 System.out.println("Sending pause event");
                 generateEvent("PAUSE", null);

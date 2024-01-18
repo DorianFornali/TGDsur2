@@ -39,30 +39,29 @@ public abstract class Entity {
     private int maxHealth, health;
     private float speed; // Only for enemies and projectiles
 
-    public float getX(){
+    public float getX() {
         return this.x;
     }
 
-    public float getY(){
+    public float getY() {
         return this.y;
     }
 
-    public void setX(float x){
+    public void setX(float x) {
         this.x = x;
     }
 
-    public void setY(float y){
+    public void setY(float y) {
         this.y = y;
     }
 
-    public int getRow(){
+    public int getRow() {
         return entityRow;
     }
 
-    public void setEntityRow(int row){
+    public void setEntityRow(int row) {
         this.entityRow = row;
     }
-
 
 
     public void update() {
@@ -74,18 +73,18 @@ public abstract class Entity {
     private void updateHitbox() {
         int hitboxWidth = (int) hitbox.getWidth(), hitboxHeight = (int) hitbox.getHeight();
         // We relocate the hitbox rectangle position to the entity's position
-        int newX = (int) (getX() + GameScreen.calculateCellWidth()/2 - hitboxWidth/2);
-        int newY = (int) getY() + hitboxHeight/2;
-        if(newX < 0) System.out.println("ENTITY ABOUT TO LEAVE");
+        int newX = (int) (getX() + GameScreen.calculateCellWidth() / 2 - hitboxWidth / 2);
+        int newY = (int) getY() + hitboxHeight / 2;
+        if (newX < 0) System.out.println("ENTITY ABOUT TO LEAVE");
         hitbox.setLocation(newX, newY);
     }
 
     protected void updateSprite() {
         double now = System.nanoTime();
-        if(now - previousTimer > 1000000000/10){
+        if (now - previousTimer > 1000000000 / 10) {
             previousTimer = now;
             spriteIndex++;
-            if(spriteIndex >= NSPRITES){
+            if (spriteIndex >= NSPRITES) {
                 spriteIndex = 0;
             }
             int spriteHeight = spriteSheet.getHeight() / NSPRITES;
@@ -98,7 +97,7 @@ public abstract class Entity {
     }
 
 
-    public void setSpriteSheet(BufferedImage spriteSheet){
+    public void setSpriteSheet(BufferedImage spriteSheet) {
         this.spriteSheet = spriteSheet;
     }
 
@@ -111,34 +110,35 @@ public abstract class Entity {
     }
 
     public Rectangle getHitbox() {
-    	return hitbox;
+        return hitbox;
     }
 
-    protected void setHitbox(int x, int y, int width, int height){
+    protected void setHitbox(int x, int y, int width, int height) {
         this.hitbox = new Rectangle(x, y, width, height);
     }
 
-    public void setFiringRate(int firingRate){
+    public void setFiringRate(int firingRate) {
         // We convert the firing rate from shots per second to nanoseconds
-        this.firingRate = firingRate*1000000000f;
+        this.firingRate = firingRate * 1000000000f;
     }
 
-    public void setDamage(int damage){
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
     public int getDamage() {
-    	return damage;
+        return damage;
     }
 
-    public void setMaxHealth(int maxHealth){
+    public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
 
     public int getMaxHealth() {
-    	return maxHealth;
+        return maxHealth;
     }
-    public void setHealth(int health){
+
+    public void setHealth(int health) {
         this.health = health;
     }
 
@@ -148,7 +148,7 @@ public abstract class Entity {
     }
 
     public float getSpeed() {
-    	return speed;
+        return speed;
     }
 
     public int getHealth() {

@@ -2,15 +2,14 @@ package gameView.panels;
 
 import gameView.AssetManager;
 import gameView.ViewController;
-import gameView.customButtons.TowerDragButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MainScreen extends JPanel {
     private ViewController viewController;
@@ -18,6 +17,7 @@ public class MainScreen extends JPanel {
 
     // This map contains the sprites of the towers and their description to be displayed in the main menu
     Map<BufferedImage, JLabel> towerSprites;
+
     public MainScreen(ViewController viewController) {
         this.viewController = viewController;
         setLayout(null);
@@ -53,12 +53,14 @@ public class MainScreen extends JPanel {
     }
 
 
-    /** Initializes the play button */
+    /**
+     * Initializes the play button
+     */
     private void initPlayButton() {
         playButton = new JButton("Play");
         //button.setFocusable(false);
-        playButton.setBounds((int) (ViewController.WIDTH*0.70f), (int) (ViewController.HEIGHT*0.35f),
-                ViewController.WIDTH/5, ViewController.HEIGHT/5);
+        playButton.setBounds((int) (ViewController.WIDTH * 0.70f), (int) (ViewController.HEIGHT * 0.35f),
+                ViewController.WIDTH / 5, ViewController.HEIGHT / 5);
         playButton.setFont(new Font("Arial", Font.PLAIN, 20));
         playButton.setVerticalAlignment(SwingConstants.CENTER);
         playButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,28 +81,30 @@ public class MainScreen extends JPanel {
     }
 
 
-    /** This function is responsible for displaying global information on the towers in the main menu */
+    /**
+     * This function is responsible for displaying global information on the towers in the main menu
+     */
     private void displayTowerInfo(Graphics g) {
         // First we display a plain background
         g.setColor(Color.LIGHT_GRAY);
-        int backgroundX = (int) (ViewController.WIDTH*0.1f), backgroundY = (int) (ViewController.HEIGHT*0.1f);
-        int backgroundWidth = (int) (ViewController.WIDTH*0.5f), backgroundHeight = (int) (ViewController.HEIGHT*0.8f);
+        int backgroundX = (int) (ViewController.WIDTH * 0.1f), backgroundY = (int) (ViewController.HEIGHT * 0.1f);
+        int backgroundWidth = (int) (ViewController.WIDTH * 0.5f), backgroundHeight = (int) (ViewController.HEIGHT * 0.8f);
         g.fillRect(backgroundX, backgroundY, backgroundWidth, backgroundHeight);
 
 
-        int xOffset = (int) (backgroundX/2 + (ViewController.WIDTH*0.1f));
-        int yOffset = (int) (backgroundY/2+ (ViewController.HEIGHT*0.15f));
+        int xOffset = (int) (backgroundX / 2 + (ViewController.WIDTH * 0.1f));
+        int yOffset = (int) (backgroundY / 2 + (ViewController.HEIGHT * 0.15f));
 
-        int imgWidth = (int) (ViewController.WIDTH*0.1f);
-        int imgHeight = (int) (ViewController.HEIGHT*0.1f);
+        int imgWidth = (int) (ViewController.WIDTH * 0.1f);
+        int imgHeight = (int) (ViewController.HEIGHT * 0.1f);
 
         g.setColor(Color.BLACK);
-        for(Map.Entry<BufferedImage, JLabel> e : towerSprites.entrySet()){
+        for (Map.Entry<BufferedImage, JLabel> e : towerSprites.entrySet()) {
             g.drawImage(e.getKey(), xOffset, yOffset, imgWidth, imgHeight, null);
-            e.getValue().setBounds(xOffset + imgWidth, yOffset, imgWidth*3, imgHeight);
+            e.getValue().setBounds(xOffset + imgWidth, yOffset, imgWidth * 3, imgHeight);
 
             // We created a dedicated JLabel for the description, we just have to display it
-            yOffset += (int) (imgHeight*1.2f);
+            yOffset += (int) (imgHeight * 1.2f);
         }
     }
 
@@ -108,7 +112,7 @@ public class MainScreen extends JPanel {
         // We display a small menu using a dialog object from Swing
         String[] options = {"Resume", "Quit"};
         int choice = JOptionPane.showOptionDialog(this, "Do you want to quit ?", "Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if(choice == 1){
+        if (choice == 1) {
             // We quit the game
             System.exit(0);
         }

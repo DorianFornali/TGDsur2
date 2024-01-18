@@ -4,11 +4,11 @@ import gameLogic.Game;
 import gameLogic.Stage;
 import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
+import gameLogic.entity.GlobalWave;
 import gameLogic.entity.MoneyCoin;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameLogic.entity.TowerType;
-import gameLogic.entity.GlobalWave;
 import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.customButtons.TowerDragButton;
@@ -65,11 +65,11 @@ public class GameScreen extends JPanel {
 
     private void drawHealth(Graphics g) {
         int health = currentStage.playerHealth;
-        BufferedImage toDraw = healthIcon.getSubimage(0, (5-health)*healthIcon.getHeight()/6, healthIcon.getWidth(), healthIcon.getHeight()/6);
-        int drawingWidth = (int) (ViewController.WIDTH*0.15);
-        int drawingHeight = (int) (playerMoneyLabel.getHeight()*1.5);
-        int drawingX = (int) (playerMoneyLabel.getX()*0.95f);
-        int drawingY = (int) (playerMoneyLabel.getY() + drawingHeight*0.6);
+        BufferedImage toDraw = healthIcon.getSubimage(0, (5 - health) * healthIcon.getHeight() / 6, healthIcon.getWidth(), healthIcon.getHeight() / 6);
+        int drawingWidth = (int) (ViewController.WIDTH * 0.15);
+        int drawingHeight = (int) (playerMoneyLabel.getHeight() * 1.5);
+        int drawingX = (int) (playerMoneyLabel.getX() * 0.95f);
+        int drawingY = (int) (playerMoneyLabel.getY() + drawingHeight * 0.6);
 
         g.drawImage(toDraw, drawingX, drawingY, drawingWidth, drawingHeight, null);
     }
@@ -85,14 +85,16 @@ public class GameScreen extends JPanel {
         g.fillRect(0, 0, ViewController.WIDTH, ViewController.HEIGHT);
     }
 
-    private void drawTowerButton(Graphics g){
-        for(TowerDragButton t : towerButtons){
+    private void drawTowerButton(Graphics g) {
+        for (TowerDragButton t : towerButtons) {
             g.drawImage(t.getBackground(), t.getBackgroundX(), t.getBackgroundY(), t.getBackgroundWidth(), t.getBackgroundHeight(), null);
         }
     }
 
 
-    /** Render all entities */
+    /**
+     * Render all entities
+     */
     private void renderEntities(Graphics g) {
         renderTowers(g);
         renderEnemies(g);
@@ -100,8 +102,8 @@ public class GameScreen extends JPanel {
     }
 
     private void renderProjectiles(Graphics g) {
-        for(Projectile p : currentStage.projectilesAlive){
-            if(p != null && p.inTheWindow) {
+        for (Projectile p : currentStage.projectilesAlive) {
+            if (p != null && p.inTheWindow) {
                 BufferedImage img = p.getSprite();
                 Rectangle hitbox = p.getHitbox();
                 int drawingX = (int) hitbox.getX();
@@ -121,7 +123,7 @@ public class GameScreen extends JPanel {
     }
 
     private void renderTowers(Graphics g) {
-        for(Tower[] rowOfTower : currentStage.gameBoard) {
+        for (Tower[] rowOfTower : currentStage.gameBoard) {
             for (Tower tower : rowOfTower) {
                 if (tower != null && tower.isAlive()) {
                     BufferedImage img = tower.getSprite();
@@ -140,9 +142,9 @@ public class GameScreen extends JPanel {
                      */
                     // Additionally we want to take care of isolated cases such as the Global
                     // that needs another rendering step: its linked attack (the wave)
-                    switch(tower.getTowerType()){
+                    switch (tower.getTowerType()) {
                         case GLOBAL:
-                            drawGlobalWave(tower.getGlobalWave(), g, drawingX+cellWidth/2, drawingY+cellHeight/2);
+                            drawGlobalWave(tower.getGlobalWave(), g, drawingX + cellWidth / 2, drawingY + cellHeight / 2);
                             break;
                         case MONEY:
                             drawMoneyIcon(tower, g);
@@ -156,8 +158,8 @@ public class GameScreen extends JPanel {
 
 
     private void renderEnemies(Graphics g) {
-    for(Enemy enemy : currentStage.enemiesAlive){
-            if(enemy != null && enemy.isUsed) {
+        for (Enemy enemy : currentStage.enemiesAlive) {
+            if (enemy != null && enemy.isUsed) {
                 BufferedImage img = enemy.getSprite();
                 int drawingX = (int) enemy.getX();
                 int drawingY = (int) enemy.getY();
@@ -191,26 +193,26 @@ public class GameScreen extends JPanel {
         cellHeight = gridHeight / n;
 
         g.setColor(Color.BLACK);
-        for (int i = 0; i < m-1; i++) {
+        for (int i = 0; i < m - 1; i++) {
             int x = i * cellWidth;
             g.drawRect(x, topHeight, cellWidth, gridHeight);
         }
-        for (int j = 0; j < n-1; j++) {
+        for (int j = 0; j < n - 1; j++) {
             int y = topHeight + j * cellHeight;
             g.drawRect(0, y, panelWidth, cellHeight);
         }
     }
 
-    private void drawTowerHUD(Graphics g){
+    private void drawTowerHUD(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0, 0, getWidth(), (int) (0.15*getHeight()));
+        g.fillRect(0, 0, getWidth(), (int) (0.15 * getHeight()));
     }
 
     public void displayPauseMenu() {
         // We display a small menu using a dialog object from Swing
         String[] options = {"Resume", "Back to main menu"};
         int choice = JOptionPane.showOptionDialog(this, "Game paused", "Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if(choice == 1){
+        if (choice == 1) {
             // We quit the game
             viewController.setCurrentPanel(new MainScreen(viewController));
             Game.IN_GAME = false;
@@ -222,16 +224,16 @@ public class GameScreen extends JPanel {
     private void initUI() {
         // Initializing the fasten button
         fastenButtonSprites = new ImageIcon[]{
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH/20, ViewController.WIDTH/20, Image.SCALE_DEFAULT))
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT))
         };
 
         fastenButton = new JButton(fastenButtonSprites[0]);
 
-        int buttonSize = ViewController.WIDTH/20;
+        int buttonSize = ViewController.WIDTH / 20;
         fastenButton.setPreferredSize(new Dimension(buttonSize, buttonSize));
-        fastenButton.setBounds((int) (ViewController.WIDTH*0.9), buttonSize/2, buttonSize, buttonSize);
+        fastenButton.setBounds((int) (ViewController.WIDTH * 0.9), buttonSize / 2, buttonSize, buttonSize);
         fastenButton.setVisible(true);
         fastenButton.setFocusable(false);
         fastenButton.addActionListener(new ActionListener() {
@@ -244,13 +246,13 @@ public class GameScreen extends JPanel {
 
         // Intializing the player money label
         playerMoneyLabel = new JLabel("TEST");
-        int labelSize = ViewController.WIDTH/10;
-        playerMoneyLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        int labelSize = ViewController.WIDTH / 10;
+        playerMoneyLabel.setPreferredSize(new Dimension(labelSize, labelSize / 4));
         playerMoneyLabel.setForeground(Color.BLACK);
         playerMoneyLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        playerMoneyLabel.setBounds((int) (ViewController.WIDTH*0.55), (int) (ViewController.HEIGHT*0.06), labelSize*2, labelSize/4);
-        moneyLocationX = (int) (ViewController.WIDTH*0.55);
-        moneyLocationY = (int) (ViewController.HEIGHT*0.06);
+        playerMoneyLabel.setBounds((int) (ViewController.WIDTH * 0.55), (int) (ViewController.HEIGHT * 0.06), labelSize * 2, labelSize / 4);
+        moneyLocationX = (int) (ViewController.WIDTH * 0.55);
+        moneyLocationY = (int) (ViewController.HEIGHT * 0.06);
         playerMoneyLabel.setVisible(true);
         add(playerMoneyLabel);
 
@@ -265,44 +267,46 @@ public class GameScreen extends JPanel {
 
     private void initInfoLabels() {
         JLabel tLabel = new JLabel("Press T to speed up the game");
-        int labelSize = ViewController.WIDTH/10;
-        tLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        int labelSize = ViewController.WIDTH / 10;
+        tLabel.setPreferredSize(new Dimension(labelSize, labelSize / 4));
         tLabel.setForeground(Color.DARK_GRAY);
         tLabel.setFont(new Font("Arial", Font.ITALIC, 11));
-        tLabel.setBounds(ViewController.WIDTH/2 + labelSize*2, (int) (ViewController.HEIGHT*0.08), labelSize*2, labelSize/4);
+        tLabel.setBounds(ViewController.WIDTH / 2 + labelSize * 2, (int) (ViewController.HEIGHT * 0.08), labelSize * 2, labelSize / 4);
         tLabel.setVisible(true);
         add(tLabel);
 
         JLabel escLabel = new JLabel("Press Esc to pause the game");
-        escLabel.setPreferredSize(new Dimension(labelSize , labelSize/4));
+        escLabel.setPreferredSize(new Dimension(labelSize, labelSize / 4));
         escLabel.setForeground(Color.DARK_GRAY);
         escLabel.setFont(new Font("Arial", Font.ITALIC, 11));
-        escLabel.setBounds(ViewController.WIDTH/2 + labelSize*2, (int) (ViewController.HEIGHT*0.04), labelSize*2, labelSize/4);
+        escLabel.setBounds(ViewController.WIDTH / 2 + labelSize * 2, (int) (ViewController.HEIGHT * 0.04), labelSize * 2, labelSize / 4);
         escLabel.setVisible(true);
         add(escLabel);
     }
 
     private void initTowerButtons() {
         this.towerButtons = new ArrayList<>();
-        int squareSize = ViewController.WIDTH/15;
-        int offset = (int) (ViewController.WIDTH*0.01f);
-        for(TowerType t: TowerType.values()){
-            TowerDragButton towerDragButton = new TowerDragButton(offset, (int) ((ViewController.HEIGHT)*0.05f),
+        int squareSize = ViewController.WIDTH / 15;
+        int offset = (int) (ViewController.WIDTH * 0.01f);
+        for (TowerType t : TowerType.values()) {
+            TowerDragButton towerDragButton = new TowerDragButton(offset, (int) ((ViewController.HEIGHT) * 0.05f),
                     squareSize, squareSize, viewController, t);
             towerButtons.add(towerDragButton);
             add(towerDragButton.getDragButton());
-            offset += ViewController.WIDTH/10;
+            offset += ViewController.WIDTH / 10;
             add(towerDragButton.getTowerPriceLabel());
         }
 
     }
 
     private void updateButtonIcon() {
-        fastenButton.setIcon(fastenButtonSprites[Game.CURRENT_SPEED_FACTOR-1]);
+        fastenButton.setIcon(fastenButtonSprites[Game.CURRENT_SPEED_FACTOR - 1]);
         fastenButton.setVisible(!Game.PAUSED);
     }
 
-    /** Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size*/
+    /**
+     * Fetch information on the gameboard to determine the height of a game cell, to calculate the hitbox's size
+     */
     public static int calculateCellHeight() {
         int n = Stage.nrows;
         int panelHeight = ViewController.HEIGHT;
@@ -312,7 +316,9 @@ public class GameScreen extends JPanel {
         return cellHeight;
     }
 
-    /** Fetch information on the gameboard to determine the width of a game cell, to calculate the hitbox's size*/
+    /**
+     * Fetch information on the gameboard to determine the width of a game cell, to calculate the hitbox's size
+     */
     public static int calculateCellWidth() {
         int m = Stage.mcols;
         int panelWidth = ViewController.WIDTH;
@@ -322,32 +328,36 @@ public class GameScreen extends JPanel {
         return cellWidth;
     }
 
-    /** Converts a row to coordinates */
-    public static float rowToY(int row){
+    /**
+     * Converts a row to coordinates
+     */
+    public static float rowToY(int row) {
         //return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
-        return (float) (ViewController.HEIGHT*0.15 + row * ((ViewController.HEIGHT-ViewController.HEIGHT*0.15)/Stage.nrows));
+        return (float) (ViewController.HEIGHT * 0.15 + row * ((ViewController.HEIGHT - ViewController.HEIGHT * 0.15) / Stage.nrows));
     }
 
-    public static float columnToX(int column){
-        return (float) (column * ((ViewController.WIDTH)/Stage.mcols));
+    public static float columnToX(int column) {
+        return (float) (column * ((ViewController.WIDTH) / Stage.mcols));
     }
 
 
-    /** Draws a circle with center the tower that shoots,
-     *  this circle will quickly get bigger, then disappear once out of bounds */
+    /**
+     * Draws a circle with center the tower that shoots,
+     * this circle will quickly get bigger, then disappear once out of bounds
+     */
     private void drawGlobalWave(GlobalWave globalWaveToDraw, Graphics g, int centerX, int centerY) {
-        if(globalWaveToDraw == null) return;
+        if (globalWaveToDraw == null) return;
         g.setColor(Color.RED);
         int r = globalWaveToDraw.getRadius();
-        g.drawOval(centerX - r, centerY - r, 2*r, 2*r);
+        g.drawOval(centerX - r, centerY - r, 2 * r, 2 * r);
     }
 
     private void drawMoneyIcon(Tower tower, Graphics g) {
         MoneyCoin mc = tower.getMoneyCoin();
-        if(mc == null || mc.dead) return;
+        if (mc == null || mc.dead) return;
         BufferedImage toDraw = mc.getSprite();
 
-        g.drawImage(toDraw, (int) mc.getX(), (int) mc.getY(), cellWidth/2, cellHeight/2, null);
+        g.drawImage(toDraw, (int) mc.getX(), (int) mc.getY(), cellWidth / 2, cellHeight / 2, null);
 
     }
 }

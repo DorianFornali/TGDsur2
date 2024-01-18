@@ -14,7 +14,7 @@ public class SpawnObject {
     public float delay;
 
 
-    public SpawnObject(EnemyType enemyType, int row, float delay){
+    public SpawnObject(EnemyType enemyType, int row, float delay) {
         this.type = enemyType;
         this.row = row;
         this.delay = delay;

@@ -6,7 +6,7 @@ import gameView.ViewController;
 import gameView.panels.GameScreen;
 
 
-public class Tower extends Entity{
+public class Tower extends Entity {
 
     private Game game = Game.getInstance();
     private int damage;
@@ -27,28 +27,27 @@ public class Tower extends Entity{
 
     private boolean isAlive;
 
-    public Tower(){
+    public Tower() {
         super();
     }
 
-    /** Updates the tower, will call a function corresponding of the tower's type 
-     * We choose to do it that way instead of one class = one tower 
-     * */
-    public void update(){
+    /**
+     * Updates the tower, will call a function corresponding of the tower's type
+     * We choose to do it that way instead of one class = one tower
+     */
+    public void update() {
         super.update();
 
-        if(getHealth() <= 0){
+        if (getHealth() <= 0) {
             // Tower dies
             System.out.println("Tower died");
             setisAlive(false);
-        }
-
-        else if(getHealth() <= getMaxHealth()/2){
+        } else if (getHealth() <= getMaxHealth() / 2) {
             // Tower is hurt
             // TODO! Change spritesheet for a more "damaged" one
         }
 
-        switch(this.towerType){
+        switch (this.towerType) {
             case ATTACK:
                 updateAttackTower();
                 break;
@@ -67,12 +66,14 @@ public class Tower extends Entity{
         }
     }
 
-    /** The update function for the money tower */
+    /**
+     * The update function for the money tower
+     */
     private void updateMoneyTower() {
         // We first generate the coin for the first time
-        if(moneyCoin == null) initMoneyCoin();
+        if (moneyCoin == null) initMoneyCoin();
         moneyCoin.update(); // The coin will move towards the money label and when reached, increment player's money
-        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+        if (System.nanoTime() - previousFiring >= firingRate / Game.CURRENT_SPEED_FACTOR) {
             // At new shoot, we reset the coin as if it was a new one.
             moneyCoin.dead = false;
             moneyCoin.setX(getHitbox().x);
@@ -87,16 +88,16 @@ public class Tower extends Entity{
     }
 
     private void updateGlobalTower() {
-        if(globalWave == null) initGlobalWave();
+        if (globalWave == null) initGlobalWave();
         updateWaveRadius();
-        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+        if (System.nanoTime() - previousFiring >= firingRate / Game.CURRENT_SPEED_FACTOR) {
             // New shoot so we reset the circle to 0 radius to fake a new shoot when we actually use
             // the same wave
             this.globalWave.setRadius(0);
             System.out.println("global shot");
             // We must now apply the damage
-            for(Enemy e : game.getCurrentStage().enemiesAlive){
-                if(e.hitbox.x < ViewController.WIDTH-(e.hitbox.width/2)) {
+            for (Enemy e : game.getCurrentStage().enemiesAlive) {
+                if (e.hitbox.x < ViewController.WIDTH - (e.hitbox.width / 2)) {
                     // We want to hit only enemies that are already partially visible
                     // without this condition we would be hitting enemies outside the map as they are spawned
                     // slightly off of it
@@ -109,14 +110,14 @@ public class Tower extends Entity{
     }
 
     private void updateWaveRadius() {
-        this.globalWave.setRadius(this.globalWave.getRadius()+10*Game.CURRENT_SPEED_FACTOR);
+        this.globalWave.setRadius(this.globalWave.getRadius() + 10 * Game.CURRENT_SPEED_FACTOR);
     }
 
     private void updateMultiTower() {
-        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+        if (System.nanoTime() - previousFiring >= firingRate / Game.CURRENT_SPEED_FACTOR) {
             shootProjectile(0);
-            int row = Stage.getRowFromY((int)getY());
-            switch (row){
+            int row = Stage.getRowFromY((int) getY());
+            switch (row) {
                 case (0):
                     shootProjectile(0);
                     shootProjectile(1);
@@ -136,48 +137,50 @@ public class Tower extends Entity{
     }
 
     private void updateAttackTower() {
-        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+        if (System.nanoTime() - previousFiring >= firingRate / Game.CURRENT_SPEED_FACTOR) {
             shootProjectile(0);
             previousFiring = System.nanoTime();
         }
     }
 
-    public void setCanShoot(boolean canShoot){
+    public void setCanShoot(boolean canShoot) {
         this.canShoot = canShoot;
     }
 
-    public void setCanBlock(boolean canBlock){
+    public void setCanBlock(boolean canBlock) {
         this.canBlock = canBlock;
     }
-    
-    public void setTowerType(TowerType towerType){
+
+    public void setTowerType(TowerType towerType) {
         this.towerType = towerType;
     }
 
     public void setisAlive(boolean isAlive) {
-    	this.isAlive = isAlive;
+        this.isAlive = isAlive;
     }
 
     public boolean isAlive() {
-    	return this.isAlive;
+        return this.isAlive;
     }
 
 
-    public void setHitbox(){
+    public void setHitbox() {
         int cellWidth = GameScreen.calculateCellWidth();
         int cellHeight = GameScreen.calculateCellHeight();
 
-        int hitboxWidth = (int) (cellWidth*0.8), hitboxHeight = cellHeight/2;
+        int hitboxWidth = (int) (cellWidth * 0.8), hitboxHeight = cellHeight / 2;
         super.setHitbox(5000, 5000, hitboxWidth, hitboxHeight);
     }
 
-    /** Creates a projectile at the tower location */
-    private void shootProjectile(int rowOffSet){
+    /**
+     * Creates a projectile at the tower location
+     */
+    private void shootProjectile(int rowOffSet) {
         int YOffSet = rowOffSet * GameScreen.calculateCellHeight();
         Projectile p = new Projectile();
-        p.setX(getX() + (float) getHitbox().getWidth() /2);
-        p.setY((float) (getY() + getHitbox().getHeight()/2) + YOffSet);
-        p.setHitbox(-500, -500, GameScreen.calculateCellWidth()/4, GameScreen.calculateCellHeight()/4);
+        p.setX(getX() + (float) getHitbox().getWidth() / 2);
+        p.setY((float) (getY() + getHitbox().getHeight() / 2) + YOffSet);
+        p.setHitbox(-500, -500, GameScreen.calculateCellWidth() / 4, GameScreen.calculateCellHeight() / 4);
         p.setSpeed(getSpeed());
         p.setDamage(getDamage());
         game.getCurrentStage().projectilesAlive.add(p);
@@ -187,15 +190,15 @@ public class Tower extends Entity{
         return towerType;
     }
 
-    public GlobalWave getGlobalWave(){
+    public GlobalWave getGlobalWave() {
         return globalWave;
     }
 
-    public MoneyCoin getMoneyCoin(){
+    public MoneyCoin getMoneyCoin() {
         return moneyCoin;
     }
 
-    private void initMoneyCoin(){
+    private void initMoneyCoin() {
         MoneyCoin mc = new MoneyCoin();
         mc.setX(getHitbox().x);
         mc.setY(getHitbox().y);
@@ -205,7 +208,7 @@ public class Tower extends Entity{
 
     }
 
-    private void initGlobalWave(){
+    private void initGlobalWave() {
         GlobalWave gw = new GlobalWave(this);
         this.globalWave = gw;
     }

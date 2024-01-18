@@ -7,23 +7,25 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/** This class is used to load assets and retrieve them easily */
+/**
+ * This class is used to load assets and retrieve them easily
+ */
 public class AssetManager {
     private static AssetManager instance = null;
     private Map<String, BufferedImage> assets;
 
-    private AssetManager(){
+    private AssetManager() {
         this.assets = new HashMap<>();
     }
 
-    public static AssetManager getInstance(){
-        if(instance == null){
+    public static AssetManager getInstance() {
+        if (instance == null) {
             instance = new AssetManager();
         }
         return instance;
     }
 
-    public void loadAssets(){
+    public void loadAssets() {
         // We load all assets in a hashmap to retrieve them easily
         BufferedImage img = null;
         loadButtons(img);
@@ -86,7 +88,9 @@ public class AssetManager {
         }
     }
 
-    /** Load all buttons UIs */
+    /**
+     * Load all buttons UIs
+     */
     private void loadButtons(BufferedImage img) {
         try {
             img = ImageIO.read(new File("assets/sprites/ui/fastenButton1.png"));

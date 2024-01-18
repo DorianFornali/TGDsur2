@@ -8,9 +8,6 @@ import gameView.panels.MainScreen;
 import inputs.InputController;
 import observerPattern.GameEvent;
 import observerPattern.Observer;
-import java.io.File;
-import java.io.IOException;
-import javax.sound.sampled.*;
 
 import javax.swing.*;
 
@@ -48,7 +45,7 @@ public class Game implements Runnable, Observer {
     }
 
     public static Game getInstance() {
-        if(gameInstance == null) {
+        if (gameInstance == null) {
             gameInstance = new Game();
         }
         return gameInstance;
@@ -64,7 +61,7 @@ public class Game implements Runnable, Observer {
         gameLoop.start();
     }
 
-    public void restartGameLoop(){
+    public void restartGameLoop() {
         gameLoop.interrupt();
         gameLoop = new Thread(this);
         gameLoop.start();
@@ -74,7 +71,8 @@ public class Game implements Runnable, Observer {
     public void run() {
         // Game loop executed on a different thread
 
-        int frames = 0; long lastCheck = 0;
+        int frames = 0;
+        long lastCheck = 0;
         double timePerFrame = 1000000000.0 / FPS_SET; // Time per frame (nano seconds)
         double timePerUpdate = 1000000000.0 / UPS_SET; // Delay between updates (nano seconds)
 
@@ -84,28 +82,28 @@ public class Game implements Runnable, Observer {
         double deltaU = 0;
         double deltaF = 0;
 
-        while(!Thread.interrupted()) {
+        while (!Thread.interrupted()) {
             long currentTime = System.nanoTime();
 
             deltaU += (currentTime - previousTime) / timePerUpdate;
             deltaF += (currentTime - previousTime) / timePerFrame;
             previousTime = currentTime;
 
-            if(deltaU >= 1) {
+            if (deltaU >= 1) {
                 this.updateGameLogic();
 
                 updates++;
                 deltaU--;
             }
 
-            if(deltaF >= 1) {
+            if (deltaF >= 1) {
                 SwingUtilities.invokeLater(viewController::renderGraphics);
 
                 deltaF--;
                 frames++;
             }
 
-            if(System.currentTimeMillis() - lastCheck >= 1000) {
+            if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
                 System.out.println("FPS : " + frames + " UPS : " + updates);
                 frames = 0;
@@ -118,7 +116,7 @@ public class Game implements Runnable, Observer {
     private void updateGameLogic() {
         // Game logic update
         //generateEvent("TEST_EVENT", null);
-        if(currentStage != null && !PAUSED)
+        if (currentStage != null && !PAUSED)
             currentStage.update();
 
     }
@@ -128,7 +126,7 @@ public class Game implements Runnable, Observer {
     }
 
 
-    public Stage getCurrentStage(){
+    public Stage getCurrentStage() {
         return currentStage;
     }
 
@@ -140,25 +138,25 @@ public class Game implements Runnable, Observer {
         return viewController;
     }
 
-    public int getUPS(){
+    public int getUPS() {
         return UPS_SET;
     }
 
-    public void setUPS(int ups){
+    public void setUPS(int ups) {
         UPS_SET = ups;
     }
 
     public void fastenTheGame() {
-        if(!IN_GAME)
+        if (!IN_GAME)
             return;
-        switch(Game.CURRENT_SPEED_FACTOR){
+        switch (Game.CURRENT_SPEED_FACTOR) {
             case 1:
-                setUPS(getUPS()+60);
+                setUPS(getUPS() + 60);
                 Game.CURRENT_SPEED_FACTOR = 2;
                 restartGameLoop();
                 break;
             case 2:
-                setUPS(getUPS()+60);
+                setUPS(getUPS() + 60);
                 Game.CURRENT_SPEED_FACTOR = 3;
                 getInstance().restartGameLoop();
                 break;
@@ -173,7 +171,7 @@ public class Game implements Runnable, Observer {
     @Override
     public void receiveEventNotification(GameEvent event) {
         String typeEvent = event.getEventType();
-        switch(typeEvent) {
+        switch (typeEvent) {
             case "TEST_EVENT":
                 System.out.println("Test event received by Game");
                 break;
@@ -181,7 +179,7 @@ public class Game implements Runnable, Observer {
                 fastenTheGame();
                 break;
 
-                // Tower placement
+            // Tower placement
             case "TOWER_PLACEMENT_ATTACK":
                 currentStage.spawnTower(event.getEventData(), TowerType.ATTACK);
                 break;
@@ -197,7 +195,7 @@ public class Game implements Runnable, Observer {
             case "TOWER_PLACEMENT_GLOBAL":
                 currentStage.spawnTower(event.getEventData(), TowerType.GLOBAL);
                 break;
-                // Music playing
+            // Music playing
             case "MAIN_MUSIC_PLAY":
                 audioPlayer.playSong(AudioPlayer.MAIN_MUSIC);
                 break;

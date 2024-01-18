@@ -1,15 +1,22 @@
 package gameLogic;
 
 import audio.AudioPlayer;
-import gameLogic.entity.*;
+import gameLogic.entity.Enemy;
+import gameLogic.entity.EnemyFactory;
+import gameLogic.entity.EnemyType;
+import gameLogic.entity.Entity;
+import gameLogic.entity.Projectile;
+import gameLogic.entity.Tower;
+import gameLogic.entity.TowerFactory;
+import gameLogic.entity.TowerType;
 import gameLogic.spawn.SpawnObject;
 import gameLogic.spawn.SpawnObjectStack;
 import gameView.ViewController;
 import observerPattern.GameEvent;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import observerPattern.Observable;
 import observerPattern.Observer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.File;
@@ -19,16 +26,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stage implements Observable {
-    /** The game board, contains the towers the player has placed */
+    /**
+     * The game board, contains the towers the player has placed
+     */
     public Tower[][] gameBoard;
 
-    /** The list of alive entities in the borad. Alive means they must be rendered in the View controller */
+    /**
+     * The list of alive entities in the borad. Alive means they must be rendered in the View controller
+     */
     public List<Enemy> enemiesAlive;
     public List<Projectile> projectilesAlive;
     public EnemyFactory enemyFactory;
     public TowerFactory towerFactory;
 
-    /** The amount of rows and columns in the gameBoard */
+    /**
+     * The amount of rows and columns in the gameBoard
+     */
     public static int nrows = 7, mcols = 10;
     public StageNumero stageNumero;
 
@@ -65,8 +78,8 @@ public class Stage implements Observable {
         this.spawnDelay = 0f;
         this.spawningStack = initSpawnStack();
         this.previousMoneyGenerationTimer = System.nanoTime();
-        this.moneyGenerationDelay = 5f * 1000000000.0;;
-        setPlayerMoney(10000);
+        this.moneyGenerationDelay = 5f * 1000000000.0;
+        setPlayerMoney(50);
         addObserver(viewController);
     }
 
@@ -78,8 +91,8 @@ public class Stage implements Observable {
         return this.playerMoney;
     }
 
-    public void update(){
-        if(stageEnded) return;
+    public void update() {
+        if (stageEnded) return;
         updateEntities();
         spawnEnemies();
         checkCollisions();
@@ -87,20 +100,24 @@ public class Stage implements Observable {
         checkStageEnd();
     }
 
-    /** Checks if the stage is over, if so, we notify the view controller */
+    /**
+     * Checks if the stage is over, if so, we notify the view controller
+     */
     private void checkStageEnd() {
-        if(!spawningStack.isEmpty()) return;
+        if (!spawningStack.isEmpty()) return;
         // at this point we spawned everything we had to spawn, we check if there are still enemies alive
-        if(enemiesAlive.isEmpty() && !stageEnded){
+        if (enemiesAlive.isEmpty() && !stageEnded) {
             // The stage is over, we notify the view controller
             generateEvent("STAGE_COMPLETED", this.stageNumero);
             stageEnded = true;
         }
     }
 
-    /** Natural money generation, not via money tower */
+    /**
+     * Natural money generation, not via money tower
+     */
     private void generateMoney() {
-        if(System.nanoTime() - previousMoneyGenerationTimer >= moneyGenerationDelay/Game.CURRENT_SPEED_FACTOR){
+        if (System.nanoTime() - previousMoneyGenerationTimer >= moneyGenerationDelay / Game.CURRENT_SPEED_FACTOR) {
             // Delay has passed, we can generate money
             System.out.println("Generating money");
             this.playerMoney += 25;
@@ -112,17 +129,17 @@ public class Stage implements Observable {
      * Spawns an enemy in the spawn stack and wait the corresponding delay before spawning the next one
      */
     private void spawnEnemies() {
-        if(spawningStack.isEmpty()) return;
+        if (spawningStack.isEmpty()) return;
 
-        if(System.nanoTime() - previousTimer >= spawnDelay){
+        if (System.nanoTime() - previousTimer >= spawnDelay) {
             // Delay has passed, we can go on to the next enemy to spawn
             SpawnObject so = spawningStack.pop();
             EnemyType enemyType = so.type;
             int row = so.row;
 
-            double delay = (so.delay * 1000000000.0)/Game.CURRENT_SPEED_FACTOR; // seconds to nanoseconds, and taking into account the in-game speed
+            double delay = (so.delay * 1000000000.0) / Game.CURRENT_SPEED_FACTOR; // seconds to nanoseconds, and taking into account the in-game speed
 
-            switch(enemyType){
+            switch (enemyType) {
                 case WEAK -> {
                     Enemy e = enemyFactory.createWeakEnemy(row);
                     enemiesAlive.add(e);
@@ -148,7 +165,9 @@ public class Stage implements Observable {
 
     }
 
-    /** Occurs when Game receives message from ViewController, means the user tries to place a turret*/
+    /**
+     * Occurs when Game receives message from ViewController, means the user tries to place a turret
+     */
     public void spawnTower(Object eventData, TowerType towerType) {
         Point location = (Point) eventData;
         int locationX = location.x;
@@ -156,34 +175,34 @@ public class Stage implements Observable {
         int row = getRowFromY(locationY);
         int column = getColumnFromX(locationX);
 
-        if(row < 0 || row >= nrows || column < 0 || column >= mcols){
+        if (row < 0 || row >= nrows || column < 0 || column >= mcols) {
             // The user tried to place a tower outside the game board
             return;
         }
 
-        switch(towerType){
+        switch (towerType) {
             case ATTACK -> {
-                if(this.playerMoney < Tower.ATTACK_TOWER_PRICE) return;
+                if (this.playerMoney < Tower.ATTACK_TOWER_PRICE) return;
                 this.playerMoney -= Tower.ATTACK_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createAttackTower(row, column);
             }
             case DEFENSIVE -> {
-                if(this.playerMoney < Tower.DEFENSIVE_TOWER_PRICE) return;
+                if (this.playerMoney < Tower.DEFENSIVE_TOWER_PRICE) return;
                 this.playerMoney -= Tower.DEFENSIVE_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createDefensiveTower(row, column);
             }
             case MONEY -> {
-                if(this.playerMoney < Tower.MONEY_TOWER_PRICE) return;
+                if (this.playerMoney < Tower.MONEY_TOWER_PRICE) return;
                 this.playerMoney -= Tower.MONEY_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMoneyTower(row, column);
             }
             case MULTI -> {
-                if(this.playerMoney < Tower.MULTI_TOWER_PRICE) return;
+                if (this.playerMoney < Tower.MULTI_TOWER_PRICE) return;
                 this.playerMoney -= Tower.MULTI_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createMultiTower(row, column);
             }
             case GLOBAL -> {
-                if(this.playerMoney < Tower.GLOBAL_TOWER_PRICE) return;
+                if (this.playerMoney < Tower.GLOBAL_TOWER_PRICE) return;
                 this.playerMoney -= Tower.GLOBAL_TOWER_PRICE;
                 this.gameBoard[row][column] = towerFactory.createGlobalTower(row, column);
             }
@@ -198,7 +217,7 @@ public class Stage implements Observable {
      */
     private SpawnObjectStack initSpawnStack() throws IOException {
         String jsonPath = "";
-        switch(this.stageNumero){
+        switch (this.stageNumero) {
             case STAGE1 -> jsonPath = "config/stage1.json";
             case STAGE2 -> jsonPath = "config/stage2.json";
             case STAGE3 -> jsonPath = "config/stage3.json";
@@ -211,14 +230,14 @@ public class Stage implements Observable {
             File jsonfile = new File(jsonPath);
             String jsonString = Files.readString(jsonfile.toPath());
             enemiesJSONArray = new JSONObject(jsonString).getJSONArray("stage_enemies");
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         SpawnObjectStack stack = new SpawnObjectStack();
 
         // We fetch all the information to build a SpawnObject from the json
-        for(int i = enemiesJSONArray.length()-1; i > -1; i--){
+        for (int i = enemiesJSONArray.length() - 1; i > -1; i--) {
             // We iterate from end to start as we want our enemies to be spawned in the json order
             // (we use a stack, so we start by pushing the last element)
             EnemyType type = EnemyType.valueOf(enemiesJSONArray.getJSONObject(i).getString("type"));
@@ -240,11 +259,11 @@ public class Stage implements Observable {
     private void updateEntities() {
         List<Enemy> enemiesToRemove = new ArrayList<Enemy>();
         // Update all entities
-        for(Entity e : enemiesAlive){
-            if(e != null) {
-                if(e instanceof Enemy) {
+        for (Entity e : enemiesAlive) {
+            if (e != null) {
+                if (e instanceof Enemy) {
                     Enemy enemy = (Enemy) e;
-                    if(((Enemy) e).toRemove()){
+                    if (((Enemy) e).toRemove()) {
                         // We need to remove the enemy from the list of entities outside the loop
                         enemiesToRemove.add(enemy);
                     }
@@ -253,18 +272,17 @@ public class Stage implements Observable {
             }
         }
 
-        for(Enemy e : enemiesToRemove) {
+        for (Enemy e : enemiesToRemove) {
             enemiesAlive.remove(e);
         }
 
         // Update all towers
-        for(int i = 0; i<nrows; i++){
-            for(int j = 0; j<mcols; j++){
-                if(gameBoard[i][j] != null){
-                    if(!gameBoard[i][j].isAlive()){
+        for (int i = 0; i < nrows; i++) {
+            for (int j = 0; j < mcols; j++) {
+                if (gameBoard[i][j] != null) {
+                    if (!gameBoard[i][j].isAlive()) {
                         gameBoard[i][j] = null;
-                    }
-                    else{
+                    } else {
                         gameBoard[i][j].update();
                     }
                 }
@@ -273,41 +291,44 @@ public class Stage implements Observable {
 
         // Update all projectiles
         List<Projectile> projectilesToRemove = new ArrayList<Projectile>();
-        for(Projectile p : projectilesAlive){
-            if(p != null) {
-                if(p.toRemove()){
+        for (Projectile p : projectilesAlive) {
+            if (p != null) {
+                if (p.toRemove()) {
                     // We need to remove the projectile from the list of entities outside the loop
                     projectilesToRemove.add(p);
                 }
                 p.update();
             }
         }
-        for(Projectile p : projectilesToRemove) {
+        for (Projectile p : projectilesToRemove) {
             projectilesAlive.remove(p);
         }
     }
 
-    private void checkCollisions(){
+    private void checkCollisions() {
         checkCollisionsProjectilesEnemies();
         checkCollisionsEnemiesTowers();
     }
 
-    /** Will check for every projectile alive if it's inside the hitbox of any alive enemy */
+    /**
+     * Will check for every projectile alive if it's inside the hitbox of any alive enemy
+     */
     private void checkCollisionsProjectilesEnemies() {
-        for(Projectile p : projectilesAlive){
-            if(p != null && p.inTheWindow) {
+        for (Projectile p : projectilesAlive) {
+            if (p != null && p.inTheWindow) {
                 for (Enemy e : enemiesAlive) {
                     if (e != null && e.isUsed) {
                         if (p.getHitbox().intersects(e.getHitbox())) {
                             // Collision between projectile and enemy
                             e.setHealth(e.getHealth() - p.getDamage());
                             p.inTheWindow = false;
-                            switch(e.getType()){
+                            switch (e.getType()) {
                                 // We play the correct hitting sound depending on the enemy type
                                 case WEAK -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.WEAK_HURT_SFX);
                                 case FAST -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.FAST_HURT_SFX);
                                 case TANK -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.TANK_HURT_SFX);
-                                case POLYVALENT -> Game.getInstance().audioPlayer.playEffect(AudioPlayer.POLYVALENT_HURT_SFX);
+                                case POLYVALENT ->
+                                        Game.getInstance().audioPlayer.playEffect(AudioPlayer.POLYVALENT_HURT_SFX);
                             }
                         }
                     }
@@ -317,10 +338,12 @@ public class Stage implements Observable {
 
     }
 
-    /** Will check for every enemy alive if it's inside the hitbox of any tower */
+    /**
+     * Will check for every enemy alive if it's inside the hitbox of any tower
+     */
     private void checkCollisionsEnemiesTowers() {
-        for(Enemy e : enemiesAlive){
-            if(e != null && e.isUsed) {
+        for (Enemy e : enemiesAlive) {
+            if (e != null && e.isUsed) {
                 for (int i = 0; i < nrows; i++) {
                     for (int j = 0; j < mcols; j++) {
                         if (gameBoard[i][j] != null) {
@@ -337,7 +360,6 @@ public class Stage implements Observable {
     }
 
 
-
     @Override
     public void addObserver(Observer observer) {
         this.observers.add(observer);
@@ -351,7 +373,7 @@ public class Stage implements Observable {
 
     @Override
     public void notifyObservers(GameEvent event) {
-        for(Observer observer : observers) {
+        for (Observer observer : observers) {
             observer.receiveEventNotification(event);
         }
     }
@@ -360,20 +382,23 @@ public class Stage implements Observable {
         GameEvent event = new GameEvent(eventType, eventData);
         notifyObservers(event);
     }
-    public static int getRowFromY(int y){
-        return ((int) (y / ((ViewController.HEIGHT*0.85) / nrows)))-1;
+
+    public static int getRowFromY(int y) {
+        return ((int) (y / ((ViewController.HEIGHT * 0.85) / nrows))) - 1;
     }
 
-    private int getColumnFromX(int x){
+    private int getColumnFromX(int x) {
         return x / (ViewController.WIDTH / mcols);
     }
 
-    /** Called when the player looses */
-    public void clearStage(){
+    /**
+     * Called when the player looses
+     */
+    public void clearStage() {
         enemiesAlive.clear();
         projectilesAlive.clear();
-        for(int i = 0; i<nrows; i++){
-            for(int j = 0; j<mcols; j++){
+        for (int i = 0; i < nrows; i++) {
+            for (int j = 0; j < mcols; j++) {
                 gameBoard[i][j] = null;
             }
         }

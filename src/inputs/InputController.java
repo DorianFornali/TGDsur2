@@ -19,7 +19,8 @@ public class InputController {
     public MouseListener getMouseController() {
         return this.mouseController;
     }
-    public KeyboardController getKeyboardController(){
+
+    public KeyboardController getKeyboardController() {
         return this.keyboardController;
     }
 

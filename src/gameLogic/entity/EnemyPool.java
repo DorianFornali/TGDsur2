@@ -1,34 +1,39 @@
 package gameLogic.entity;
 
-/** The singleton pool of objects for the game's enemies */
+/**
+ * The singleton pool of objects for the game's enemies
+ */
 public class EnemyPool {
     private static EnemyPool poolInstance;
     private static final int poolSize = 150;
     public int size;
     private Enemy[] pool;
-    public EnemyPool(int n){
+
+    public EnemyPool(int n) {
         this.size = n;
         initPool();
     }
 
     public static EnemyPool getInstance() {
-        if(poolInstance == null) {
+        if (poolInstance == null) {
             poolInstance = new EnemyPool(poolSize);
         }
         return poolInstance;
     }
 
-    /** Initializes the pool of object, creates n blank enemies */
+    /**
+     * Initializes the pool of object, creates n blank enemies
+     */
     private void initPool() {
         pool = new Enemy[size];
-        for(int i = 0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             pool[i] = new Enemy(i);
         }
     }
 
-    public Enemy allocateEnemy(){
-        for(int i = 0; i<size; i++){
-            if(!pool[i].isUsed){
+    public Enemy allocateEnemy() {
+        for (int i = 0; i < size; i++) {
+            if (!pool[i].isUsed) {
                 pool[i].initialize();
                 return pool[i];
             }
@@ -36,7 +41,7 @@ public class EnemyPool {
         return null;
     }
 
-    public void freeSpace(int index){
+    public void freeSpace(int index) {
         // We reset the enemy so it can be reused later
         pool[index].reset();
     }

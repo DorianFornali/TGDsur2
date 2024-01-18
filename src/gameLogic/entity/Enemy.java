@@ -5,7 +5,7 @@ import gameLogic.Game;
 import gameLogic.Stage;
 import gameView.panels.GameScreen;
 
-public class Enemy extends Entity{
+public class Enemy extends Entity {
     // Whether the Enemy is being used by the pool of object or not
     public boolean isUsed;
 
@@ -21,48 +21,49 @@ public class Enemy extends Entity{
 
     private EnemyType type;
 
-    public Enemy(int index){
+    public Enemy(int index) {
         this.index = index;
         this.isUsed = false;
         this.canHurtPlayer = true;
     }
 
 
-    /** Used when the enemy dies, resets its components to a blank state so
-     * the object can be reused */
+    /**
+     * Used when the enemy dies, resets its components to a blank state so
+     * the object can be reused
+     */
     public void reset() {
         this.isUsed = false;
     }
 
-    public void update(){
-        if(!isUsed) return;
+    public void update() {
+        if (!isUsed) return;
         super.update();
 
         updateTargetState();
         attack();
 
-        if(hitbox.x < 0 && canHurtPlayer){
+        if (hitbox.x < 0 && canHurtPlayer) {
             this.canHurtPlayer = false;
             setHealth(-1);
             Stage stage = Game.getInstance().getCurrentStage();
             stage.playerHealth--;
-            if (stage.playerHealth <=0 && Game.IN_GAME){
+            if (stage.playerHealth <= 0 && Game.IN_GAME) {
                 stage.generateEvent("GAME_OVER", null);
                 stage.clearStage();
             }
         }
 
         // Moving the enemy from right to left
-        if(!isAttacking)
-            setX(getX() - getSpeed() /10);
+        if (!isAttacking)
+            setX(getX() - getSpeed() / 10);
 
 
-        if(getHealth() <= 0){
+        if (getHealth() <= 0) {
             // Enemy dies
             reset();
             playDeathSound();
-        }
-        else if(getHealth() <= getMaxHealth()/2){
+        } else if (getHealth() <= getMaxHealth() / 2) {
             // Enemy is hurt
             // TODO! Change spritesheet for a more "damaged" one
         }
@@ -70,7 +71,7 @@ public class Enemy extends Entity{
     }
 
     private void playDeathSound() {
-        switch(this.type){
+        switch (this.type) {
             case WEAK:
                 Game.getInstance().audioPlayer.playEffect(AudioPlayer.WEAK_DEATH_SFX);
                 break;
@@ -86,9 +87,11 @@ public class Enemy extends Entity{
         }
     }
 
-    /** Checks if the current target is dead or not */
+    /**
+     * Checks if the current target is dead or not
+     */
     private void updateTargetState() {
-        if(target != null && !target.isAlive()){
+        if (target != null && !target.isAlive()) {
             // The target is dead, the enemy can move again
             target = null;
             isAttacking = false;
@@ -96,44 +99,46 @@ public class Enemy extends Entity{
     }
 
 
-    /** Attack function with firingRate as delay */
+    /**
+     * Attack function with firingRate as delay
+     */
     private void attack() {
-        if(!isAttacking || target == null) return;
-        if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
+        if (!isAttacking || target == null) return;
+        if (System.nanoTime() - previousFiring >= firingRate / Game.CURRENT_SPEED_FACTOR) {
             // The enemy can "shoot", in this case it simply attacks the tower
             target.setHealth(target.getHealth() - damage);
             previousFiring = System.nanoTime();
         }
     }
 
-    public void initialize(){
+    public void initialize() {
         this.isUsed = true;
     }
 
     public boolean toRemove() {
-    	return getHealth() <= 0;
+        return getHealth() <= 0;
     }
 
     public void setHitbox() {
         int cellWidth = GameScreen.calculateCellWidth();
         int cellHeight = GameScreen.calculateCellHeight();
 
-        int hitboxWidth = cellWidth/3, hitboxHeight = cellHeight/2;
+        int hitboxWidth = cellWidth / 3, hitboxHeight = cellHeight / 2;
         // Initial position doesn't matter as it'll get updated in the update() method
         // So we put it in a place where it won't collide with anything
         super.setHitbox(10000, 10000, hitboxWidth, hitboxHeight);
     }
 
     public void setTarget(Tower target) {
-    	this.target = target;
+        this.target = target;
     }
 
     public void setAttacking(boolean isAttacking) {
-    	this.isAttacking = isAttacking;
+        this.isAttacking = isAttacking;
     }
 
     public boolean isAttacking() {
-    	return isAttacking;
+        return isAttacking;
     }
 
     public void setType(EnemyType type) {
@@ -145,6 +150,6 @@ public class Enemy extends Entity{
     }
 
     public void setCanHurtPlayer(boolean canHurtPlayer) {
-    	this.canHurtPlayer = canHurtPlayer;
+        this.canHurtPlayer = canHurtPlayer;
     }
 }

@@ -4,11 +4,11 @@ import gameView.AssetManager;
 import gameView.ViewController;
 
 
-public class Projectile extends Entity{
+public class Projectile extends Entity {
 
     public boolean inTheWindow;
 
-    public Projectile(){
+    public Projectile() {
         initSpriteSheet();
         setSpriteSheet(spriteSheet);
         setNSPRITES(8);
@@ -16,20 +16,22 @@ public class Projectile extends Entity{
         this.inTheWindow = true;
     }
 
-    /** Initializes the spritesheet */
+    /**
+     * Initializes the spritesheet
+     */
     private void initSpriteSheet() {
         spriteSheet = AssetManager.getInstance().getSprite("projectile");
     }
 
-    public void update(){
+    public void update() {
         super.update();
         setX(getX() + getSpeed());
 
-        if(hitbox.x > ViewController.WIDTH)
+        if (hitbox.x > ViewController.WIDTH)
             inTheWindow = false;
     }
 
-    public boolean toRemove(){
+    public boolean toRemove() {
         return !inTheWindow;
     }
 

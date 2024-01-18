@@ -12,10 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.TooManyListenersException;
 
-/** This class represents the tower buttons in the game screen hud
- * Contains a JButton that is draggable and a background */
+/**
+ * This class represents the tower buttons in the game screen hud
+ * Contains a JButton that is draggable and a background
+ */
 public class TowerDragButton {
     private int backgroundX, backgroundY;
     private int buttonX, buttonY;
@@ -29,15 +30,15 @@ public class TowerDragButton {
     private BufferedImage background;
     private TowerType type;
 
-    public TowerDragButton(int x, int y, int width, int height, ViewController vc, TowerType type){
+    public TowerDragButton(int x, int y, int width, int height, ViewController vc, TowerType type) {
         this.backgroundX = x;
         this.backgroundY = y;
-        this.buttonX = x + width/8;
-        this.buttonY = y + height/8;
+        this.buttonX = x + width / 8;
+        this.buttonY = y + height / 8;
         this.backgroundWidth = width;
-        this.backgroundHeight= height;
-        this.buttonWidth = (int) (width*0.8);
-        this.buttonHeight = (int) (height*0.8);
+        this.backgroundHeight = height;
+        this.buttonWidth = (int) (width * 0.8);
+        this.buttonHeight = (int) (height * 0.8);
         this.background = AssetManager.getInstance().getSprite("tower_DragButton_background");
         this.vc = vc;
         this.type = type;
@@ -45,15 +46,15 @@ public class TowerDragButton {
         initLabel();
     }
 
-    public JButton getDragButton(){
+    public JButton getDragButton() {
         return dragButton;
     }
 
-    public BufferedImage getBackground(){
+    public BufferedImage getBackground() {
         return background;
     }
 
-    public JLabel getTowerPriceLabel(){
+    public JLabel getTowerPriceLabel() {
         return towerPrice;
     }
 
@@ -102,7 +103,7 @@ public class TowerDragButton {
     public void initLabel() {
         towerPrice = new JLabel();
         towerPrice.setText("NaN");
-        switch(type){
+        switch (type) {
             case ATTACK:
                 towerPrice.setText(String.valueOf(Tower.ATTACK_TOWER_PRICE));
                 break;
@@ -121,13 +122,15 @@ public class TowerDragButton {
         }
         towerPrice.setForeground(Color.BLACK);
         towerPrice.setFont(new Font("Arial", Font.BOLD, 16));
-        towerPrice.setBounds(backgroundX + backgroundWidth/4, (int) (backgroundY - backgroundHeight*0.75), backgroundWidth, backgroundHeight);
+        towerPrice.setBounds(backgroundX + backgroundWidth / 4, (int) (backgroundY - backgroundHeight * 0.75), backgroundWidth, backgroundHeight);
         towerPrice.setVisible(true);
     }
 
-    /** Associates the button to a custom mouse adapter that will allow us to move the button itself
-     * Additionally, associates an action listener to retrieve the final coordinates when button is released */
-    private void associateMouseAdapter(JButton button){
+    /**
+     * Associates the button to a custom mouse adapter that will allow us to move the button itself
+     * Additionally, associates an action listener to retrieve the final coordinates when button is released
+     */
+    private void associateMouseAdapter(JButton button) {
         final Point offset = new Point();
 
         button.addMouseListener(new MouseAdapter() {
@@ -158,7 +161,7 @@ public class TowerDragButton {
 
                 button.setLocation(buttonX, buttonY);
 
-                switch(type){
+                switch (type) {
                     case ATTACK:
                         vc.generateEvent("TOWER_PLACEMENT_ATTACK", finalLocation);
                         break;

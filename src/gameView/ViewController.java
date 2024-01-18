@@ -41,31 +41,31 @@ public class ViewController extends JFrame implements Observer, Observable {
     }
 
 
-
     /**
      * Renders graphics on the screen.
      */
     public void renderGraphics() {
-        if(this.currentPanel != null) {
+        if (this.currentPanel != null) {
             this.currentPanel.repaint();
         }
     }
 
 
-
-    public InputController getInputController(){
+    public InputController getInputController() {
         return inputController;
     }
+
     public void setInputController(InputController inputController) {
         this.inputController = inputController;
     }
 
     /**
      * Changes the current panel to the one passed as parameter while removing the current one.
+     *
      * @param panel The panel to be set as the new one.
      */
-    public void setCurrentPanel(JPanel panel){
-        if(this.currentPanel != null){
+    public void setCurrentPanel(JPanel panel) {
+        if (this.currentPanel != null) {
             // We remove the current panel from the frame
             remove(this.currentPanel);
             currentPanel.invalidate();
@@ -87,7 +87,7 @@ public class ViewController extends JFrame implements Observer, Observable {
     @Override
     public void receiveEventNotification(GameEvent event) {
         String typeEvent = event.getEventType();
-        switch(typeEvent) {
+        switch (typeEvent) {
             case "TEST_EVENT":
                 System.out.println("Test event received by ViewController");
                 break;
@@ -106,16 +106,16 @@ public class ViewController extends JFrame implements Observer, Observable {
 
     private void diplayStageCompleted(StageNumero sn) {
         String options[];
-        if(sn == StageNumero.STAGE3){
+        if (sn == StageNumero.STAGE3) {
             // There is no next level so we can only send the player back to main menu
             options = new String[]{"Back to main menu"};
-        }else
+        } else
             options = new String[]{"Back to main menu", "Next Level"};
 
         int choice = JOptionPane.showOptionDialog(this, "Congratulations, you completed this stage !", "Stage Completed", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if(choice == 1){
+        if (choice == 1) {
             try {
-                switch(sn){
+                switch (sn) {
                     case STAGE1 -> {
                         sn = StageNumero.STAGE2;
                         generateEvent("STAGE2_MUSIC_PLAY", null);
@@ -130,27 +130,26 @@ public class ViewController extends JFrame implements Observer, Observable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-        else {
+        } else {
 
             setCurrentPanel(new MainScreen(this));
             Game.IN_GAME = false;
         }
     }
 
-    private void displayGameOver(){
+    private void displayGameOver() {
         // We display a small menu using a dialog object from Swing
         String[] options = {"Back to main menu"};
         int choice = JOptionPane.showOptionDialog(this, "You lost ...", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if(choice == 0){
+        if (choice == 0) {
             // We quit the game
             setCurrentPanel(new MainScreen(this));
             Game.IN_GAME = false;
         }
     }
 
-    private void pauseGame(){
-        switch(this.currentPanel.getClass().getSimpleName()){
+    private void pauseGame() {
+        switch (this.currentPanel.getClass().getSimpleName()) {
             case "GameScreen":
                 Game.PAUSED = !Game.PAUSED;
 
@@ -183,7 +182,7 @@ public class ViewController extends JFrame implements Observer, Observable {
 
     @Override
     public void notifyObservers(GameEvent event) {
-        for(Observer observer : observers) {
+        for (Observer observer : observers) {
             observer.receiveEventNotification(event);
         }
     }

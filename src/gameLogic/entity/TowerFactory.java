@@ -14,7 +14,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Defensive tower");
-        buildMainStats(tower, 1000, 1000, 0, 1, 10,false, true);
+        buildMainStats(tower, 1000, 1000, 0, 1, 10, false, true);
         setCoords(tower, row, column);
         setSprites(tower, "defensiveTower", 1);
         tower.setHitbox();
@@ -28,7 +28,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Money tower");
-        buildMainStats(tower, 50, 50, 5, 5, 10,true, false);
+        buildMainStats(tower, 50, 50, 5, 5, 10, true, false);
         setCoords(tower, row, column);
         setSprites(tower, "moneyTower", 1);
         tower.setHitbox();
@@ -42,7 +42,7 @@ public class TowerFactory {
         Tower tower = new Tower();
 
         System.out.println("Creating Attack tower");
-        buildMainStats(tower, 100, 100, 25, 2, 10,true, true);
+        buildMainStats(tower, 100, 100, 25, 2, 10, true, true);
         setCoords(tower, row, column);
         setSprites(tower, "attackTower", 8);
         tower.setHitbox();
@@ -52,11 +52,11 @@ public class TowerFactory {
     }
 
     // Tower that attack on tree line at the same time (triple shooter in PVZ)
-    public Tower createMultiTower(int row, int column){
+    public Tower createMultiTower(int row, int column) {
         Tower tower = new Tower();
 
         System.out.println("Creating Multi tower");
-        buildMainStats(tower, 100, 100, 25, 2, 10,true, true);
+        buildMainStats(tower, 100, 100, 25, 2, 10, true, true);
         setCoords(tower, row, column);
         setSprites(tower, "multiTower", 1);
         tower.setHitbox();
@@ -66,11 +66,11 @@ public class TowerFactory {
     }
 
     // Tower that can attack every enemy on the map at the same time
-    public Tower createGlobalTower(int row, int column){
+    public Tower createGlobalTower(int row, int column) {
         Tower tower = new Tower();
 
         System.out.println("Creating Global tower");
-        buildMainStats(tower, 50, 50, 50, 5, 10,true, true);
+        buildMainStats(tower, 50, 50, 50, 5, 10, true, true);
         setCoords(tower, row, column);
         setSprites(tower, "globalTower", 1);
         tower.setHitbox();
@@ -79,7 +79,7 @@ public class TowerFactory {
         return tower;
     }
 
-    private void buildMainStats(Tower t, int health, int maxHealth, int damage, int firingRate, float speed, boolean canShoot, boolean canBlock){
+    private void buildMainStats(Tower t, int health, int maxHealth, int damage, int firingRate, float speed, boolean canShoot, boolean canBlock) {
         t.setHealth(health);
         t.setMaxHealth(maxHealth);
         t.setDamage(damage);
@@ -89,7 +89,7 @@ public class TowerFactory {
         t.setCanBlock(canBlock);
     }
 
-    private void setCoords(Tower t, int row, int column){
+    private void setCoords(Tower t, int row, int column) {
         // We set the X coordinate of the tower to the center of the entity's column
         column = column % Stage.mcols;
         t.setX(GameScreen.columnToX(column));
@@ -99,7 +99,7 @@ public class TowerFactory {
         t.setY(GameScreen.rowToY(row));
     }
 
-    private void setSprites(Tower t, String type, int NSPRITES){
+    private void setSprites(Tower t, String type, int NSPRITES) {
         BufferedImage img = AssetManager.getInstance().getSprite(type);
         t.setSpriteSheet(img);
         t.setSpriteIndex(0);
