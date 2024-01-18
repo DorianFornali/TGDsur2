@@ -39,7 +39,7 @@ public class EnemyFactory {
         if (e == null) {
             System.err.println("Unable to allocate enemy, all are used");
         } else {
-            buildMainStats(e, 1, 600, 600, 40, 1, EnemyType.TANK);
+            buildMainStats(e, 2, 800, 800, 70, 1, EnemyType.TANK);
             setCoords(e, row, 0);
             setSprites(e, "tankEnemy", 8);
             e.setHitbox();

@@ -141,22 +141,18 @@ public class Stage implements Observable {
 
             switch (enemyType) {
                 case WEAK -> {
-                    System.out.println("Spawning weak enemy");
                     Enemy e = enemyFactory.createWeakEnemy(row);
                     enemiesAlive.add(e);
                 }
                 case POLYVALENT -> {
-                    System.out.println("Spawning polyvalent enemy");
                     Enemy e = enemyFactory.createPolyvalentEnemy(row);
                     enemiesAlive.add(e);
                 }
                 case FAST -> {
-                    System.out.println("Spawning fast enemy");
                     Enemy e = enemyFactory.createFastEnemy(row);
                     enemiesAlive.add(e);
                 }
                 case TANK -> {
-                    System.out.println("Spawning tank enemy");
                     Enemy e = enemyFactory.createTankEnemy(row);
                     enemiesAlive.add(e);
                 }

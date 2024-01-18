@@ -2,18 +2,122 @@
   "stage_enemies": [
     {
       "type": "WEAK",
-      "row": 0,
-      "delay": 3
+      "row": 6,
+      "delay": 20
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 5
+    },
+    {
+      "type": "FAST",
+      "row": 1,
+      "delay": 1
     },
     {
       "type": "WEAK",
       "row": 2,
-      "delay": 0.5
+      "delay": 15
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 7
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 1
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 10
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 2,
+      "delay": 5
+    },
+    {
+      "type": "FAST",
+      "row": 2,
+      "delay": 10
+    },
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 3
     },
     {
       "type": "WEAK",
       "row": 3,
-      "delay": 0.5
+      "delay": 5
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 1
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 15
+    },
+
+
+
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 10
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 20
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 5
+    },
+    {
+      "type": "FAST",
+      "row": 4,
+      "delay": 1
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 5
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 2
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 1
     },
     {
       "type": "WEAK",
@@ -21,9 +125,311 @@
       "delay": 1
     },
     {
-      "type": "WEAK",
-      "row": 8,
+      "type": "POLYVALENT",
+      "row": 1,
       "delay": 3
+    },
+    {
+      "type": "FAST",
+      "row": 1,
+      "delay": 2
+    },
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 2
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 7
+    },
+
+
+
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 10
+    },
+
+
+    {
+      "type": "TANK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 6,
+      "delay": 3
+    },
+
+
+
+    {
+      "type": "TANK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 6,
+      "delay": 0
+    },
+
+
+    {
+      "type": "POLYVALENT",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 6,
+      "delay": 0
+    },
+
+
+
+    {
+      "type": "POLYVALENT",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 6,
+      "delay": 0
+    },
+
+
+    {
+      "type": "TANK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 6,
+      "delay": 0
+    },
+
+
+
+    {
+      "type": "TANK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 6,
+      "delay": 0
+    },
+
+
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
+    },
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 0.5
     }
   ]
 }

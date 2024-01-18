@@ -32,7 +32,6 @@ public class MoneyCoin extends Entity {
         float deltaY = (GameScreen.moneyLocationY - getY());
 
         if (Math.abs(deltaX) < ViewController.WIDTH / 50 && Math.abs(deltaY) < ViewController.HEIGHT / 50) {
-            System.out.println("Coin reached money, adding dmg");
             // The coin reached the destination, generates money and stop updating/drawing coin
             Game.getInstance().getCurrentStage().setPlayerMoney(Game.getInstance().getCurrentStage().getPlayerMoney() + getDamage());
             dead = true;
