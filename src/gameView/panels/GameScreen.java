@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 
@@ -102,13 +103,14 @@ public class GameScreen extends JPanel {
     }
 
     private void renderProjectiles(Graphics g) {
-        for (Projectile p : currentStage.projectilesAlive) {
-            if (p != null && p.inTheWindow) {
-                BufferedImage img = p.getSprite();
-                Rectangle hitbox = p.getHitbox();
-                int drawingX = (int) hitbox.getX();
-                int drawingY = (int) hitbox.getY();
-                g.drawImage(img, drawingX, drawingY, hitbox.width, hitbox.height, null);
+        try {
+            for (Projectile p : currentStage.projectilesAlive) {
+                if (p != null && p.inTheWindow) {
+                    BufferedImage img = p.getSprite();
+                    Rectangle hitbox = p.getHitbox();
+                    int drawingX = (int) hitbox.getX();
+                    int drawingY = (int) hitbox.getY();
+                    g.drawImage(img, drawingX, drawingY, hitbox.width, hitbox.height, null);
 
                 /*
                 g.setColor(Color.RED);
@@ -118,7 +120,11 @@ public class GameScreen extends JPanel {
                 g.drawRect(drawingX, drawingY, hitbox.width, hitbox.height);
 
                  */
+                }
             }
+        }catch(ConcurrentModificationException e){
+            // This happpens when an enemy dies and is removed from the list while the viewcontroller iterates over the list
+            // This error is NOT critical
         }
     }
 
@@ -158,23 +164,28 @@ public class GameScreen extends JPanel {
 
 
     private void renderEnemies(Graphics g) {
-        for (Enemy enemy : currentStage.enemiesAlive) {
-            if (enemy != null && enemy.isUsed) {
-                BufferedImage img = enemy.getSprite();
-                int drawingX = (int) enemy.getX();
-                int drawingY = (int) enemy.getY();
-                g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
+        try {
+            for (Enemy enemy : currentStage.enemiesAlive) {
+                if (enemy != null && enemy.isUsed) {
+                    BufferedImage img = enemy.getSprite();
+                    int drawingX = (int) enemy.getX();
+                    int drawingY = (int) enemy.getY();
+                    g.drawImage(img, drawingX, drawingY, cellWidth, cellHeight, null);
 
-                /*
-                g.setColor(Color.RED);
-                Rectangle hitbox = enemy.getHitbox();
-                g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+                    /*
+                    g.setColor(Color.RED);
+                    Rectangle hitbox = enemy.getHitbox();
+                    g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 
-                g.setColor(Color.BLUE);
-                g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
+                    g.setColor(Color.BLUE);
+                    g.drawRect((int) enemy.getX(), (int) enemy.getY(), cellWidth, cellHeight);
 
-                 */
+                     */
+                }
             }
+        } catch (ConcurrentModificationException e){
+            // This happpens when an enemy dies and is removed from the list while the viewcontroller iterates over the list
+            // This error is NOT critical
         }
     }
 

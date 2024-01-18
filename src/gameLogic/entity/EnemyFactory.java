@@ -39,7 +39,7 @@ public class EnemyFactory {
         if (e == null) {
             System.err.println("Unable to allocate enemy, all are used");
         } else {
-            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.TANK);
+            buildMainStats(e, 1, 600, 600, 40, 1, EnemyType.TANK);
             setCoords(e, row, 0);
             setSprites(e, "tankEnemy", 8);
             e.setHitbox();
@@ -55,7 +55,7 @@ public class EnemyFactory {
         if (e == null) {
             System.err.println("Unable to allocate enemy, all are used");
         } else {
-            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.FAST);
+            buildMainStats(e, 4, 150, 150, 25, 1, EnemyType.FAST);
             setCoords(e, row, 0);
             setSprites(e, "fastEnemy", 8);
             e.setHitbox();
@@ -71,7 +71,7 @@ public class EnemyFactory {
         if (e == null) {
             System.err.println("Unable to allocate enemy, all are used");
         } else {
-            buildMainStats(e, 10, 100, 100, 10, 10, EnemyType.POLYVALENT);
+            buildMainStats(e, 3, 300, 300, 35, 1, EnemyType.POLYVALENT);
             setCoords(e, row, 0);
             setSprites(e, "polyvalentEnemy", 8);
             e.setHitbox();

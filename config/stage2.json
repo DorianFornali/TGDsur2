@@ -3,13 +3,439 @@
     {
       "type": "WEAK",
       "row": 2,
-      "delay": 3
+      "delay": 15
     },
     {
       "type": "WEAK",
       "row": 1,
-      "delay": 1
-    }
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 15
+    },
 
+
+
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 4
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 4
+    },
+
+
+
+    {
+      "type": "POLYVALENT",
+      "row": 2,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 5
+    },
+    {
+      "type": "FAST",
+      "row": 5,
+      "delay": 3
+    },
+    {
+      "type": "FAST",
+      "row": 5,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 7
+    },
+
+
+
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 5
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 3
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 2
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 20
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 1
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 15
+    },
+
+
+
+    {
+      "type": "FAST",
+      "row": 3,
+      "delay": 10
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 6
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 4
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 4
+    },
+
+
+
+    {
+      "type": "POLYVALENT",
+      "row": 4,
+      "delay": 0.1
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 6,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 3,
+      "delay": 7
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0.1
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0.1
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.3
+    },
+
+
+
+    {
+      "type": "FAST",
+      "row": 6,
+      "delay": 0.3
+    },
+    {
+      "type": "FAST",
+      "row": 5,
+      "delay": 0.3
+    },
+    {
+      "type": "FAST",
+      "row": 5,
+      "delay": 0.3
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.2
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0.3
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 0
+    },{
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "FAST",
+      "row": 6,
+      "delay": 0.3
+    },
+
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 2,
+      "delay": 0
+    },{
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0.3
+    }
+  ,
+
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 0
+    },{
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0.3
+    }
+  ,
+
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 0
+    },{
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "POLYVALENT",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 6,
+      "delay": 0.3
+    }
+  ,
+
+
+
+    {
+      "type": "WEAK",
+      "row": 0,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 1,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 2,
+      "delay": 0
+    },{
+      "type": "WEAK",
+      "row": 3,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 4,
+      "delay": 0
+    },
+    {
+      "type": "TANK",
+      "row": 5,
+      "delay": 0
+    },
+    {
+      "type": "WEAK",
+      "row": 6,
+      "delay": 0.3
+    }
   ]
 }

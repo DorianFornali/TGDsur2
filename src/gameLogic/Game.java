@@ -178,7 +178,6 @@ public class Game implements Runnable, Observer {
             case "FASTEN":
                 fastenTheGame();
                 break;
-
             // Tower placement
             case "TOWER_PLACEMENT_ATTACK":
                 currentStage.spawnTower(event.getEventData(), TowerType.ATTACK);
