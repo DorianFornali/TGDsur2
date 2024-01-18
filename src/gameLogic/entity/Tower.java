@@ -2,6 +2,7 @@ package gameLogic.entity;
 
 import gameLogic.Game;
 import gameLogic.Stage;
+import gameView.ViewController;
 import gameView.panels.GameScreen;
 
 
@@ -12,6 +13,10 @@ public class Tower extends Entity{
     private boolean canShoot;
     private boolean canBlock;
     private TowerType towerType;
+
+    // Unique to the globalTower, it is its attack, we store it once not to draw in gamescreen one circle per attack
+    // Gamescreen will recycle the same circle
+    private Wave globalWave;
     public static final int ATTACK_TOWER_PRICE = 100;
     public static final int MULTI_TOWER_PRICE = 325;
     public static final int GLOBAL_TOWER_PRICE = 500;
@@ -21,6 +26,12 @@ public class Tower extends Entity{
 
     private boolean isAlive;
 
+    public Tower(TowerType type){
+        super();
+        setTowerType(type);
+        if(towerType == TowerType.GLOBAL)
+            this.globalWave = new Wave(this);
+    }
 
     /** Updates the tower, will call a function corresponding of the tower's type 
      * We choose to do it that way instead of one class = one tower 
@@ -76,13 +87,28 @@ public class Tower extends Entity{
     }
 
     private void updateGlobalTower() {
+        updateWaveRadius();
         if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
-            // The tower can "shoot", in this case it simply attacks every enemy on the map
+            // New shoot so we reset the circle to 0 radius to fake a new shoot when we actually use
+            // the same wave
+            this.globalWave.setRadius(0);
+            System.out.println("global shot");
+            // We must now apply the damage
             for(Enemy e : game.getCurrentStage().enemiesAlive){
-                e.setHealth(e.getHealth() - getDamage());
+                if(e.hitbox.x < ViewController.WIDTH-(e.hitbox.width/2)) {
+                    // We want to hit only enemies that are already partially visible
+                    // without this condition we would be hitting enemies outside the map as they are spawned
+                    // slightly off of it
+                    e.setHealth(e.getHealth() - getDamage());
+                    System.out.println("Global dealing dmg");
+                }
             }
             previousFiring = System.nanoTime();
         }
+    }
+
+    private void updateWaveRadius() {
+        this.globalWave.setRadius(this.globalWave.getRadius()+10*Game.CURRENT_SPEED_FACTOR);
     }
 
     private void updateMultiTower() {
@@ -91,12 +117,10 @@ public class Tower extends Entity{
             int row = Stage.getRowFromY((int)getY());
             switch (row){
                 case (0):
-                    System.out.println("tout en haut");
                     shootProjectile(0);
                     shootProjectile(1);
                     break;
                 case (6):
-                    System.out.println("tout en bas");
                     shootProjectile(0);
                     shootProjectile(-1);
                     break;
@@ -158,4 +182,11 @@ public class Tower extends Entity{
         game.getCurrentStage().projectilesAlive.add(p);
     }
 
+    public TowerType getTowerType() {
+        return towerType;
+    }
+
+    public Wave getGlobalWave(){
+        return globalWave;
+    }
 }

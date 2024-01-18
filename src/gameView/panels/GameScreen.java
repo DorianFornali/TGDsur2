@@ -7,9 +7,12 @@ import gameLogic.entity.Enemy;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameLogic.entity.TowerType;
+import gameLogic.entity.Wave;
 import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.customButtons.TowerDragButton;
+import observerPattern.GameEvent;
+import observerPattern.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,6 +136,11 @@ public class GameScreen extends JPanel {
                     g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
 
                      */
+                    if(tower.getTowerType() == TowerType.GLOBAL){
+                        // Additionally we want to take care of isolated cases such as the Global
+                        // that needs another rendering step: its linked attack (the wave)
+                        drawGlobalWave(tower.getGlobalWave(), g, drawingX+cellWidth/2, drawingY+cellHeight/2);
+                    }
                 }
             }
         }
@@ -314,4 +322,11 @@ public class GameScreen extends JPanel {
     }
 
 
+    /** Draws a circle with center the tower that shoots,
+     *  this circle will quickly get bigger, then disappear once out of bounds */
+    private void drawGlobalWave(Wave waveToDraw, Graphics g, int centerX, int centerY) {
+        g.setColor(Color.RED);
+        int r = waveToDraw.getRadius();
+        g.drawOval(centerX - r, centerY - r, 2*r, 2*r);
+    }
 }
