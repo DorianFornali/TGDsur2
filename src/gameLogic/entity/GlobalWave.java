@@ -1,11 +1,11 @@
 package gameLogic.entity;
 
 /** The global tower wave, its attack */
-public class Wave {
+public class GlobalWave {
     private Tower globalTower;
     private int radius = 0;
 
-    public Wave(Tower globalTower){
+    public GlobalWave(Tower globalTower){
         this.globalTower = globalTower;
     }
     public Tower getTower(){

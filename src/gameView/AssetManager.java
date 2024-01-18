@@ -64,6 +64,8 @@ public class AssetManager {
             assets.put("multiTower", img);
             img = ImageIO.read(new File("assets/sprites/towers/global.png"));
             assets.put("globalTower", img);
+            img = ImageIO.read(new File("assets/sprites/towers/moneyGenerationIcon.png"));
+            assets.put("moneyGenerationIcon", img);
         } catch (IOException e) {
             e.printStackTrace();
         }

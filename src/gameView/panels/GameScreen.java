@@ -4,15 +4,14 @@ import gameLogic.Game;
 import gameLogic.Stage;
 import gameLogic.StageNumero;
 import gameLogic.entity.Enemy;
+import gameLogic.entity.MoneyCoin;
 import gameLogic.entity.Projectile;
 import gameLogic.entity.Tower;
 import gameLogic.entity.TowerType;
-import gameLogic.entity.Wave;
+import gameLogic.entity.GlobalWave;
 import gameView.AssetManager;
 import gameView.ViewController;
 import gameView.customButtons.TowerDragButton;
-import observerPattern.GameEvent;
-import observerPattern.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +35,9 @@ public class GameScreen extends JPanel {
     private BufferedImage healthIcon;
 
     private List<TowerDragButton> towerButtons;
+
+    // Simple coordinates of the money JLabel for the coin animation travel
+    public static int moneyLocationX, moneyLocationY;
 
     public GameScreen(ViewController viewController, StageNumero stageNumero) throws IOException {
         setPreferredSize(new Dimension(ViewController.WIDTH, ViewController.HEIGHT));
@@ -136,15 +138,22 @@ public class GameScreen extends JPanel {
                     g.drawRect((int) tower.getX(), (int) tower.getY(), cellWidth, cellHeight);
 
                      */
-                    if(tower.getTowerType() == TowerType.GLOBAL){
-                        // Additionally we want to take care of isolated cases such as the Global
-                        // that needs another rendering step: its linked attack (the wave)
-                        drawGlobalWave(tower.getGlobalWave(), g, drawingX+cellWidth/2, drawingY+cellHeight/2);
+                    // Additionally we want to take care of isolated cases such as the Global
+                    // that needs another rendering step: its linked attack (the wave)
+                    switch(tower.getTowerType()){
+                        case GLOBAL:
+                            drawGlobalWave(tower.getGlobalWave(), g, drawingX+cellWidth/2, drawingY+cellHeight/2);
+                            break;
+                        case MONEY:
+                            drawMoneyIcon(tower, g);
+                            break;
                     }
+
                 }
             }
         }
     }
+
 
     private void renderEnemies(Graphics g) {
     for(Enemy enemy : currentStage.enemiesAlive){
@@ -240,6 +249,8 @@ public class GameScreen extends JPanel {
         playerMoneyLabel.setForeground(Color.BLACK);
         playerMoneyLabel.setFont(new Font("Arial", Font.BOLD, 16));
         playerMoneyLabel.setBounds((int) (ViewController.WIDTH*0.55), (int) (ViewController.HEIGHT*0.06), labelSize*2, labelSize/4);
+        moneyLocationX = (int) (ViewController.WIDTH*0.55);
+        moneyLocationY = (int) (ViewController.HEIGHT*0.06);
         playerMoneyLabel.setVisible(true);
         add(playerMoneyLabel);
 
@@ -324,9 +335,19 @@ public class GameScreen extends JPanel {
 
     /** Draws a circle with center the tower that shoots,
      *  this circle will quickly get bigger, then disappear once out of bounds */
-    private void drawGlobalWave(Wave waveToDraw, Graphics g, int centerX, int centerY) {
+    private void drawGlobalWave(GlobalWave globalWaveToDraw, Graphics g, int centerX, int centerY) {
+        if(globalWaveToDraw == null) return;
         g.setColor(Color.RED);
-        int r = waveToDraw.getRadius();
+        int r = globalWaveToDraw.getRadius();
         g.drawOval(centerX - r, centerY - r, 2*r, 2*r);
+    }
+
+    private void drawMoneyIcon(Tower tower, Graphics g) {
+        MoneyCoin mc = tower.getMoneyCoin();
+        if(mc == null || mc.dead) return;
+        BufferedImage toDraw = mc.getSprite();
+
+        g.drawImage(toDraw, (int) mc.getX(), (int) mc.getY(), cellWidth/2, cellHeight/2, null);
+
     }
 }

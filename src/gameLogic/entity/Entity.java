@@ -63,9 +63,6 @@ public abstract class Entity {
         this.entityRow = row;
     }
 
-    public BufferedImage getCurrentSprite(){
-        return this.currentSprite;
-    }
 
 
     public void update() {
@@ -83,7 +80,7 @@ public abstract class Entity {
         hitbox.setLocation(newX, newY);
     }
 
-    private void updateSprite() {
+    protected void updateSprite() {
         double now = System.nanoTime();
         if(now - previousTimer > 1000000000/10){
             previousTimer = now;

@@ -16,7 +16,8 @@ public class Tower extends Entity{
 
     // Unique to the globalTower, it is its attack, we store it once not to draw in gamescreen one circle per attack
     // Gamescreen will recycle the same circle
-    private Wave globalWave;
+    private GlobalWave globalWave;
+    private MoneyCoin moneyCoin;
     public static final int ATTACK_TOWER_PRICE = 100;
     public static final int MULTI_TOWER_PRICE = 325;
     public static final int GLOBAL_TOWER_PRICE = 500;
@@ -26,11 +27,8 @@ public class Tower extends Entity{
 
     private boolean isAlive;
 
-    public Tower(TowerType type){
+    public Tower(){
         super();
-        setTowerType(type);
-        if(towerType == TowerType.GLOBAL)
-            this.globalWave = new Wave(this);
     }
 
     /** Updates the tower, will call a function corresponding of the tower's type 
@@ -71,13 +69,15 @@ public class Tower extends Entity{
 
     /** The update function for the money tower */
     private void updateMoneyTower() {
+        // We first generate the coin for the first time
+        if(moneyCoin == null) initMoneyCoin();
+        moneyCoin.update(); // The coin will move towards the money label and when reached, increment player's money
         if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
-            System.out.println("Money tower generated money");
-            // The tower can "shoot", in this case it simply generates money
-            System.out.println("Money tower generated money");
-            game.getCurrentStage().setPlayerMoney(game.getCurrentStage().getPlayerMoney()+getDamage());
-            //TODO! Do some visual effect to show the player that the tower generated money -> the GameScreen must do it
-            //TODO! send message to GameScreen
+            // At new shoot, we reset the coin as if it was a new one.
+            moneyCoin.dead = false;
+            moneyCoin.setX(getHitbox().x);
+            moneyCoin.setY(getHitbox().y);
+            moneyCoin.setSpeed(1);
             previousFiring = System.nanoTime();
         }
     }
@@ -87,6 +87,7 @@ public class Tower extends Entity{
     }
 
     private void updateGlobalTower() {
+        if(globalWave == null) initGlobalWave();
         updateWaveRadius();
         if(System.nanoTime() - previousFiring >= firingRate/Game.CURRENT_SPEED_FACTOR){
             // New shoot so we reset the circle to 0 radius to fake a new shoot when we actually use
@@ -186,7 +187,26 @@ public class Tower extends Entity{
         return towerType;
     }
 
-    public Wave getGlobalWave(){
+    public GlobalWave getGlobalWave(){
         return globalWave;
+    }
+
+    public MoneyCoin getMoneyCoin(){
+        return moneyCoin;
+    }
+
+    private void initMoneyCoin(){
+        MoneyCoin mc = new MoneyCoin();
+        mc.setX(getHitbox().x);
+        mc.setY(getHitbox().y);
+        mc.setSpeed(1);
+        mc.setDamage(this.getDamage()); // Because damage = the money generated
+        this.moneyCoin = mc;
+
+    }
+
+    private void initGlobalWave(){
+        GlobalWave gw = new GlobalWave(this);
+        this.globalWave = gw;
     }
 }
