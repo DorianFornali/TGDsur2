@@ -15,7 +15,8 @@ You can find JDKs here: https://www.oracle.com/java/technologies/javase/jdk20-ar
 <b>First method:</b>
 
 Download the .jar directly from here, to do so click on the file and then on "raw", your browser should download it.
-Then from powershell if you are on windows or your linux terminal:
+<br><b>You can also download the jar file from my OneDrive: <br> https://unice-my.sharepoint.com/:u:/g/personal/dorian_fornali_etu_unice_fr/EVlXiS28ZrNPo2aVeoqOZ1IBUO5pfKiGo0PZa6QwJPSYVA </b>
+<br>Then, from powershell if you are on windows or your linux terminal:
 
 ```bash
 java -jar TGDsur2.jar
