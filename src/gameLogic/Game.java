@@ -195,6 +195,7 @@ public class Game implements Runnable, Observer {
                 currentStage.spawnTower(event.getEventData(), TowerType.GLOBAL);
                 break;
             // Music playing
+
             case "MAIN_MUSIC_PLAY":
                 audioPlayer.playSong(AudioPlayer.MAIN_MUSIC);
                 break;

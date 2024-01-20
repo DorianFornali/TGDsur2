@@ -7,8 +7,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Random;
 
 public class AudioPlayer {
@@ -75,18 +79,27 @@ public class AudioPlayer {
      */
     private Clip getClip(String name) {
         try {
-            File f = new File("assets/audio/" + name);
-            AudioInputStream audio;
-            audio = AudioSystem.getAudioInputStream(f);
-            Clip c = AudioSystem.getClip();
-            c.open(audio);
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("audio/" + name);
 
-            return c;
+            if (inputStream != null) {
+                InputStream bufferedIn = new BufferedInputStream(inputStream);
+                AudioInputStream audio = AudioSystem.getAudioInputStream(bufferedIn);
+
+                Clip c = AudioSystem.getClip();
+                c.open(audio);
+                inputStream.close();
+
+                return c;
+            } else {
+                // La ressource n'a pas été trouvée
+                System.err.println("Ressource non trouvée : audio/" + name);
+            }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     public void setVolume(float v) {
         this.volume = v;

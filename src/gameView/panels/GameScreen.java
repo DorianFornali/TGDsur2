@@ -235,9 +235,9 @@ public class GameScreen extends JPanel {
     private void initUI() {
         // Initializing the fasten button
         fastenButtonSprites = new ImageIcon[]{
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton1.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton2.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("assets/sprites/ui/fastenButton3.PNG").getImage().getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT))
+                new ImageIcon(AssetManager.getInstance().getSprite("fastenButton1").getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
+                new ImageIcon(AssetManager.getInstance().getSprite("fastenButton2").getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT)),
+                new ImageIcon(AssetManager.getInstance().getSprite("fastenButton3").getScaledInstance(ViewController.WIDTH / 20, ViewController.WIDTH / 20, Image.SCALE_DEFAULT))
         };
 
         fastenButton = new JButton(fastenButtonSprites[0]);

@@ -36,9 +36,24 @@ public class AssetManager {
         loadHealthIcon(img);
     }
 
+    /**
+     * Load all buttons UIs
+     */
+    private void loadButtons(BufferedImage img) {
+        try {
+            img = ImageIO.read(getClass().getResource("/sprites/ui/fastenButton1.png"));
+            assets.put("fastenButton1", img);
+            img = ImageIO.read(getClass().getResource("/sprites/ui/fastenButton2.png"));
+            assets.put("fastenButton2", img);
+            img = ImageIO.read(getClass().getResource("/sprites/ui/fastenButton3.png"));
+            assets.put("fastenButton3", img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void loadHealthIcon(BufferedImage img) {
         try {
-            img = ImageIO.read(new File("assets/sprites/ui/healthIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/ui/healthIcon.png"));
             assets.put("healthIcon", img);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +62,7 @@ public class AssetManager {
 
     private void loadProjectilesSprites(BufferedImage img) {
         try {
-            img = ImageIO.read(new File("assets/sprites/projectile.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/projectile.png"));
             assets.put("projectile", img);
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,17 +71,17 @@ public class AssetManager {
 
     private void loadTowersSprites(BufferedImage img) {
         try {
-            img = ImageIO.read(new File("assets/sprites/towers/attack.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/attack.png"));
             assets.put("attackTower", img);
-            img = ImageIO.read(new File("assets/sprites/towers/defensive.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/defensive.png"));
             assets.put("defensiveTower", img);
-            img = ImageIO.read(new File("assets/sprites/towers/money.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/money.png"));
             assets.put("moneyTower", img);
-            img = ImageIO.read(new File("assets/sprites/towers/multi.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/multi.png"));
             assets.put("multiTower", img);
-            img = ImageIO.read(new File("assets/sprites/towers/global.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/global.png"));
             assets.put("globalTower", img);
-            img = ImageIO.read(new File("assets/sprites/towers/moneyGenerationIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/moneyGenerationIcon.png"));
             assets.put("moneyGenerationIcon", img);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,62 +90,47 @@ public class AssetManager {
 
     private void loadEnemiesSprites(BufferedImage img) {
         try {
-            img = ImageIO.read(new File("assets/sprites/enemies/weak.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/weak.png"));
             assets.put("weakEnemy", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/weakattacking.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/weakattacking.png"));
             assets.put("weakEnemyAttacking", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/weakdamaged.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/weakdamaged.png"));
             assets.put("weakEnemyDamaged", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/weakAttackingDamaged.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/weakAttackingDamaged.png"));
             assets.put("weakEnemyAttackingDamaged", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/tank.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/tank.png"));
             assets.put("tankEnemy", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/tankdamaged1.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/tankdamaged1.png"));
             assets.put("tankEnemyDamaged1", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/tankdamaged2.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/tankdamaged2.png"));
             assets.put("tankEnemyDamaged2", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/fast.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/fast.png"));
             assets.put("fastEnemy", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/fastdamaged.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/fastdamaged.png"));
             assets.put("fastEnemyDamaged", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/polyvalent.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/polyvalent.png"));
             assets.put("polyvalentEnemy", img);
-            img = ImageIO.read(new File("assets/sprites/enemies/polyvalentdamaged.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/enemies/polyvalentdamaged.png"));
             assets.put("polyvalentEnemyDamaged", img);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Load all buttons UIs
-     */
-    private void loadButtons(BufferedImage img) {
-        try {
-            img = ImageIO.read(new File("assets/sprites/ui/fastenButton1.png"));
-            assets.put("fastenButton1", img);
-            img = ImageIO.read(new File("assets/sprites/ui/fastenButton2.png"));
-            assets.put("fastenButton2", img);
-            img = ImageIO.read(new File("assets/sprites/ui/fastenButton3.png"));
-            assets.put("fastenButton3", img);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void loadDragButtonAssets(BufferedImage img) {
         try {
-            img = ImageIO.read(new File("assets/sprites/tower_DragButton_background.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/tower_DragButton_background.png"));
             assets.put("tower_DragButton_background", img);
-            img = ImageIO.read(new File("assets/sprites/towers/icons/attackTowerIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/icons/attackTowerIcon.png"));
             assets.put("attackTowerIcon", img);
-            img = ImageIO.read(new File("assets/sprites/towers/icons/defensiveTowerIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/icons/defensiveTowerIcon.png"));
             assets.put("defensiveTowerIcon", img);
-            img = ImageIO.read(new File("assets/sprites/towers/icons/moneyTowerIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/icons/moneyTowerIcon.png"));
             assets.put("moneyTowerIcon", img);
-            img = ImageIO.read(new File("assets/sprites/towers/icons/multiTowerIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/icons/multiTowerIcon.png"));
             assets.put("multiTowerIcon", img);
-            img = ImageIO.read(new File("assets/sprites/towers/icons/globalTowerIcon.png"));
+            img = ImageIO.read(getClass().getResource("/sprites/towers/icons/globalTowerIcon.png"));
             assets.put("globalTowerIcon", img);
 
 

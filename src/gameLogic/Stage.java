@@ -19,11 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Stage implements Observable {
     /**
@@ -218,18 +220,28 @@ public class Stage implements Observable {
     private SpawnObjectStack initSpawnStack() throws IOException {
         String jsonPath = "";
         switch (this.stageNumero) {
-            case STAGE1 -> jsonPath = "config/stage1.json";
-            case STAGE2 -> jsonPath = "config/stage2.json";
-            case STAGE3 -> jsonPath = "config/stage3.json";
+            case STAGE1 -> jsonPath = "stage1.json";
+            case STAGE2 -> jsonPath = "stage2.json";
+            case STAGE3 -> jsonPath = "stage3.json";
             default -> throw new RuntimeException("Wrong stage level specified");
         }
 
         // With this JSON implementation we need first to convert the string to JSON
         JSONArray enemiesJSONArray = new JSONArray();
         try {
-            File jsonfile = new File(jsonPath);
-            String jsonString = Files.readString(jsonfile.toPath());
-            enemiesJSONArray = new JSONObject(jsonString).getJSONArray("stage_enemies");
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(jsonPath);
+
+            if (inputStream != null) {
+                InputStreamReader isr = new InputStreamReader(inputStream);
+                String jsonString = new BufferedReader(isr)
+                        .lines()
+                        .collect(Collectors.joining("\n"));
+
+                enemiesJSONArray = new JSONObject(jsonString).getJSONArray("stage_enemies");
+                inputStream.close();
+            } else {
+                System.err.println("Ressource non trouvée : " + jsonPath);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -252,6 +264,7 @@ public class Stage implements Observable {
         stack.print();
         return stack;
     }
+
 
     /**
      * Will update all entities from the entities array, containing all the entities alive (enemies, towers, projectiles)
