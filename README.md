@@ -30,3 +30,16 @@ java --version
 <b>Second method:</b>
 
 If you can't start the jar properly, clone the repository locally and execute Main.java from intelliJ IDEA directly. IntelliJ is required as the .iml file handles the dependency injection.
+
+## Developers
+
+- FORNALI Dorian <br>
+- PERALDI Laurent
+
+## Credits
+All songs are taken from https://www.epidemicsound.com/ and are free of use.<br>
+Sprites:
+<br>
+  - https://fr.123rf.com/profile_saphatthachat <br>
+  - https://opengameart.org/content/pixel-robot <br>
+  - https://elthen.itch.io/
