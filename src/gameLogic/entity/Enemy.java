@@ -3,6 +3,7 @@ package gameLogic.entity;
 import audio.AudioPlayer;
 import gameLogic.Game;
 import gameLogic.Stage;
+import gameView.AssetManager;
 import gameView.panels.GameScreen;
 
 public class Enemy extends Entity {
@@ -40,6 +41,7 @@ public class Enemy extends Entity {
         if (!isUsed) return;
         super.update();
 
+        updateSpriteSheet();
         updateTargetState();
         attack();
 
@@ -47,7 +49,19 @@ public class Enemy extends Entity {
             this.canHurtPlayer = false;
             setHealth(-1);
             Stage stage = Game.getInstance().getCurrentStage();
-            stage.playerHealth--;
+
+            // We will deal damage to the player according to the enemy type
+            switch (this.type) {
+                case WEAK: case FAST:
+                    stage.playerHealth--;
+                    break;
+                case TANK:
+                    stage.playerHealth -= 3;
+                    break;
+                case POLYVALENT:
+                    stage.playerHealth -= 2;
+                    break;
+            }
             if (stage.playerHealth <= 0 && Game.IN_GAME) {
                 stage.generateEvent("GAME_OVER", null);
                 stage.clearStage();
@@ -68,6 +82,42 @@ public class Enemy extends Entity {
             // TODO! Change spritesheet for a more "damaged" one
         }
 
+    }
+
+    /** We update the spriteSheet according to current hp and whether it is attacking or not
+     * (the attacking part is only for the weak enemy) */
+    private void updateSpriteSheet() {
+        AssetManager am = AssetManager.getInstance();
+        switch(this.type){
+            case WEAK:
+                if(getHealth()<0.5*getMaxHealth())
+                    if(isAttacking) setSpriteSheet(am.getSprite("weakEnemyAttackingDamaged"));
+                    else setSpriteSheet(am.getSprite("weakEnemyDamaged"));
+                else
+                    if(isAttacking) setSpriteSheet(am.getSprite("weakEnemyAttacking"));
+                    else setSpriteSheet(am.getSprite("weakEnemy"));
+                break;
+
+            case FAST:
+                if(getHealth()<0.5*getMaxHealth())
+                    setSpriteSheet(am.getSprite("fastEnemyDamaged"));
+                else setSpriteSheet(am.getSprite("fastEnemy"));
+                break;
+
+            case TANK:
+                if(getHealth() < 0.6*getMaxHealth()){
+                    if(getHealth() < 0.3*getMaxHealth())
+                        setSpriteSheet(am.getSprite("tankEnemyDamaged2"));
+                    else setSpriteSheet(am.getSprite("tankEnemyDamaged1"));
+                }
+                else setSpriteSheet(am.getSprite("tankEnemy"));
+                break;
+            case POLYVALENT:
+                if(getHealth()<0.5*getMaxHealth())
+                    setSpriteSheet(am.getSprite("polyvalentEnemyDamaged"));
+                else setSpriteSheet(am.getSprite("polyvalentEnemy"));
+                break;
+        }
     }
 
     private void playDeathSound() {

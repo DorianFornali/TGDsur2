@@ -77,12 +77,26 @@ public class AssetManager {
         try {
             img = ImageIO.read(new File("assets/sprites/enemies/weak.png"));
             assets.put("weakEnemy", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/weakattacking.png"));
+            assets.put("weakEnemyAttacking", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/weakdamaged.png"));
+            assets.put("weakEnemyDamaged", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/weakAttackingDamaged.png"));
+            assets.put("weakEnemyAttackingDamaged", img);
             img = ImageIO.read(new File("assets/sprites/enemies/tank.png"));
             assets.put("tankEnemy", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/tankdamaged1.png"));
+            assets.put("tankEnemyDamaged1", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/tankdamaged2.png"));
+            assets.put("tankEnemyDamaged2", img);
             img = ImageIO.read(new File("assets/sprites/enemies/fast.png"));
             assets.put("fastEnemy", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/fastdamaged.png"));
+            assets.put("fastEnemyDamaged", img);
             img = ImageIO.read(new File("assets/sprites/enemies/polyvalent.png"));
             assets.put("polyvalentEnemy", img);
+            img = ImageIO.read(new File("assets/sprites/enemies/polyvalentdamaged.png"));
+            assets.put("polyvalentEnemyDamaged", img);
         } catch (IOException e) {
             e.printStackTrace();
         }
