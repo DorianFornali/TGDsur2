@@ -79,7 +79,7 @@ public class Stage implements Observable {
         this.spawningStack = initSpawnStack();
         this.previousMoneyGenerationTimer = System.nanoTime();
         this.moneyGenerationDelay = 5f * 1000000000.0;
-        setPlayerMoney(50);
+        setPlayerMoney(1000);
         addObserver(viewController);
     }
 
