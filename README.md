@@ -6,7 +6,8 @@ The goal was to develop a small video game of tower-defense genre by using well 
 
 ## Pre-requisites
 
-You need a JVM installed with java 20 or higher.
+You need a JVM installed with java 20.0.1
+You can find JDKs here: https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html
 
 ## How to install
 
@@ -20,7 +21,7 @@ Then from powershell if you are on windows or your linux terminal:
 java -jar TGDsur2.jar
 ```
 
-If it doesn't work, please verify that you have Java 20+ installed
+If it doesn't work, please verify that you have Java 20+ installed. 
 
 ```bash
 java --version
