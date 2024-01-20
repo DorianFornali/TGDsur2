@@ -79,7 +79,7 @@ public class Stage implements Observable {
         this.spawningStack = initSpawnStack();
         this.previousMoneyGenerationTimer = System.nanoTime();
         this.moneyGenerationDelay = 5f * 1000000000.0;
-        setPlayerMoney(1000);
+        setPlayerMoney(50);
         addObserver(viewController);
     }
 
@@ -349,8 +349,10 @@ public class Stage implements Observable {
                         if (gameBoard[i][j] != null) {
                             if (e.getHitbox().intersects(gameBoard[i][j].getHitbox())) {
                                 // Collision between enemy and tower
-                                e.setAttacking(true);
-                                e.setTarget(gameBoard[i][j]);
+                                if (e.isUsed) { // Additional check, sometimes the enemy can still attack even when dead
+                                    e.setAttacking(true);
+                                    e.setTarget(gameBoard[i][j]);
+                                }
                             }
                         }
                     }
