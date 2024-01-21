@@ -6,7 +6,7 @@ The goal was to develop a small video game of tower-defense genre by using well 
 
 ## Pre-requisites
 
-You need a JVM installed with java 20 or higher
+You need a JVM installed with java 20 or higher. <br>
 You can find JDKs here: https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html
 
 ## How to install
