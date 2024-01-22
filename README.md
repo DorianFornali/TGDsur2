@@ -31,6 +31,10 @@ java --version
 
 If you can't start the jar properly, clone the repository locally and execute Main.java from intelliJ IDEA directly. IntelliJ is required as the .iml file handles the dependency injection.
 
+# Known bugs
+
+Some testing revealed that somehow, a stage could never end (with no enemies spawning) when on windows 11 with jdk 20.0.2. If you are using this config and meet this bug, try to downgrade your jvm to 20.0.1 (Or you can just press esc and leave the stage when no enemies are spawning anymore ...)
+
 ## Developers
 
 - FORNALI Dorian <br>
