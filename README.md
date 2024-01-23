@@ -31,6 +31,14 @@ java --version
 
 If you can't start the jar properly, clone the repository locally and execute Main.java from intelliJ IDEA directly. IntelliJ is required as the .iml file handles the dependency injection.
 
+## How to play the game
+
+To put towers on the board, this is a drag n drop behaviour:
+<br>
+  You click on the desired tower, then drag it onto the spot you want to place it in.<br>
+The goal is to prevent the enemies spawning at the right end to reach the left end of the screen. <br>
+You can see the different towers description at the main menu, just know that the Money tower is extremely important and MUST be the keystone for your strategy if you want to win !
+
 # Known bugs
 
 Some testing revealed that somehow, a stage could never end (with no enemies spawning) when on windows 11 with jdk 20.0.2. If you are using this config and meet this bug, try to downgrade your jvm to 20.0.1 (Or you can just press esc and leave the stage when no enemies are spawning anymore ...)
